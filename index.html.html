@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Library — Human Systems Risk Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0b1120; --navy2:#0f1826; --navy3:#131f2e;
+  --cream:#ede8df; --warm:#c4bba9; --muted:#7a8190;
+  --border:rgba(255,255,255,0.07);
+  --amber:#c07a18; --amber2:#e09030;
+  --red:#c83030; --green:#28885a;
+  --ff-display:'Cormorant Garamond',Georgia,serif;
+  --ff-body:'Source Sans 3',system-ui,sans-serif;
+  --ff-mono:'DM Mono','Courier New',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--warm);font-family:var(--ff-body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding:0 48px}
+.body-p{font-size:15px;color:var(--warm);line-height:1.9;margin-bottom:16px}
+.body-p:last-child{margin-bottom:0}
+.body-p strong{color:var(--cream)}
+.btn{display:inline-block;font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:12px 24px;border:1px solid;transition:all .2s;cursor:pointer}
+.btn-amber{background:var(--amber);color:var(--navy);border-color:var(--amber)}
+.btn-amber:hover{background:var(--amber2);border-color:var(--amber2)}
+.btn-ghost{background:transparent;color:var(--amber);border-color:rgba(193,122,24,.35)}
+.btn-ghost:hover{background:rgba(193,122,24,.08);border-color:var(--amber)}
+.btn-outline{background:transparent;color:var(--cream);border-color:rgba(255,255,255,.2)}
+.btn-outline:hover{border-color:var(--cream)}
+
+/* RECORD BAR */
+.record-bar{background:var(--navy3);border-bottom:1px solid var(--border);padding:9px 0}
+.record-bar-inner{max-width:1180px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.record-id{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.record-id strong{color:var(--amber)}
+.record-actions{display:flex;gap:10px}
+.record-btn{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);padding:5px 12px;cursor:pointer;transition:all .15s;text-decoration:none}
+.record-btn:hover{border-color:var(--amber);color:var(--amber)}
+
+/* HERO */
+.case-hero{background:var(--navy2);padding:56px 0 0;position:relative;overflow:hidden}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at 12% 55%,rgba(200,48,48,.05) 0%,transparent 60%)}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:start}
+.breadcrumb{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.breadcrumb a{color:var(--amber);text-decoration:none;cursor:pointer}
+.breadcrumb a:hover{color:var(--cream)}
+.breadcrumb span{margin:0 7px;opacity:.35}
+
+.case-flag{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.flag-dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0;box-shadow:0 0 10px rgba(200,48,48,.45)}
+.flag-dot.resilient{background:var(--green);box-shadow:0 0 10px rgba(40,136,90,.45)}
+.flag-type{font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.flag-type.resilient{color:var(--green)}
+.flag-domain{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
+
+.case-h1{font-family:var(--ff-display);font-size:clamp(38px,5.5vw,70px);font-weight:700;color:var(--cream);line-height:1.06;margin-bottom:10px}
+.case-h2{font-family:var(--ff-display);font-style:italic;font-size:clamp(15px,2vw,22px);color:var(--amber2);margin-bottom:24px;line-height:1.4}
+.case-meta{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:28px}
+.meta-chip{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:6px}
+.meta-chip::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--amber);flex-shrink:0}
+
+.gpws-panel{background:var(--navy3);border:1px solid var(--border);padding:28px 28px 24px}
+.gpws-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.gpws-score{font-family:var(--ff-display);font-size:80px;font-weight:700;color:var(--red);line-height:1;margin-bottom:6px}
+.gpws-tier{font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:18px}
+.gpws-bar-track{height:5px;background:rgba(255,255,255,.06);position:relative;margin-bottom:6px}
+.gpws-bar-fill{height:100%;background:var(--red)}
+.gpws-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:14px}
+.cond-table{margin-top:16px;display:flex;flex-direction:column;gap:2px}
+.cond-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;background:var(--navy2);padding:10px 14px;gap:12px}
+.cond-id{font-family:var(--ff-mono);font-size:10px;font-weight:500;color:var(--amber)}
+.cond-name{font-size:13px;color:var(--warm)}
+.cond-badge{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase}
+.badge-a{color:var(--red);background:rgba(200,48,48,.1);border:1px solid rgba(200,48,48,.22)}
+.badge-p{color:var(--green);background:rgba(40,136,90,.1);border:1px solid rgba(40,136,90,.22)}
+.badge-x{color:var(--amber);background:rgba(192,122,24,.1);border:1px solid rgba(192,122,24,.22)}
+
+/* TAPE */
+.tape{background:var(--red);padding:9px 0;overflow:hidden}
+.tape-track{display:flex;gap:36px;white-space:nowrap;animation:scrolltape 22s linear infinite}
+.tape-item{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.88);flex-shrink:0}
+.tape-sep{color:rgba(255,255,255,.3);flex-shrink:0}
+@keyframes scrolltape{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION NAV */
+.sec-nav{position:sticky;top:0;z-index:100;background:rgba(11,17,32,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.sec-nav-track{display:flex;max-width:1180px;margin:0 auto;padding:0 48px;overflow-x:auto;scrollbar-width:none}
+.sec-nav-track::-webkit-scrollbar{display:none}
+.sec-nav-link{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:13px 18px;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none}
+.sec-nav-link:hover{color:var(--cream)}
+.sec-nav-link.on{color:var(--amber);border-bottom-color:var(--amber)}
+
+/* LAYOUT */
+.case-body{max-width:1180px;margin:0 auto;padding:0 48px}
+.sec{padding:72px 0;border-bottom:1px solid var(--border)}
+.sec:last-child{border-bottom:none}
+.sec-header{margin-bottom:36px}
+.sec-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.sec-title{font-family:var(--ff-display);font-size:clamp(22px,3vw,38px);font-weight:600;color:var(--cream);line-height:1.15;max-width:640px}
+.sec-title em{font-style:italic;color:var(--amber2)}
+.two-col{display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:start}
+.col-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.col-title{font-family:var(--ff-display);font-size:18px;font-weight:600;color:var(--cream);line-height:1.25;margin-bottom:8px}
+.col-note{font-size:13px;color:var(--muted);line-height:1.65}
+.sticky-col{position:sticky;top:104px}
+
+/* HARM STATS */
+.harm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:40px}
+.hstat{background:var(--navy2);padding:24px 20px;text-align:center}
+.hstat-n{font-family:var(--ff-display);font-size:clamp(22px,3vw,42px);font-weight:700;color:var(--red);line-height:1;margin-bottom:5px}
+.hstat-n.amber{color:var(--amber2)}
+.hstat-l{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column;position:relative}
+.tl::before{content:'';position:absolute;left:10px;top:22px;bottom:22px;width:1px;background:linear-gradient(to bottom,var(--amber) 0%,rgba(192,122,24,.08) 100%)}
+.tl-item{display:flex;gap:24px;padding-bottom:28px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{width:21px;height:21px;border-radius:50%;border:2px solid var(--amber);background:var(--navy);flex-shrink:0;margin-top:3px;z-index:1;display:flex;align-items:center;justify-content:center}
+.tl-dot.r{border-color:var(--red)}
+.tl-dot.g{border-color:var(--green)}
+.tl-pip{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.tl-dot.r .tl-pip{background:var(--red)}
+.tl-dot.g .tl-pip{background:var(--green)}
+.tl-date{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--amber);margin-bottom:3px}
+.tl-date.r{color:var(--red)}
+.tl-date.g{color:var(--green)}
+.tl-event{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;line-height:1.35}
+.tl-detail{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* 57-TRIGGER MATRIX */
+.trigger-section-block{margin-bottom:4px}
+.tsec-header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--navy3);cursor:pointer;user-select:none}
+.tsec-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);flex:1}
+.tsec-count{font-family:var(--ff-mono);font-size:10px;color:var(--muted)}
+.tsec-toggle{font-family:var(--ff-mono);font-size:10px;color:var(--muted);transition:transform .2s;display:inline-block}
+.tsec-toggle.open{transform:rotate(180deg)}
+.tsec-rows{display:flex;flex-direction:column;gap:1px;margin-top:1px}
+.trigger-row{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:12px;padding:10px 16px;background:var(--navy2)}
+.tr-id{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.tr-name{font-size:13px;color:var(--warm);line-height:1.4}
+.tr-score{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase;white-space:nowrap}
+.tr-yes{color:#3db57a;background:rgba(40,136,90,.1);border:1px solid rgba(40,136,90,.2)}
+.tr-nhr{color:var(--amber);background:rgba(192,122,24,.08);border:1px solid rgba(192,122,24,.18)}
+.tr-unk{color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.trigger-legend{display:flex;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+.tleg{display:flex;align-items:center;gap:7px;font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.tleg-dot{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.trigger-summary{display:flex;gap:2px;margin-bottom:24px;height:8px}
+
+/* CONDITION DEEP DIVES */
+.cdive{background:var(--navy2);border:1px solid var(--border);padding:28px;margin-bottom:12px}
+.cdive:last-child{margin-bottom:0}
+.cdive-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.cdive-id{font-family:var(--ff-mono);font-size:10px;color:var(--amber);letter-spacing:.1em;margin-bottom:4px}
+.cdive-name{font-family:var(--ff-display);font-size:18px;font-weight:600;color:var(--cream);line-height:1.2}
+.cdive-finding{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-top:5px}
+.cdive-text{font-size:13px;color:var(--warm);line-height:1.78;margin-bottom:10px}
+.cdive-quote{border-left:2px solid var(--amber);padding-left:16px;margin:14px 0;font-family:var(--ff-display);font-style:italic;font-size:15px;color:var(--warm);line-height:1.6}
+.cdive-source{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em}
+
+/* LAUNDERING TAGS */
+.launder-box{padding:22px 24px;background:rgba(200,48,48,.04);border:1px solid rgba(200,48,48,.14);border-left:3px solid var(--red);margin-top:20px}
+.launder-lbl{font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.launder-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.ltag{font-family:var(--ff-mono);font-size:10px;color:rgba(200,48,48,.8);background:rgba(200,48,48,.07);border:1px solid rgba(200,48,48,.18);padding:3px 9px}
+.launder-desc{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* PREVENTION */
+.prev-item{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--border)}
+.prev-item:last-child{border-bottom:none}
+.prev-cond{font-family:var(--ff-mono);font-size:11px;color:var(--amber);flex-shrink:0;width:28px;padding-top:2px}
+.prev-title{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;line-height:1.35}
+.prev-desc{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* COMPARABLE */
+.comp-card{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;background:var(--navy2);border:1px solid var(--border);border-left:3px solid rgba(192,122,24,.35);padding:22px 24px;margin-bottom:12px;text-decoration:none;transition:border-color .15s;cursor:pointer}
+.comp-card:hover{border-left-color:var(--amber)}
+.comp-card:last-child{margin-bottom:0}
+.comp-name{font-size:15px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.comp-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.07em;margin-bottom:8px}
+.comp-overlaps{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}
+.comp-tag{font-family:var(--ff-mono);font-size:9px;color:var(--amber);background:rgba(192,122,24,.07);border:1px solid rgba(192,122,24,.18);padding:2px 8px;letter-spacing:.07em}
+.comp-desc{font-size:13px;color:var(--warm);line-height:1.65}
+.comp-score-col{text-align:right;flex-shrink:0}
+.comp-score-n{font-family:var(--ff-display);font-size:32px;font-weight:700;color:var(--red);line-height:1}
+.comp-score-l{font-family:var(--ff-mono);font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+
+/* METADATA */
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.meta-cell{background:var(--navy2);padding:16px 20px}
+.meta-cell-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.meta-cell-value{font-size:13px;color:var(--cream);line-height:1.5}
+.meta-cell-value.red{color:var(--red);font-weight:600}
+
+/* RELATED */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rc{background:var(--navy2);border:1px solid var(--border);padding:20px;text-decoration:none;transition:border-color .15s;display:block;cursor:pointer}
+.rc:hover{border-color:rgba(192,122,24,.4)}
+.rc-type{display:flex;align-items:center;gap:6px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.rc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rc-name{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:3px;line-height:1.3}
+.rc-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:9px}
+.rc-conds{display:flex;gap:4px;flex-wrap:wrap}
+.rct{font-family:var(--ff-mono);font-size:9px;padding:2px 7px}
+.rct-a{color:var(--red);background:rgba(200,48,48,.08);border:1px solid rgba(200,48,48,.18)}
+.rct-p{color:var(--green);background:rgba(40,136,90,.08);border:1px solid rgba(40,136,90,.18)}
+
+/* LIBRARY INDEX */
+.lib-hero{background:var(--navy2);padding:72px 0 64px;border-bottom:1px solid var(--border)}
+.lib-hero-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.lib-hero-title{font-family:var(--ff-display);font-size:clamp(36px,5vw,72px);font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:20px}
+.lib-stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
+.lib-stat{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.lib-stat strong{color:var(--amber);font-size:20px;display:block;margin-bottom:2px;font-family:var(--ff-display);font-weight:700}
+.filter-bar{background:var(--navy3);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:50}
+.filter-inner{max-width:1180px;margin:0 auto;padding:0 48px;display:flex;flex-direction:column;gap:10px}
+.search-row{display:flex;gap:10px;align-items:center}
+.search-input{flex:1;background:var(--navy2);border:1px solid var(--border);color:var(--cream);font-family:var(--ff-mono);font-size:12px;padding:9px 14px;outline:none;transition:border-color .15s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:rgba(192,122,24,.4)}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--muted);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:rgba(192,122,24,.4);color:var(--cream)}
+.chip.active{background:rgba(192,122,24,.12);border-color:rgba(192,122,24,.5);color:var(--amber)}
+.results-count{font-family:var(--ff-mono);font-size:10px;color:var(--muted);padding:14px 0 0}
+.case-grid{max-width:1180px;margin:0 auto;padding:32px 48px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.case-card{background:var(--navy2);border:1px solid var(--border);padding:22px;text-decoration:none;display:block;transition:border-color .15s;cursor:pointer}
+.case-card:hover{border-color:rgba(192,122,24,.35)}
+.card-type-row{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.card-type-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.card-type-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.card-domain-label{font-family:var(--ff-mono);font-size:9px;color:var(--muted);margin-left:auto}
+.card-name{font-family:var(--ff-display);font-size:18px;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:4px}
+.card-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px}
+.card-conditions{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+.cc{font-family:var(--ff-mono);font-size:9px;padding:2px 7px}
+.cc-a{color:var(--red);background:rgba(200,48,48,.08);border:1px solid rgba(200,48,48,.18)}
+.cc-p{color:var(--green);background:rgba(40,136,90,.08);border:1px solid rgba(40,136,90,.18)}
+.card-bottom{display:flex;justify-content:space-between;align-items:center}
+.card-score{font-family:var(--ff-display);font-size:26px;font-weight:700;line-height:1}
+.card-link{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;color:var(--amber);text-transform:uppercase}
+.card-no-link{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;font-style:italic}
+
+@media(max-width:1024px){
+  .wrap,.case-body,.filter-inner,.case-grid,.record-bar-inner,.sec-nav-track{padding-left:32px;padding-right:32px}
+  .hero-grid,.two-col{grid-template-columns:1fr;gap:36px}
+  .sticky-col{position:static}
+  .harm-stats{grid-template-columns:1fr 1fr}
+  .related-grid{grid-template-columns:1fr 1fr}
+  .case-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .wrap,.case-body,.filter-inner,.case-grid,.record-bar-inner,.sec-nav-track{padding-left:20px;padding-right:20px}
+  .harm-stats,.related-grid,.case-grid{grid-template-columns:1fr}
+  .comp-card{grid-template-columns:1fr}
+  .meta-grid{grid-template-columns:1fr}
+  .lib-stats{gap:20px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// CONTENT DATABASE — edit these JSON objects to update case content
+// ═══════════════════════════════════════════════════════════════════
+const CASES = {
+
+"robodebt": {
+  id: "F009", slug: "robodebt", built: true,
+  name: "Australia Robodebt",
+  subtitle: "Automated Welfare Debt Recovery Scheme · 2016–2019",
+  type: "Failure", domain: "Benefits & Welfare", country: "Australia",
+  deployYear: 2016, gpws: 0.0, gpwsTier: "DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT — Confirmed",
+  suppressionConfirmed: true, verified: "January 2025",
+  harmStats: [
+    {n:"470K", label:"Unlawful debt\nnotices issued", color:"red"},
+    {n:"AUD 1.8B", label:"Settlement\namount", color:"amber"},
+    {n:"7 yr", label:"Deploy to first\ncompensation", color:"amber"},
+    {n:"0.0", label:"GPWS Score\n(DANGER)", color:"red"}
+  ],
+  overviewTitle: "The methodology was unlawful from day one",
+  overviewNote: "Income averaging reversed the legal burden of proof — it assumed debt and required welfare recipients to disprove it. Legal advice confirming this unlawfulness was suppressed for two years.",
+  overview: [
+    "Robodebt was an automated compliance system deployed by the Australian Department of Human Services in 2016 to recover welfare overpayments. The system used income averaging — matching Centrelink payment records against Australian Taxation Office annual income data — to generate debt notices. This methodology assumed that income reported to the ATO was received evenly across the year, which is not how casual and seasonal employment works. The result was hundreds of thousands of unlawful debt notices.",
+    "The system reversed the legal burden of proof: it asserted debt and required welfare recipients to disprove it. Many could not. 470,000 notices were issued. The debt collection continued for over two years after legal advice confirming the methodology was unlawful was provided to the Department. That advice was suppressed. A Royal Commission in 2023 found deliberate concealment at senior levels of the public service and referred multiple individuals for potential criminal prosecution."
+  ],
+  tapeItems: ["GPWS 0.0","ALL 5 CONDITIONS ABSENT","470K UNLAWFUL NOTICES","AUD 1.8B SETTLEMENT","ROYAL COMMISSION 2023","7 YEAR JUSTICE LAG","SUPPRESSION CONFIRMED","BURDEN OF PROOF REVERSED"],
+  timeline: [
+    {date:"July 2016", type:"neutral", event:"Robodebt deployed", detail:"The income averaging methodology goes live. No named individual is documented as accountable for the legal validity of the debt assessment methodology. No independent legal review of the income averaging approach is commissioned before deployment."},
+    {date:"2016–2017", type:"harm", event:"First wave of unlawful notices — recipients cannot disprove", detail:"Welfare recipients begin receiving debt notices they cannot explain. Many pay money they do not owe. Some enter payment plans. The volume of complaints rises steadily. No monitoring mechanism connects the complaint rate to a review of the underlying methodology."},
+    {date:"Late 2017", type:"harm", event:"Legal advice obtained — confirms methodology unlawful", detail:"Legal advice is provided to the Department confirming that income averaging without individual verification reverses the legal burden of proof and is unlawful. The scheme continues operating. The legal advice is not disclosed to affected individuals or to Parliament."},
+    {date:"2017–2019", type:"harm", event:"Scheme continues — suppression sustained", detail:"Robodebt continues issuing notices for over two years after the unlawfulness advice. At least some deaths during this period are associated with the financial and psychological impact of receiving unlawful debt notices. The causal chain is not formally established in the dataset record."},
+    {date:"November 2019", type:"accountability", event:"Federal Court proceedings — Victoria Legal Aid", detail:"Victoria Legal Aid begins Federal Court proceedings challenging the income averaging methodology. This is the first formal legal challenge that creates a public record. Post-filing, the Government begins quietly settling debts without admitting the methodology was unlawful."},
+    {date:"June 2021", type:"accountability", event:"AUD 1.8 billion settlement — Gordon v Commonwealth", detail:"The Federal Government settles the class action for AUD 1.8 billion. 470,000 debt notices are admitted to have been unlawfully raised. This is the first victim compensation — 5 years after deployment."},
+    {date:"2023", type:"accountability", event:"Royal Commission — deliberate concealment found", detail:"The Royal Commission into the Robodebt Scheme finds deliberate concealment of legal advice at senior levels of the Australian Public Service. Multiple referrals made for potential criminal prosecution. The Commission finds the suppression was not inadvertent non-disclosure but an active decision to continue a scheme known to be unlawful."}
+  ],
+  conditions: [
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["No individual was documented as accountable for the legal validity of the debt assessment methodology before deployment. When the income averaging approach was challenged by recipients, there was no named official whose documented role required them to evaluate the legal basis of the methodology. The Department treated the question of lawfulness as a legal team matter, the legal team treated it as a policy matter, and policy treated it as an operational matter. No one owned it.",
+     "This is the structural gap that allowed legal advice confirming unlawfulness to be received without triggering a halt. If a named accountable owner existed with explicit authority to stop the scheme pending legal review, the 2017 legal advice would have reached a decision-maker with documented responsibility to act on it."],
+     quote: "No one was accountable for the question that would have ended the scheme on the day the legal advice arrived.", source:"HSRL C1 analysis — Robodebt"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["The income averaging methodology was never independently validated before being used to generate 470,000 debt notices. No actuary, no independent legal reviewer, and no external technical expert assessed whether the methodology produced accurate outputs before deployment. The Department used ATO data cross-matched against Centrelink records as if the methodology were established practice when it was not.",
+     "Independent validation would have identified the core problem immediately: income averaging assumes continuous income across a tax year, which is factually incorrect for casual and seasonal workers — the population most likely to receive welfare payments. Any independent reviewer asked to validate the methodology's accuracy would have flagged this within hours of examining it."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["The volume and nature of recipient complaints was a clear monitoring signal that the methodology was producing incorrect outputs. Hundreds of recipients reported identical experiences — receiving notices for debts they had no record of incurring, being unable to explain how the figures were calculated, and being directed to disprove the government's figures using records many no longer held.",
+     "No mechanism connected this complaint pattern to a review of whether the methodology itself was the source of the errors. Each complaint was treated as an individual dispute, not as a data point about system performance. A structured monitoring protocol that set a threshold — if X% of notices are disputed, trigger a methodology review — would have identified the problem within the first months of operation."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["No pre-established protocol existed for what happened when the automated debt assessment methodology was challenged. The default position — that the methodology was correct and the recipient was responsible for disproving the debt — was never formally adopted as policy, which meant it was never formally reviewed. It was simply the operational default.",
+     "A pre-established accountability protocol would have required the Department to define in advance: at what point does a legal challenge to the methodology trigger a halt to new notices? That question was never answered before deployment, which is why the answer that emerged in practice — never, until a court forces it — was allowed to operate for three years."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT — Confirmed", finding:"ABSENT — ACTIVE SUPPRESSION CONFIRMED",
+     text:["The Royal Commission found that legal advice confirming the income averaging methodology was unlawful was received by the Department in late 2017 and that senior officials made decisions that resulted in that advice not being acted upon, not being disclosed in legal proceedings, and not being provided to welfare recipients challenging their debts.",
+     "This is confirmed C5 suppression. The Commission's findings distinguish between failing to obtain legal advice (which would be a C2 failure) and obtaining legal advice, finding it adverse, and continuing to operate while keeping that advice from the people it would have protected. The Robodebt suppression pattern is the latter. The Commission referred multiple individuals for potential criminal prosecution on the basis of this finding."],
+     laundering: {
+       tags:["L-01 Accountability diffusion","L-02 Authority denied after harm","L-03 Evidence degraded or narrativized","L-05 Responsibility shifted across teams","L-16 Responsibility shifted to victims"],
+       desc:"L-03 (Evidence degraded): Legal advice suppressed from proceedings. L-05 (Responsibility shifted across teams): Each agency (DHS, ATO, legal) treated lawfulness as another team's problem. L-16 (Responsibility shifted to victims): Recipients directed to disprove debt using records many no longer held — effectively requiring proof of a negative."
+     },
+     quote: null, source: null}
+  ],
+  prevention: [
+    {c:"C1", title:"A named individual accountable for the legal validity of the methodology", desc:"If one person at the Department had documented accountability for confirming the income averaging methodology had a valid legal basis before going live, the question of lawfulness would have had an owner. The 2016 deployment would have required that person's sign-off. The sign-off process would have surfaced the legal question. The legal question would have been answered before 470,000 notices were issued."},
+    {c:"C2", title:"Independent legal review of the income averaging methodology before deployment", desc:"The methodology was novel — income averaging against ATO data had not been used as the basis for debt recovery before. Any independent legal reviewer asked to validate it would have identified the burden of proof problem immediately. The review would have cost less than one day of the legal proceedings that followed."},
+    {c:"C3", title:"A complaint monitoring threshold that triggered methodology review", desc:"If the operational policy had defined a threshold — e.g., if more than 5% of notices in any month are disputed on the grounds that the recipient has no record of the income figure used, escalate for methodology review — the problem would have been surfaced within three months of deployment rather than three years."},
+    {c:"C4", title:"A pre-established halt condition for legal challenges to the methodology", desc:"If the policy had defined in advance that any Federal Court challenge to the methodology itself (as opposed to an individual notice) would trigger an automatic halt to new notices pending outcome, the Victoria Legal Aid proceedings in 2019 would have stopped the scheme on the day they were filed, not two years later after settlement."},
+    {c:"C5", title:"An independent oversight body with access to internal legal advice", desc:"The suppression in Robodebt was sustained because the legal advice that would have ended the scheme sat inside one organisation with strong institutional incentives to continue it. An independent oversight body — an ombudsman with statutory access to internal legal advice about automated decision systems — would have broken the suppression within months of the 2017 advice being received."}
+  ],
+  comparables: [
+    {slug:"horizon", name:"UK Post Office Horizon", meta:"United Kingdom · Public Infrastructure · 1999–2015", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 CONFIRMED"], desc:"Closest structural comparator: sustained institutional suppression across hundreds of proceedings over 15+ years, Royal Commission equivalent finding of systemic dishonesty, comparable justice lag. The suppression mechanism differs — Post Office used litigation disclosure failures rather than briefing architecture — but the institutional behaviour pattern is identical.", score:"0.0", scoreColor:"red"},
+    {slug:"michigan-midas", name:"Michigan MiDAS", meta:"United States · Benefits & Welfare · 2013–2015", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Direct domain comparator: automated fraud detection in unemployment benefits, 40,000+ false fraud determinations, same reversal of burden of proof. MiDAS operated for a shorter harm window with faster accountability, making it a useful comparison for the role that C3 monitoring would have played.", score:"0.0", scoreColor:"red"},
+    {slug:"norway-nav", name:"Norway NAV", meta:"Norway · Benefits & Welfare · 2012–2019", tags:["C1 PRESENT","C2 PRESENT","C3 PRESENT"], desc:"Resilient domain comparator. Norway's welfare system had named accountable owners for algorithmic decision-making and independent review mechanisms. When a systematic error in benefit calculations was identified, it was self-reported, publicly disclosed, and remediated within 18 months.", score:"0.9", scoreColor:"green"}
+  ],
+  metadata: {
+    "Case ID":"F009", "Classification":"Failure — Benefits & Welfare", "GPWS Score":"0.0 · DANGER",
+    "Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5", "Suppression Confirmed":"Yes — Active suppression",
+    "Country":"Australia", "Operational Period":"July 2016 – November 2019",
+    "Justice Lag":"5 years (deploy to first compensation)", "Harm Scale":"470,000 unlawful debt notices",
+    "Last Verified":"January 2025"
+  },
+  sources: ["Royal Commission into the Robodebt Scheme — Final Report, July 2023","Federal Court — Victoria Legal Aid proceedings, November 2019","Gordon v Commonwealth settlement documentation, June 2021","Senate Community Affairs References Committee Report, 2017"],
+  related: [
+    {slug:"horizon", type:"Failure", domain:"Public Infrastructure", name:"UK Post Office Horizon", meta:"UK · 1999–2015 · 900+ prosecutions", conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"], dotColor:"red"},
+    {slug:"michigan-midas", type:"Failure", domain:"Benefits & Welfare", name:"Michigan MiDAS", meta:"US · 2013–2015 · 40K+ false fraud", conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"], dotColor:"red"},
+    {slug:"compas", type:"Failure", domain:"Criminal Justice", name:"COMPAS Risk Assessment", meta:"US · 1998–present · ongoing", conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"], dotColor:"red"}
+  ],
+  triggers: {"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"NEEDS HUMAN REVIEW","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"UNKNOWN","F-01":"YES","F-02":"YES","G-01":"YES","G-02":"YES","G-03":"NEEDS HUMAN REVIEW","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"NEEDS HUMAN REVIEW","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"YES","J-02":"NEEDS HUMAN REVIEW","K-01":"YES","K-02":"NEEDS HUMAN REVIEW","K-03":"YES","K-04":"YES","K-05":"NEEDS HUMAN REVIEW","K-06":"NEEDS HUMAN REVIEW","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"NEEDS HUMAN REVIEW","L-06":"NEEDS HUMAN REVIEW","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"NEEDS HUMAN REVIEW","M-03":"YES","M-04":"NEEDS HUMAN REVIEW","N-01":"NEEDS HUMAN REVIEW","N-02":"NEEDS HUMAN REVIEW","N-03":"YES"}
+},
+
+"horizon": {
+  id: "F040", slug: "horizon", built: true,
+  name: "UK Post Office Horizon",
+  subtitle: "Fujitsu Accounting Software — Post Office Network · 1999–2015",
+  type: "Failure", domain: "Public Infrastructure", country: "United Kingdom",
+  deployYear: 1999, gpws: 0.0, gpwsTier: "DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT — Confirmed",
+  suppressionConfirmed: true, verified: "January 2025",
+  harmStats: [
+    {n:"900+", label:"Wrongful\nprosecutions", color:"red"},
+    {n:"25 yr", label:"Deploy to\nmass exoneration", color:"amber"},
+    {n:"4+", label:"Deaths attributed\nto harm window", color:"red"},
+    {n:"£58M+", label:"Compensation\n(ongoing)", color:"amber"}
+  ],
+  overviewTitle: "Prosecuted for a computer's errors — 900 times over 15 years",
+  overviewNote: "Software bugs produced phantom shortfalls. Post Office Ltd knew. They prosecuted subpostmasters anyway. The largest miscarriage of justice in British legal history.",
+  overview: [
+    "The Post Office Horizon IT system was a computerised accounting and point-of-sale platform developed by Fujitsu and deployed across the UK Post Office network from 1999. The system contained software bugs that produced phantom shortfalls in branch accounts — apparent discrepancies between the cash held at a branch and what Horizon recorded. Post Office Ltd prosecuted subpostmasters for theft, fraud, and false accounting based on these computer-generated figures, which courts accepted as reliable without independent scrutiny.",
+    "Between 1999 and 2015, over 900 subpostmasters were prosecuted — the largest miscarriage of justice in British legal history. Many were imprisoned. Many lost their homes, their businesses, and their livelihoods. At least four took their own lives. Post Office Ltd was aware of Horizon bugs from the early 2000s and actively suppressed that knowledge in legal proceedings for over a decade. The Post Office Horizon IT Inquiry (Sir Wyn Williams, 2021–2024) found systemic dishonesty at senior levels of the organisation."
+  ],
+  tapeItems: ["GPWS 0.0","ALL 5 CONDITIONS ABSENT","900+ WRONGFUL PROSECUTIONS","LARGEST UK MISCARRIAGE OF JUSTICE","BUGS KNOWN FROM EARLY 2000s","SUPPRESSED IN COURT 15 YEARS","PUBLIC INQUIRY 2021–2024","25 YEAR JUSTICE LAG"],
+  timeline: [
+    {date:"1999", type:"neutral", event:"Horizon deployed across Post Office network", detail:"Fujitsu's Horizon system goes live. No named individual at Post Office Ltd is documented as accountable for the accuracy of the system's financial outputs. No independent validation of the accounting methodology is commissioned. No structured monitoring connects reported shortfalls to system performance review."},
+    {date:"Early 2000s", type:"harm", event:"Bugs documented internally — prosecutions begin", detail:"Software faults causing phantom shortfalls are identified and documented within Fujitsu and Post Office Ltd. Subpostmasters raising concerns are told the system is reliable and that no one else is experiencing problems. This was false. Prosecutions begin. Internal knowledge of bugs is not disclosed in legal proceedings."},
+    {date:"2000–2015", type:"harm", event:"900+ prosecutions — suppression sustained for 15 years", detail:"Post Office Ltd prosecutes over 900 subpostmasters for theft, fraud, and false accounting. In each proceeding, Horizon records are presented as reliable. Post Office Ltd holds documentation of known bugs and does not disclose it. This is not a single act of suppression but a sustained institutional pattern operating across hundreds of individual cases."},
+    {date:"2009", type:"harm", event:"Second Sight investigation commissioned — then terminated", detail:"Post Office Ltd commissions forensic accountants Second Sight to investigate Horizon. Second Sight identifies significant problems. Post Office Ltd terminates the investigation and attempts to suppress the findings. The Parliamentary Business, Innovation and Skills Committee later identifies this as deliberate suppression of adverse findings."},
+    {date:"2019", type:"accountability", event:"High Court finds Post Office engaged in abuse of process", detail:"Justice Fraser finds that Post Office Ltd engaged in conduct amounting to an abuse of the court's process. He finds that Horizon did have bugs causing phantom shortfalls and that Post Office Ltd knew this. The judgment is the first formal judicial finding of the suppression pattern."},
+    {date:"2021", type:"accountability", event:"Court of Appeal quashes 39 convictions — inquiry opens", detail:"The Court of Appeal quashes 39 convictions, finding Post Office Ltd had failed to disclose material evidence. The Post Office Horizon IT Inquiry opens under Sir Wyn Williams. This is the start of the formal accountability arc — 22 years after deployment."},
+    {date:"2021–2024", type:"accountability", event:"Public Inquiry — systemic dishonesty found at senior levels", detail:"The Inquiry hears evidence from hundreds of witnesses and finds evidence of systemic dishonesty at senior levels of Post Office Ltd. Multiple referrals made to prosecuting authorities. Witness statements are found to have been altered. Senior Fujitsu executives give evidence."},
+    {date:"2024 — ongoing", type:"accountability", event:"Mass exoneration legislation — accountability arc incomplete", detail:"The Post Office (Horizon System) Offences Act 2024 automatically quashes convictions related to Horizon. Compensation payments begin. Criminal referrals ongoing. The accountability arc from deployment in 1999 to mass exoneration in 2024 is 25 years. Individual criminal accountability for those responsible remains incomplete."}
+  ],
+  conditions: [
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["Post Office Ltd operated Horizon under a contract with Fujitsu that distributed responsibility across two organisations without clearly assigning it to either. When subpostmasters reported shortfalls they could not explain, there was no named individual at Post Office Ltd whose documented role included investigating whether Horizon itself was the source of the discrepancy. The default assumption — that the system was reliable and the subpostmaster was responsible — was never formally assigned as a governance position with a named owner who could be held to it.",
+     "The Inquiry found that senior Post Office Ltd executives made decisions about litigation strategy, disclosure obligations, and how to characterise Horizon to courts and subpostmasters. None had documented accountability for the question that mattered: is this system producing accurate outputs? That question had no owner, which is why it was never seriously asked across 15 years of prosecutions."],
+     quote:"The organisation prosecuted hundreds of people on the basis of a system no one was accountable for verifying.", source:"HSRL C1 analysis — Horizon"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["Horizon's accounting outputs were never independently validated before being used as the basis for criminal prosecutions. Courts accepted Horizon's records as reliable based on the legal presumption that computers produce accurate outputs unless proven otherwise. Post Office Ltd did not commission independent validation before using its records as prosecution evidence. The Second Sight investigation — the closest thing to independent review — was terminated before its findings could be finalised.",
+     "The consequence of C2 absence here is structurally distinct. In Robodebt, the unlawful methodology was simple enough to identify in a single legal review. In Horizon, the bugs were complex software faults requiring forensic examination of Fujitsu's code. That forensic examination was available — Fujitsu held the records — but Post Office Ltd never commissioned it for any proceeding in which it was prosecuting a subpostmaster."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["The pattern of unexplained shortfalls across hundreds of branches was a monitoring signal of exactly the kind C3 is designed to capture. Hundreds of subpostmasters reported identical experiences — accounts that balanced and then suddenly showed large discrepancies they could not account for. No mechanism connected these reports to a systematic review of whether Horizon was producing them.",
+     "Post Office Ltd's Helpline documented the volume and nature of Horizon-related complaints throughout the harm window. Those call records were not used as a monitoring dataset. They were used to reassure subpostmasters that the system was reliable. The difference between using complaint data as a monitoring signal versus using it as a reassurance script is the difference between C3 present and C3 absent."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["The subpostmaster contract made personal liability for shortfalls the default position. There was no pre-established protocol requiring independent investigation of Horizon's outputs before a subpostmaster could be held liable. No defined threshold existed at which the volume of unexplained shortfalls would trigger a system audit. No pre-established appeals mechanism gave subpostmasters access to Fujitsu's source code or bug logs.",
+     "The accountability architecture was constructed entirely in the direction of prosecuting subpostmasters, with no structural pathway for system accountability to flow in the other direction. A pre-established protocol requiring system audit before prosecution would have created that pathway in 1999 and ended the harm within years, not decades."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT — Confirmed", finding:"ABSENT — ACTIVE SUPPRESSION CONFIRMED",
+     text:["This is the longest-sustained confirmed C5 suppression pattern in the HSRL dataset. Post Office Ltd had legal disclosure obligations — duties to share with defendants any evidence that could undermine the prosecution — and failed to meet those obligations across hundreds of proceedings over more than a decade. This was not a single decision. It was a sustained institutional behaviour pattern.",
+     "The Inquiry found evidence of systemic dishonesty at senior levels of the organisation. Executives who gave evidence about what they knew and when they knew it were found in multiple instances to have given evidence inconsistent with the documentary record. The Second Sight investigation was actively terminated to prevent adverse findings from becoming public. Witness statements were altered. The scale of the suppression is proportionate to the scale of the harm."],
+     laundering:{
+       tags:["L-01 Accountability diffusion","L-02 Authority denied after harm","L-03 Evidence degraded","L-06 Blame shifted onto tools","L-16 Responsibility shifted to victims"],
+       desc:"L-03: Fujitsu bug logs not disclosed in prosecutions across 15 years. L-06: Horizon presented as the reliable authority, subpostmaster conduct as the variable. L-16: Subpostmaster contracts made personal liability the legal default, requiring victims to prove a negative against a system whose source code they could not access."
+     },
+     quote: null, source: null}
+  ],
+  prevention: [
+    {c:"C1", title:"A named individual responsible for system accuracy — not just contract compliance", desc:"If one person at Post Office Ltd had been documented as accountable for the accuracy of Horizon's financial outputs — with explicit authority to pause prosecutions pending system review — the question 'is this system producing the figures, or is the subpostmaster?' would have had an owner. Without that owner, the question was never asked across 15 years and 900 prosecutions."},
+    {c:"C2", title:"Independent validation of Horizon's accuracy before use as prosecution evidence", desc:"Courts accepted Horizon records as reliable without independent verification. If Post Office Ltd had been required to obtain independent validation of the system's error rate before using its outputs in criminal proceedings, the bug documentation that Fujitsu held would have been examined years before the 2019 High Court ruling."},
+    {c:"C3", title:"A monitoring protocol treating the shortfall complaint rate as a system signal", desc:"Hundreds of identical complaints from subpostmasters across the network were a clear and accurate signal. If the Helpline call volume on unexplained shortfalls had been a defined monitoring metric — reviewed monthly, with an escalation threshold — the pattern would have been visible within the first two years of operation, not after 15 years and 900 prosecutions."},
+    {c:"C4", title:"A pre-established protocol requiring system audit before prosecution", desc:"If the subpostmaster contract and prosecution policy had included a requirement that any shortfall above a defined threshold trigger an independent audit of Horizon's outputs before criminal action could proceed, the prosecution pathway would have hit a structural checkpoint. That checkpoint did not exist. The only pathway available was criminal liability."},
+    {c:"C5", title:"An independent oversight body with statutory access to Fujitsu's bug logs", desc:"The suppression in Horizon was sustained because the information that would have ended it was held inside two organisations with strong incentives to keep it there. An independent technical oversight body with statutory access to that documentation, reviewing it against the prosecution record, would have identified the pattern within the first decade. The 25-year justice lag required both C5 failure and the absence of any external body with access and authority to break it."}
+  ],
+  comparables: [
+    {slug:"robodebt", name:"Australia Robodebt", meta:"Australia · Benefits & Welfare · 2016–2019", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 CONFIRMED"], desc:"Closest structural comparator: Royal Commission finding of deliberate concealment, sustained institutional suppression, comparable justice lag. Suppression mechanism differs — Robodebt used briefing architecture; Horizon used litigation disclosure failures — but the institutional behaviour pattern is identical.", score:"0.0", scoreColor:"red"},
+    {slug:"compas", name:"COMPAS Risk Assessment", meta:"United States · Criminal Justice · 1998–present", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Same domain pattern: algorithmic outputs used in criminal proceedings without independent validation, accepted by courts without scrutiny. C2 failure is structurally identical — system outputs treated as reliable because no one was required to verify them before they were used to make decisions about people's liberty.", score:"0.0", scoreColor:"red"},
+    {slug:"estonia-xroad", name:"Estonia X-Road", meta:"Estonia · Digital Infrastructure · 2001–present", tags:["C1 PRESENT","C2 PRESENT","C5 PRESENT"], desc:"Resilient comparator for government digital infrastructure. Named accountable owners, independent validation, no suppression of adverse findings across 25+ years. Included as the structural contrast: what C1 and C2 presence looks like in a long-running government system.", score:"1.0", scoreColor:"green"}
+  ],
+  metadata: {
+    "Case ID":"F040","Classification":"Failure — Public Infrastructure","GPWS Score":"0.0 · DANGER",
+    "Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5","Suppression Confirmed":"Yes — Active suppression",
+    "Country":"United Kingdom","Operational Period":"1999 – 2015 (prosecutions continued to 2015)",
+    "Justice Lag":"25 years (deploy to mass exoneration)","Harm Scale":"900+ wrongful prosecutions · 4+ deaths",
+    "Last Verified":"January 2025"
+  },
+  sources:["Post Office Horizon IT Inquiry — Sir Wyn Williams, 2021–2024","Bates & Ors v Post Office Ltd — High Court judgment, Justice Fraser, 2019","Court of Appeal — Hamilton & Ors, 2021 (first group exoneration)","Post Office (Horizon System) Offences Act 2024","Computer Weekly / Private Eye investigative reporting 2009–2020"],
+  related:[
+    {slug:"robodebt",type:"Failure",domain:"Benefits & Welfare",name:"Australia Robodebt",meta:"Australia · 2016–2019 · 470K notices",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"compas",type:"Failure",domain:"Criminal Justice",name:"COMPAS Risk Assessment",meta:"US · 1998–present · ongoing",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"mcas",type:"Failure",domain:"Aviation Safety",name:"Boeing 737 MAX MCAS",meta:"Global · 2017–2019 · 346 deaths",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"}
+  ],
+  triggers:{"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"UNKNOWN","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"NEEDS HUMAN REVIEW","F-01":"NEEDS HUMAN REVIEW","F-02":"UNKNOWN","G-01":"YES","G-02":"YES","G-03":"NEEDS HUMAN REVIEW","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"NEEDS HUMAN REVIEW","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"NEEDS HUMAN REVIEW","J-02":"NEEDS HUMAN REVIEW","K-01":"NEEDS HUMAN REVIEW","K-02":"NEEDS HUMAN REVIEW","K-03":"YES","K-04":"YES","K-05":"UNKNOWN","K-06":"NEEDS HUMAN REVIEW","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"NEEDS HUMAN REVIEW","L-06":"NEEDS HUMAN REVIEW","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"NEEDS HUMAN REVIEW","M-03":"YES","M-04":"NEEDS HUMAN REVIEW","N-01":"NEEDS HUMAN REVIEW","N-02":"NEEDS HUMAN REVIEW","N-03":"YES"}
+},
+
+"compas": {
+  id:"F001", slug:"compas", built:true,
+  name:"COMPAS Risk Assessment",
+  subtitle:"Correctional Offender Management Profiling for Alternative Sanctions · 1998–present",
+  type:"Failure", domain:"Criminal Justice & Policing", country:"United States",
+  deployYear:1998, gpws:0.0, gpwsTier:"DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT",
+  suppressionConfirmed:false, verified:"January 2025",
+  harmStats:[
+    {n:"25+", label:"US states using\nCOMPAS or equivalent", color:"red"},
+    {n:"20+ yr", label:"Deployed without\nindependent validation", color:"amber"},
+    {n:"2x", label:"Black defendants scored\nhigh-risk vs white", color:"red"},
+    {n:"0.0", label:"GPWS Score\n(DANGER)", color:"red"}
+  ],
+  overviewTitle: "A proprietary black box used to sentence people for 20 years",
+  overviewNote: "No court ever independently validated COMPAS's accuracy. Northpointe refused to disclose the algorithm. Courts accepted the scores anyway.",
+  overview:[
+    "COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) is a proprietary risk assessment tool developed by Northpointe (now Equivant) and used across the United States criminal justice system to inform decisions about bail, sentencing, and parole. The algorithm produces a recidivism risk score — a numerical prediction of how likely a defendant is to reoffend — which judges use as an input to sentencing decisions. The algorithm is proprietary and has never been publicly disclosed.",
+    "In 2016, ProPublica published an analysis of COMPAS scores in Broward County, Florida, finding that Black defendants were nearly twice as likely as white defendants to be falsely flagged as high risk, while white defendants were more likely to be incorrectly flagged as low risk and then reoffend. The fundamental problem is structural: COMPAS has never been independently validated for accuracy or racial bias before being deployed in any jurisdiction. Courts in multiple states have ruled that defendants do not have the right to examine the algorithm that scored them, because it is a trade secret."
+  ],
+  tapeItems:["GPWS 0.0","ALL 5 CONDITIONS ABSENT","PROPRIETARY ALGORITHM","NO INDEPENDENT VALIDATION","20+ YEARS DEPLOYED","BLACK DEFENDANTS 2X FALSE HIGH-RISK","TRADE SECRET RULING","NO NAMED ACCOUNTABLE OWNER"],
+  timeline:[
+    {date:"1998", type:"neutral", event:"COMPAS deployed — algorithm never publicly validated", detail:"Northpointe releases COMPAS. No independent validation of accuracy or bias is commissioned before deployment. No court requires validation before accepting COMPAS scores as evidence. The algorithm is proprietary and Northpointe does not disclose the weighting methodology."},
+    {date:"1998–2013", type:"harm", event:"Expansion across 25+ states without validation", detail:"COMPAS is adopted across the United States without any jurisdiction commissioning independent validation of accuracy or racial equity before purchase. Each adoption decision is made by corrections departments evaluating administrative utility, not by independent technical bodies evaluating whether the tool produces accurate and unbiased outputs."},
+    {date:"2013", type:"harm", event:"Wisconsin v. Loomis — defendant denied access to algorithm", detail:"Eric Loomis challenges his sentence on the grounds that the COMPAS score used cannot be independently verified because the algorithm is a trade secret. The Wisconsin Supreme Court rules in 2016 that using COMPAS does not violate due process, even though the defendant cannot examine the scoring methodology. This ruling is cited in subsequent cases across multiple jurisdictions."},
+    {date:"2016", type:"accountability", event:"ProPublica analysis — Black defendants nearly 2x false high-risk", detail:"ProPublica publishes 'Machine Bias,' an analysis of 7,000 COMPAS scores in Broward County, Florida. The analysis finds Black defendants are nearly twice as likely as white defendants to be falsely flagged as future criminals. Northpointe publishes a response disputing the methodology. The dispute itself illustrates the C2 problem: without independent validation, there is no agreed methodology for evaluating accuracy."},
+    {date:"2016–present", type:"harm", event:"Ongoing deployment — no federal validation requirement", detail:"Despite the ProPublica findings and the Wisconsin ruling, COMPAS and similar tools continue to be deployed across the United States without a federal requirement for independent validation. The harm window remains open. No jurisdiction has established a pre-deployment validation requirement for risk assessment tools used in criminal sentencing."},
+    {date:"2019–present", type:"accountability", event:"Growing legislative attention — no resolution", detail:"Multiple states begin considering or passing legislation requiring audits of algorithmic tools used in criminal justice. None has established the pre-deployment independent validation framework that C2 requires. The accountability arc for COMPAS is ongoing and unresolved."}
+  ],
+  conditions:[
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["No individual at any court, corrections department, or government agency is documented as accountable for the accuracy of COMPAS scores used in their jurisdiction. When a defendant is scored and sentenced based on that score, the accountability chain is: Northpointe built the algorithm, the corrections department purchased it, the judge used it. No one in that chain has documented accountability for whether the score is accurate for this defendant.",
+     "The trade secret ruling compounds this. By ruling that defendants cannot examine the algorithm, courts have explicitly held that the accountability for algorithmic accuracy sits with the private vendor — a vendor with financial incentives to maintain the algorithm's deployment, not to validate its accuracy."],
+     quote:"No one in the accountability chain has documented responsibility for whether this score is accurate for this person.", source:"HSRL C1 analysis — COMPAS"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["COMPAS has been deployed in over 25 states for over 20 years without independent validation of its accuracy, its error rates, or its racial equity properties by any body independent of its developer. The ProPublica analysis is the only publicly available independent evaluation, and it was conducted by journalists, not by the jurisdictions deploying the tool.",
+     "Northpointe's response to ProPublica illustrates the C2 problem precisely: when the tool's developer and its critics dispute how to measure accuracy, there is no independent validator whose methodology is agreed upon in advance. C2 is not just about commissioning a review — it's about commissioning a review using a pre-established methodology before the tool is deployed, so that the criteria for acceptable accuracy are set before there are institutional incentives to find the tool accurate."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["No jurisdiction deploying COMPAS has published structured monitoring data on the accuracy of COMPAS predictions against observed outcomes. The basic monitoring question — do the people COMPAS scores as high-risk actually reoffend at higher rates than those scored low-risk, and does this relationship hold equally across racial groups — has never been answered by a monitoring program that any deploying jurisdiction runs.",
+     "Northpointe publishes its own validation studies. These are not independent and do not constitute C3 monitoring. C3 requires that the deploying organisation — the court, the corrections department, the government — runs and publishes its own monitoring of outcomes against predictions, independently of the vendor."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["No pre-established protocol exists in any COMPAS-deploying jurisdiction for what happens when a defendant challenges the accuracy of their score. The Wisconsin v. Loomis ruling resolved this question in the direction of continuing to use COMPAS without examination. No protocol defines: at what accuracy level should COMPAS be withdrawn from use? At what racial disparity level? Who decides?",
+     "The absence of C4 here means that even if COMPAS were found to be systematically inaccurate, there is no pre-established process for that finding to result in remediation. The accountability pathway that C4 creates — a defined protocol for responding to accuracy failures — does not exist for any risk assessment tool in any US jurisdiction."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT", finding:"ABSENT",
+     text:["C5 for COMPAS is ABSENT but not confirmed suppression in the same mode as Robodebt or Horizon. The mechanism is structural rather than involving documented suppression of specific adverse findings. The trade secret designation functions as a structural suppression mechanism: by classifying the algorithm as proprietary, Northpointe prevents independent scrutiny of a tool being used to determine people's liberty.",
+     "The Wisconsin ruling that defendants cannot examine the algorithm because it is a trade secret formalised this structural suppression. The effect is equivalent to suppression of adverse findings: information that could challenge the tool's accuracy in individual cases is structurally inaccessible to the people it affects. Whether or not Northpointe made active decisions to suppress adverse findings is not established in the dataset — what is established is that the structure prevents those findings from being surfaced."],
+     laundering:{
+       tags:["L-01 Accountability diffusion","L-03 Evidence degraded or narrativized","L-06 Blame shifted onto tools","L-09 Compliance artifacts substitute for safety"],
+       desc:"L-06 (Blame shifted onto tools): Courts cite COMPAS scores without owning the scoring decision. L-09 (Compliance artifacts substitute for safety): Jurisdictions treat the act of purchasing a validated-by-vendor tool as equivalent to independent validation. The vendor's own validation studies are the compliance artifact."
+     },
+     quote: null, source: null}
+  ],
+  prevention:[
+    {c:"C1", title:"A named individual in each jurisdiction accountable for the accuracy of scores used in sentencing", desc:"Before any jurisdiction deploys COMPAS, one person should be documented as accountable for confirming the tool produces accurate outputs for the jurisdiction's population. That person's name should be on record before the first score is used. If no one is willing to sign their name to the accuracy claim, the tool should not be used."},
+    {c:"C2", title:"Pre-deployment independent validation with publicly disclosed methodology", desc:"Every jurisdiction should commission independent validation — not by Northpointe — of COMPAS accuracy and racial equity before deployment, using a methodology published in advance. The methodology should define acceptable error rates and disparity thresholds before testing begins, so that the criteria for acceptable accuracy are set before there are institutional incentives to find the tool acceptable."},
+    {c:"C3", title:"Mandatory outcome monitoring published annually by each deploying jurisdiction", desc:"Each jurisdiction should publish annual data comparing COMPAS predictions against observed outcomes, disaggregated by race, gender, and prior record category. This data should be publicly available and auditable by independent researchers. If the monitoring data shows disparate error rates, a pre-defined remediation process should activate automatically."},
+    {c:"C4", title:"Pre-established accuracy thresholds that trigger withdrawal from use", desc:"Each jurisdiction should define in advance: if COMPAS accuracy falls below X%, or if racial disparity in false positive rates exceeds Y%, the tool is suspended pending independent review. These thresholds should be defined before deployment and should be public. They are currently undefined in every jurisdiction."},
+    {c:"C5", title:"A public interest exemption from trade secret protection for tools used in criminal sentencing", desc:"The trade secret designation for COMPAS prevents defendants, courts, and researchers from examining a tool being used to determine their liberty. A legislative requirement that any algorithmic tool used in criminal sentencing must disclose its methodology to an independent oversight body — even if not publicly — would break the structural suppression mechanism without requiring Northpointe to make the algorithm fully public."}
+  ],
+  comparables:[
+    {slug:"horizon", name:"UK Post Office Horizon", meta:"United Kingdom · Public Infrastructure · 1999–2015", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 CONFIRMED"], desc:"Strongest comparator for C2 absence: algorithmic outputs used in legal proceedings without independent validation, courts accepting system outputs as reliable without requiring verification. The harm mechanism differs but the structural gap is identical.", score:"0.0", scoreColor:"red"},
+    {slug:"michigan-midas", name:"Michigan MiDAS", meta:"United States · Benefits & Welfare · 2013–2015", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Closest US domestic comparator: automated system generating adverse determinations about individuals, used without independent validation, affecting a vulnerable population without meaningful avenue to challenge the system's outputs.", score:"0.0", scoreColor:"red"},
+    {slug:"robodebt", name:"Australia Robodebt", meta:"Australia · Benefits & Welfare · 2016–2019", tags:["C1 ABSENT","C2 ABSENT","C5 CONFIRMED"], desc:"Cross-domain comparator: different automated system, same structural failure pattern. Included because the Royal Commission's findings about what pre-deployment governance would have prevented directly maps onto what COMPAS jurisdictions have never required.", score:"0.0", scoreColor:"red"}
+  ],
+  metadata:{"Case ID":"F001","Classification":"Failure — Criminal Justice & Policing","GPWS Score":"0.0 · DANGER","Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5","Suppression Confirmed":"Structural — trade secret mechanism","Country":"United States","Operational Period":"1998–present (ongoing)","Justice Lag":"Ongoing — no resolution","Harm Scale":"25+ states · 20+ years · racial disparity documented","Last Verified":"January 2025"},
+  sources:["ProPublica — 'Machine Bias', May 2016 (Angwin, Larson, Mattu, Kirchner)","Wisconsin v. Loomis, Wisconsin Supreme Court, 2016","Northpointe — 'Response to ProPublica', July 2016","National Institute of Justice — 'Risk Assessment in Criminal Sentencing', 2021","Hamilton et al. — 'The Accuracy, Fairness, and Limits of Predicting Recidivism', Science Advances 2018"],
+  related:[
+    {slug:"horizon",type:"Failure",domain:"Public Infrastructure",name:"UK Post Office Horizon",meta:"UK · 1999–2015 · 900+ prosecutions",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"michigan-midas",type:"Failure",domain:"Benefits & Welfare",name:"Michigan MiDAS",meta:"US · 2013–2015 · 40K+ false fraud",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"robodebt",type:"Failure",domain:"Benefits & Welfare",name:"Australia Robodebt",meta:"Australia · 2016–2019 · 470K notices",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"}
+  ],
+  triggers:{"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"NEEDS HUMAN REVIEW","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"UNKNOWN","F-01":"NEEDS HUMAN REVIEW","F-02":"UNKNOWN","G-01":"YES","G-02":"YES","G-03":"NEEDS HUMAN REVIEW","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"NEEDS HUMAN REVIEW","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"YES","J-02":"YES","K-01":"YES","K-02":"YES","K-03":"YES","K-04":"YES","K-05":"UNKNOWN","K-06":"NEEDS HUMAN REVIEW","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"NEEDS HUMAN REVIEW","L-06":"NEEDS HUMAN REVIEW","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"NEEDS HUMAN REVIEW","M-03":"YES","M-04":"NEEDS HUMAN REVIEW","N-01":"NEEDS HUMAN REVIEW","N-02":"NEEDS HUMAN REVIEW","N-03":"YES"}
+},
+
+"mcas": {
+  id:"F096", slug:"mcas", built:true,
+  name:"Boeing 737 MAX MCAS",
+  subtitle:"Maneuvering Characteristics Augmentation System · 2017–2019",
+  type:"Failure", domain:"Aviation Safety", country:"USA (Global)",
+  deployYear:2017, gpws:0.0, gpwsTier:"DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT — Confirmed",
+  suppressionConfirmed:true, verified:"January 2025",
+  harmStats:[
+    {n:"346", label:"Deaths across\ntwo crashes", color:"red"},
+    {n:"20 mo", label:"Lion Air to\nfull grounding", color:"amber"},
+    {n:"$2.5B", label:"DOJ settlement\n(criminal)", color:"red"},
+    {n:"0.0", label:"GPWS Score\n(DANGER)", color:"red"}
+  ],
+  overviewTitle: "346 deaths. No named owner for MCAS safety. Simulator data suppressed.",
+  overviewNote: "Boeing certified MCAS without telling pilots it existed. The FAA's oversight was structurally captured. No individual was accountable for the system's safety before Lion Air 610.",
+  overview:[
+    "The Boeing 737 MAX Maneuvering Characteristics Augmentation System (MCAS) was a flight control software system designed to compensate for the handling characteristics of the 737 MAX's larger, repositioned engines. Boeing certified MCAS under an existing 737 type certificate without disclosing the system's full authority to the FAA. Pilots were not trained on MCAS. In some variants, MCAS was not included in the flight manual. MCAS relied on a single angle-of-attack sensor — a single point of failure with no redundancy.",
+    "Lion Air Flight 610 crashed on October 29, 2018, killing 189 people. Ethiopian Airlines Flight 302 crashed on March 10, 2019, killing 157 people. Both crashes were caused by MCAS activating erroneously based on a faulty AoA sensor reading and repeatedly pushing the nose down in a pattern pilots could not overcome. The 737 MAX was grounded globally in March 2019. The House Transportation and Infrastructure Committee found that Boeing had suppressed simulator data showing MCAS's true authority from the FAA, and that the FAA's oversight had been captured by Boeing's own designated engineering representatives."
+  ],
+  tapeItems:["GPWS 0.0","ALL 5 CONDITIONS ABSENT","346 DEATHS","MCAS NOT IN FLIGHT MANUAL","SINGLE SENSOR — NO REDUNDANCY","SIMULATOR DATA SUPPRESSED","FAA REGULATORY CAPTURE","$2.5B DOJ SETTLEMENT"],
+  timeline:[
+    {date:"2016–2017", type:"neutral", event:"MCAS design — single sensor, no pilot notification", detail:"Boeing designs MCAS to rely on a single angle-of-attack sensor with no redundancy. The decision not to require AoA disagree alerting as standard equipment is made. MCAS is certified under the existing 737 type certificate, avoiding a new type certification that would require new pilot training and simulator hours. Pilots are not told MCAS exists."},
+    {date:"2017", type:"neutral", event:"FAA certification — oversight delegated to Boeing designees", detail:"The FAA delegates significant certification responsibility to Boeing's own Designated Engineering Representatives (DERs). The House Committee later finds that Boeing employees acting as FAA designees approved MCAS safety analyses that understated MCAS's authority. The FAA's oversight structure creates conditions for regulatory capture by design."},
+    {date:"October 2018", type:"harm", event:"Lion Air Flight 610 — 189 deaths", detail:"MCAS activates repeatedly based on a faulty AoA sensor reading. Pilots attempt to disable the system but are fighting a system they have not been trained on and that was not fully described in the flight manual. All 189 people on board are killed. Boeing issues a bulletin after the crash — the first time many pilots learn MCAS exists."},
+    {date:"Oct 2018–Mar 2019", type:"harm", event:"737 MAX continues flying — Boeing resists grounding", detail:"After Lion Air 610, Boeing lobbies against grounding the 737 MAX. Internally, engineers raise safety concerns. Boeing's position to regulators and airlines is that pilot error was the cause and the MAX is safe to continue operating. Simulator data showing MCAS's authority is not disclosed to the FAA during this period."},
+    {date:"March 2019", type:"harm", event:"Ethiopian Airlines Flight 302 — 157 deaths", detail:"The same MCAS failure sequence that caused Lion Air 610 causes Ethiopian Airlines 302. Five months after Lion Air, 157 more people are killed by an identical mechanism that Boeing had the information to address and chose not to ground the aircraft over. The 737 MAX is grounded globally four days later."},
+    {date:"2019–2020", type:"accountability", event:"House Committee investigation — suppression of simulator data documented", detail:"The House Transportation and Infrastructure Committee investigation finds that Boeing concealed from the FAA simulator data showing MCAS could move the horizontal stabilizer to its maximum limit — far beyond what Boeing had represented to the FAA and to pilots. This is the documented suppression event that confirms C5 in this case record."},
+    {date:"2021", type:"accountability", event:"DOJ $2.5B criminal settlement — no individual prosecutions", detail:"Boeing enters a $2.5 billion deferred prosecution agreement with the Department of Justice. The agreement includes a $243.6 million criminal fine, $1.77 billion to airline customers, and $500 million to a crash victim fund. No individual Boeing employees are criminally prosecuted. The accountability arc closes at the organisational level while the individuals responsible for the suppression decisions face no criminal consequence."},
+    {date:"2024", type:"accountability", event:"Plea agreement revised — criminal charge reinstated", detail:"The DOJ moves to reinstate criminal fraud charges against Boeing after the company is found to have violated the deferred prosecution agreement terms. The accountability arc remains incomplete and contested."}
+  ],
+  conditions:[
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["The House Committee investigation found that no individual at Boeing was documented as the named accountable owner for MCAS safety. The system was developed across multiple engineering teams with divided responsibility. When safety concerns were raised internally about MCAS's authority — its ability to move the stabilizer to its maximum limit — there was no named individual whose documented role required them to escalate those concerns to a hold-deployment decision.",
+     "This is a C1 failure with documented consequences: engineers who raised concerns about MCAS were unable to escalate them through a defined accountability pathway because that pathway did not exist. The accountability for MCAS safety was diffused across Boeing's engineering organisation, across the FAA's oversight structure, and across the DER delegation system in a way that ensured no one person owned the question."],
+     quote:"No single individual was documented as accountable for whether MCAS was safe to deploy.", source:"HSRL C1 analysis — MCAS"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["MCAS was certified under the existing 737 type certificate through a process that delegated significant validation responsibility to Boeing's own engineers acting as FAA designees. This is not independent validation — it is self-certification. The FAA's DER system created a structural conflict of interest: Boeing employees, with Boeing employment interests, were certifying Boeing's own safety analyses.",
+     "The specific C2 failure is documented: Boeing's safety analysis submitted to the FAA represented MCAS as having a limited authority of 0.6 degrees of stabilizer movement. The actual authority was 2.5 degrees. This discrepancy was not identified by the FAA because the validation process relied on Boeing's own representations. Independent validation — by a body with no financial relationship to Boeing — would have tested those representations against the simulator data Boeing held internally."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["After Lion Air 610, there was a period of approximately five months during which 737 MAX aircraft continued to fly. During that period, no structured monitoring mechanism connected the Lion Air crash's causal chain to a systematic re-evaluation of MCAS's safety across the fleet. Boeing's response was operational — issue a bulletin, modify pilot procedures — not structural.",
+     "A structured monitoring framework for safety-critical systems would have required Boeing and the FAA to answer a specific question after Lion Air: is there any other 737 MAX flight crew that could encounter this failure sequence? Answering that question required examining MCAS's authority, the AoA sensor single-point-of-failure, and the absence of training. Boeing had the information to answer it. The monitoring mechanism that would have required them to ask the question did not exist."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["No pre-established protocol defined the conditions under which a fatal crash involving a control system anomaly would trigger automatic grounding pending independent investigation. The FAA's post-Lion Air response was discretionary — it evaluated Boeing's position that pilot error was the cause and accepted it — rather than mandatory, which would have required grounding on defined criteria.",
+     "If a pre-established protocol had required: any crash where MCAS activation is identified in flight data triggers automatic grounding pending independent safety review, the 157 deaths on Ethiopian Airlines 302 would not have occurred. Ethiopian Airlines 302 happened because there was no mandatory halt condition between a known failure mechanism and continued operation."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT — Confirmed", finding:"ABSENT — ACTIVE SUPPRESSION CONFIRMED",
+     text:["The House Committee investigation documents a specific suppression event: Boeing concealed from the FAA simulator data that showed MCAS's true stabilizer authority was 2.5 degrees rather than the 0.6 degrees represented in the safety analysis submitted for certification. This is confirmed C5 suppression in the record.",
+     "The five-month period between Lion Air 610 and Ethiopian Airlines 302 also involves a documented suppression pattern: Boeing's position to regulators and airlines was that the aircraft was safe to continue operating, while internally engineers were raising concerns about MCAS that were not escalated. The DOJ deferred prosecution agreement includes a charge of conspiracy to defraud the FAA — a formal legal finding that Boeing engaged in deliberate misrepresentation of MCAS's safety profile."],
+     laundering:{
+       tags:["L-01 Accountability diffusion","L-02 Authority denied after harm","L-03 Evidence degraded","L-05 Responsibility shifted across teams","L-06 Blame shifted onto tools"],
+       desc:"L-05 (Responsibility shifted across teams): Accountability for MCAS safety was diffused across Boeing engineering, FAA oversight, and DER delegation — no team owned it. L-06 (Blame shifted onto tools): After Lion Air, Boeing's initial position attributed the crash to pilot error rather than MCAS design. L-03 (Evidence degraded): Simulator data showing true MCAS authority not disclosed to FAA during certification."
+     },
+     quote: null, source: null}
+  ],
+  prevention:[
+    {c:"C1", title:"A named individual at Boeing documented as accountable for MCAS safety before first flight", desc:"One person. Named. With documented authority to hold the first 737 MAX revenue flight pending resolution of any open safety question about MCAS. When engineers raised concerns about MCAS's authority, that person would have had both the responsibility and the documented authority to act on those concerns. The concerns were raised. The named accountable owner did not exist."},
+    {c:"C2", title:"Independent validation of MCAS safety analysis — not by Boeing's own DERs", desc:"Boeing's employees acting as FAA designees certified Boeing's own safety analysis. An independent validation body — with no employment or financial relationship to Boeing — testing the safety analysis against Boeing's own simulator data would have identified the discrepancy between the represented 0.6 degree authority and the actual 2.5 degree authority before certification."},
+    {c:"C3", title:"A post-incident monitoring protocol requiring structured re-evaluation after any control system anomaly", desc:"After Lion Air 610, a structured monitoring protocol would have required Boeing and the FAA to answer: can this failure sequence recur on any 737 MAX in service? Answering that question required examining MCAS's authority and the AoA single-point-of-failure. Boeing had the data. The protocol that would have required them to produce it publicly did not exist."},
+    {c:"C4", title:"An automatic grounding condition for fatal crashes involving identified control system anomalies", desc:"If the FAA's operational policy had defined: any fatal crash where flight data shows an automated control system activation inconsistent with pilot input triggers automatic grounding pending independent review, Ethiopian Airlines 302 would not have happened. The grounding would have been mandatory, not discretionary. Discretion allowed Boeing's lobbying to delay it."},
+    {c:"C5", title:"Mandatory disclosure of all safety analyses to the FAA in unredacted form at certification", desc:"The specific suppression in MCAS certification was that Boeing's submitted safety analysis misrepresented MCAS's authority. If certification required Boeing to disclose all internal simulator data relevant to the safety analysis — not a summarised representation — an independent FAA engineer reviewing the raw data would have identified the discrepancy. The DER delegation system allowed Boeing to control what the FAA saw."}
+  ],
+  comparables:[
+    {slug:"therac25", name:"Therac-25 Radiation Therapy System", meta:"Canada/USA · Medical Devices · 1985–1987", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Closest structural comparator for safety-critical software failure: single point of failure in a system that affects human life, no named accountable owner for software safety, incidents treated as isolated rather than systemic, manufacturer response that minimised severity before the pattern was established.", score:"0.0", scoreColor:"red"},
+    {slug:"robodebt", name:"Australia Robodebt", meta:"Australia · Benefits & Welfare · 2016–2019", tags:["C1 ABSENT","C2 ABSENT","C5 CONFIRMED"], desc:"Cross-domain comparator for documented suppression pattern: different system type, same mechanism — adverse information held internally while harm continues externally. Included because the Royal Commission's findings about what would have changed the outcome maps directly onto what FAA oversight was structured to prevent.", score:"0.0", scoreColor:"red"},
+    {slug:"horizon", name:"UK Post Office Horizon", meta:"United Kingdom · Public Infrastructure · 1999–2015", tags:["C1 ABSENT","C2 ABSENT","C5 CONFIRMED"], desc:"Cross-domain comparator for sustained suppression and accountability diffusion across organisational boundaries. The Fujitsu/Post Office split mirrors the Boeing/FAA/DER split — accountability distributed across enough organisations that no single one owned the safety question.", score:"0.0", scoreColor:"red"}
+  ],
+  metadata:{"Case ID":"F096","Classification":"Failure — Aviation Safety","GPWS Score":"0.0 · DANGER","Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5","Suppression Confirmed":"Yes — Simulator data suppressed from FAA","Country":"USA (Global)","Operational Period":"August 2017 – March 2019 (grounded)","Justice Lag":"20 months (Lion Air to global grounding)","Harm Scale":"346 deaths · two crashes","Last Verified":"January 2025"},
+  sources:["House Transportation and Infrastructure Committee — Final Committee Report, September 2020","DOJ Deferred Prosecution Agreement — Boeing, January 2021","NTSB/KNKT — Lion Air Flight 610 Final Report","Ethiopian AAIA — Ethiopian Airlines Flight 302 Final Report","Senate Commerce Committee — Boeing 737 MAX hearings, October 2019"],
+  related:[
+    {slug:"therac25",type:"Failure",domain:"Medical Devices",name:"Therac-25",meta:"Canada/USA · 1985–1987 · 3 deaths",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"robodebt",type:"Failure",domain:"Benefits & Welfare",name:"Australia Robodebt",meta:"Australia · 2016–2019 · 470K notices",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"horizon",type:"Failure",domain:"Public Infrastructure",name:"UK Post Office Horizon",meta:"UK · 1999–2015 · 900+ prosecutions",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"}
+  ],
+  triggers:{"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"UNKNOWN","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"NEEDS HUMAN REVIEW","F-01":"NEEDS HUMAN REVIEW","F-02":"UNKNOWN","G-01":"YES","G-02":"YES","G-03":"YES","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"YES","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"NEEDS HUMAN REVIEW","J-02":"NEEDS HUMAN REVIEW","K-01":"NEEDS HUMAN REVIEW","K-02":"NEEDS HUMAN REVIEW","K-03":"YES","K-04":"YES","K-05":"UNKNOWN","K-06":"YES","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"YES","L-06":"YES","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"YES","M-03":"YES","M-04":"YES","N-01":"NEEDS HUMAN REVIEW","N-02":"YES","N-03":"YES"}
+},
+
+"therac25": {
+  id:"T002", slug:"therac25", built:true,
+  name:"Therac-25",
+  subtitle:"Radiation Therapy System · AECL · 1982–1987",
+  type:"Failure", domain:"Medical Devices", country:"Canada / USA",
+  deployYear:1982, gpws:0.0, gpwsTier:"DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT",
+  suppressionConfirmed:false, verified:"January 2025",
+  harmStats:[
+    {n:"3", label:"Deaths directly\nattributed", color:"red"},
+    {n:"6", label:"Patients given\nmassive overdoses", color:"red"},
+    {n:"5 yr", label:"First incident to\nlast known overdose", color:"amber"},
+    {n:"0.0", label:"GPWS Score\n(DANGER)", color:"red"}
+  ],
+  overviewTitle: "A race condition killed people — and AECL's early response minimised it",
+  overviewNote: "The Therac-25 removed hardware safety interlocks that existed in previous models, relying entirely on software. When that software had a race condition, there was nothing else to stop it delivering a lethal dose.",
+  overview:[
+    "The Therac-25 was a radiation therapy machine manufactured by Atomic Energy of Canada Limited (AECL). Unlike its predecessors, the Therac-20 and Therac-6, the Therac-25 removed hardware safety interlocks and relied entirely on software for safety. The software contained a race condition — a timing-dependent bug that could be triggered by an experienced operator entering mode and parameter changes rapidly. When triggered, the machine could deliver a radiation dose 100 times higher than intended, directly to the patient's skin rather than through the beam-flattening filter.",
+    "Between 1985 and 1987, at least six patients received massive radiation overdoses from Therac-25 machines. At least three died. AECL's initial response to incident reports was to minimise them: the company attributed early reports to operator error, denied that the software could be the cause, and issued fixes that did not address the underlying race condition. The Therac-25 is one of the foundational cases in software safety literature because it demonstrated the danger of removing hardware interlocks, the risk of relying on untested software for safety-critical functions, and the harm that results when a manufacturer's response to safety incidents is denial rather than investigation."
+  ],
+  tapeItems:["GPWS 0.0","ALL 5 CONDITIONS ABSENT","3 DEATHS ATTRIBUTED","HARDWARE INTERLOCKS REMOVED","RACE CONDITION IN SAFETY SOFTWARE","AECL INITIALLY BLAMED OPERATORS","FOUNDATIONAL SOFTWARE SAFETY CASE","NO INDEPENDENT VALIDATION"],
+  timeline:[
+    {date:"1982", type:"neutral", event:"Therac-25 released — hardware interlocks removed", detail:"AECL releases the Therac-25 with hardware safety interlocks removed from previous models. The decision to rely on software alone for safety is made without independent validation of whether the software could produce the safety guarantees the hardware previously provided. No named individual is documented as accountable for this architectural decision and its safety implications."},
+    {date:"1985–1986", type:"harm", event:"First overdose incidents — AECL attributes to operator error", detail:"Therac-25 machines begin delivering overdoses to patients. Early incident reports to AECL describe patients experiencing unusual burns and pain. AECL investigates and concludes that the machine cannot have delivered an overdose — the software prevents it. AECL's response attributes the incidents to operator error. This response is wrong and delays identification of the actual cause."},
+    {date:"1986", type:"harm", event:"Kendy 1986 — patient Verdon Kidd receives fatal overdose", detail:"A patient at a facility in Ontario receives a massive overdose. The clinical team cannot explain the burn. AECL investigates, finds no fault, and the incident is not linked to a software defect. The race condition that caused it remains unidentified. The machine continues operating."},
+    {date:"1986–1987", type:"harm", event:"Further overdoses — pattern emerges despite AECL denials", detail:"Additional patients receive overdoses. Hospital physicists and medical physicists begin sharing information and identifying a pattern: the overdoses occur when operators enter data rapidly using a specific key sequence. AECL continues to maintain that the machine cannot deliver an overdose. Field patches are issued that do not address the underlying race condition."},
+    {date:"1987", type:"accountability", event:"FDA investigation — race condition identified", detail:"The US Food and Drug Administration opens an investigation. Working with AECL and independent engineers, the race condition is finally identified: a timing-dependent bug that can be triggered by an experienced operator entering mode and energy level changes within a specific time window. The flaw had existed in the software since before deployment."},
+    {date:"1987", type:"accountability", event:"Therac-25 recalled and taken out of service", detail:"All Therac-25 machines are taken out of service. The recall comes five years after the first machine was deployed and two years after the first overdose incidents. The harm window covers at least six patients, at least three of whom died. The Therac-25 becomes the foundational case for software safety literature and for the principle that hardware interlocks in safety-critical systems should not be removed without independent validation of software alternatives."}
+  ],
+  conditions:[
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["No individual at AECL is documented as the named accountable owner for the software safety of the Therac-25 at deployment. The decision to remove hardware interlocks was an architectural choice that should have required a named individual to sign off on the safety implications — specifically, to document that the software had been independently validated to provide equivalent safety to the hardware it replaced.",
+     "AECL's response to early incident reports illustrates the C1 absence: the company investigated and concluded the machine was not the cause. There was no named individual whose documented accountability required them to commission independent investigation of the software when operator error was reported as a possible cause. The responsibility diffused across AECL's engineering team in a way that allowed five years of harm to occur before the root cause was identified."],
+     quote:"The decision to remove hardware interlocks had no named owner — and when incidents occurred, neither did the response.", source:"HSRL C1 analysis — Therac-25"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["The Therac-25 software was not independently validated before deployment. The safety analysis that justified removing hardware interlocks relied on AECL's internal assessment of software reliability. No independent software safety body reviewed the code for race conditions, timing dependencies, or other failure modes before the machine was deployed in clinical settings.",
+     "This is the definitional C2 failure for software-based medical devices: the safety claim — that software alone can provide the safety guarantees that hardware interlocks previously provided — was not tested by anyone independent of the manufacturer. The race condition that caused the overdoses was a known category of software defect that independent code review would have been likely to identify."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["No structured monitoring mechanism connected incident reports from multiple facilities to a systematic review of whether the Therac-25 software was the common cause. AECL received reports of unusual patient outcomes from multiple facilities across multiple years. Each was investigated as an isolated incident. The pattern — that overdoses occurred at multiple facilities, to patients operated by experienced operators, triggered by rapid data entry — was identified by hospital physicists sharing information informally, not by a monitoring system.",
+     "If AECL had operated a structured adverse event monitoring system that aggregated incident reports across all Therac-25 installations and flagged multiple incidents with similar clinical presentations, the pattern would have been visible within months of the first incident rather than years."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["No pre-established protocol defined what happened when a patient experienced an unexplained radiation injury from a Therac-25. The default response — AECL investigates, AECL concludes machine is not at fault, machine continues operating — was not a formally adopted safety protocol. It was the operational default that emerged from the absence of any pre-established halt condition.",
+     "A pre-established accountability protocol would have defined: any unexplained radiation injury to a patient treated by a Therac-25 triggers immediate suspension of that machine pending independent technical investigation. That protocol would have removed the Therac-25 from service after the first overdose incident rather than after the sixth."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT", finding:"ABSENT",
+     text:["C5 for Therac-25 is ABSENT but without the confirmed active suppression pattern of Robodebt, Horizon, or MCAS. AECL's early incident response was denial rather than investigation — the company maintained for years that the machine could not have caused the injuries — but this is documented as incorrect technical conclusion rather than deliberate suppression of known adverse information.",
+     "The C5 signal is present but not confirmed at the level that Royal Commission findings or congressional investigation provide for other cases in the dataset. AECL's response pattern — attributing incidents to operator error, issuing patches that didn't address the root cause, maintaining the machine was safe — is consistent with motivated reasoning rather than documented deliberate suppression. The dataset marks this as ABSENT without confirmed active suppression."],
+     laundering:{
+       tags:["L-01 Accountability diffusion","L-06 Blame shifted onto tools","L-13 Good intent used to negate outcomes"],
+       desc:"L-06 (Blame shifted onto tools): AECL consistently attributed early incidents to operator error rather than examining the software. L-13 (Good intent): AECL's investigation reports framed the company as actively investigating and finding no fault — the good-faith investigation narrative substituted for a finding that the software had a defect."
+     },
+     quote: null, source: null}
+  ],
+  prevention:[
+    {c:"C1", title:"A named individual accountable for the safety implications of removing hardware interlocks", desc:"The architectural decision to remove hardware interlocks required someone to own the safety claim: this software provides equivalent safety to the hardware it replaces. That person's name should have been on record before the first Therac-25 was deployed. When incidents occurred, that person would have had documented accountability for commissioning independent investigation, not for defending the original safety claim."},
+    {c:"C2", title:"Independent code review before deployment in clinical settings", desc:"Software safety for a device that can deliver lethal radiation doses should not rest on the developer's own assessment. An independent software safety engineer reviewing the Therac-25 code for race conditions, timing dependencies, and single points of failure would have been likely to identify the defect before deployment. The category of defect — a race condition triggered by rapid operator input — is a known software failure mode that safety-specific code review looks for."},
+    {c:"C3", title:"A mandatory adverse event reporting system aggregated across all Therac-25 installations", desc:"AECL received incident reports from multiple facilities over multiple years. A structured monitoring system that aggregated those reports and flagged clinical presentations with similar features — unexplained radiation injury, experienced operator, rapid data entry — would have identified the pattern within months. The pattern was eventually identified by hospital physicists sharing information informally. A formal system would have done it faster."},
+    {c:"C4", title:"An automatic halt condition for any unexplained patient injury from a radiation therapy system", desc:"Any unexplained radiation injury to a patient treated by a Therac-25 should have triggered automatic suspension of that machine pending independent investigation. This is the pre-established halt condition that C4 requires. It would have removed the Therac-25 from service after the first overdose incident. The harm window covers at least six patients. A mandatory halt after incident one would have prevented incidents two through six."},
+    {c:"C5", title:"An independent reporting pathway for clinical staff to escalate concerns without going through the manufacturer", desc:"Clinical physicists who suspected the Therac-25 was the cause of patient injuries had no independent reporting pathway — their concerns went to AECL, which investigated and concluded the machine was not at fault. A mandatory adverse event reporting pathway to an independent body — the FDA, a medical device safety authority — independent of the manufacturer would have brought the pattern to regulatory attention years earlier."}
+  ],
+  comparables:[
+    {slug:"mcas", name:"Boeing 737 MAX MCAS", meta:"USA (Global) · Aviation Safety · 2017–2019", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 CONFIRMED"], desc:"Closest structural comparator for safety-critical software failure pattern: removal of redundancy (hardware interlocks / dual sensors), reliance on software alone for safety, incidents treated as isolated rather than systemic, manufacturer initial response minimising severity. Decades apart, identical structural failure pattern.", score:"0.0", scoreColor:"red"},
+    {slug:"compas", name:"COMPAS Risk Assessment", meta:"United States · Criminal Justice · 1998–present", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Cross-domain comparator for removal of independent validation: proprietary software deployed in high-stakes settings without independent validation of accuracy, with the developer's own assessment as the only available evaluation. Different domain, identical C2 failure structure.", score:"0.0", scoreColor:"red"},
+    {slug:"robodebt", name:"Australia Robodebt", meta:"Australia · Benefits & Welfare · 2016–2019", tags:["C1 ABSENT","C2 ABSENT","C5 CONFIRMED"], desc:"Cross-domain comparator: different automated system, same consequence of C1 absence — when incidents occurred, no named owner existed with authority and responsibility to halt the system pending investigation.", score:"0.0", scoreColor:"red"}
+  ],
+  metadata:{"Case ID":"T002 / T026","Classification":"RTF — Medical Devices","GPWS Score":"0.0 · DANGER","Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5","Suppression Confirmed":"Not confirmed (denial pattern documented)","Country":"Canada / USA","Operational Period":"1982 – 1987","Justice Lag":"5 years (first incident to recall)","Harm Scale":"6 overdoses · 3 deaths attributed","Last Verified":"January 2025"},
+  sources:["Leveson & Turner — 'An Investigation of the Therac-25 Accidents', IEEE Computer, 1993","FDA — Serious Accident Investigation Report, Therac-25, 1988","AECL — internal incident investigation reports (via Leveson & Turner)","Joyce Kaye Longbotham v. AECL and others (civil litigation record)"],
+  related:[
+    {slug:"mcas",type:"Failure",domain:"Aviation Safety",name:"Boeing 737 MAX MCAS",meta:"Global · 2017–2019 · 346 deaths",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"compas",type:"Failure",domain:"Criminal Justice",name:"COMPAS Risk Assessment",meta:"US · 1998–present · ongoing",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"michigan-midas",type:"Failure",domain:"Benefits & Welfare",name:"Michigan MiDAS",meta:"US · 2013–2015 · 40K+ false fraud",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"}
+  ],
+  triggers:{"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"UNKNOWN","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"UNKNOWN","F-01":"NEEDS HUMAN REVIEW","F-02":"UNKNOWN","G-01":"YES","G-02":"YES","G-03":"NEEDS HUMAN REVIEW","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"NEEDS HUMAN REVIEW","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"NEEDS HUMAN REVIEW","J-02":"NEEDS HUMAN REVIEW","K-01":"NEEDS HUMAN REVIEW","K-02":"NEEDS HUMAN REVIEW","K-03":"YES","K-04":"YES","K-05":"UNKNOWN","K-06":"NEEDS HUMAN REVIEW","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"NEEDS HUMAN REVIEW","L-06":"NEEDS HUMAN REVIEW","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"NEEDS HUMAN REVIEW","M-03":"YES","M-04":"NEEDS HUMAN REVIEW","N-01":"NEEDS HUMAN REVIEW","N-02":"NEEDS HUMAN REVIEW","N-03":"YES"}
+},
+
+"michigan-midas": {
+  id:"F008", slug:"michigan-midas", built:true,
+  name:"Michigan MiDAS",
+  subtitle:"Michigan Integrated Data Automated System · 2013–2015",
+  type:"Failure", domain:"Benefits & Welfare", country:"United States",
+  deployYear:2013, gpws:0.0, gpwsTier:"DANGER",
+  c1:"ABSENT", c2:"ABSENT", c3:"ABSENT", c4:"ABSENT", c5:"ABSENT",
+  suppressionConfirmed:false, verified:"January 2025",
+  harmStats:[
+    {n:"40K+", label:"False fraud\ndeterminations", color:"red"},
+    {n:"93%", label:"False positive\nrate at peak", color:"red"},
+    {n:"$47M+", label:"Wrongful\npayments demanded", color:"amber"},
+    {n:"0.0", label:"GPWS Score\n(DANGER)", color:"red"}
+  ],
+  overviewTitle: "A 93% false positive rate. The system ran for two years.",
+  overviewNote: "MiDAS was automated fraud detection for unemployment benefits. At peak, it was wrong 93% of the time. The state knew within a year. It took two more years to shut down.",
+  overview:[
+    "The Michigan Integrated Data Automated System (MiDAS) was an automated fraud detection system deployed by the Michigan Unemployment Insurance Agency (UIA) in 2013. The system cross-matched unemployment benefit records against employer wage records and automatically issued fraud determinations — flagging claimants as having committed unemployment fraud — without human review. Claimants flagged by MiDAS were assessed penalties, required to repay benefits, and in many cases had bank accounts levied and tax refunds seized automatically.",
+    "A 2015 audit found that MiDAS had a false positive rate of approximately 93% — meaning that for every 100 fraud determinations it issued automatically, 93 were wrong. Over 40,000 Michigan residents received false fraud determinations. Many lost income they depended on. Some had wages garnished. Some could not pay rent or utilities. The state was aware of significant accuracy problems within a year of deployment but continued operating the system. Michigan settled a class action lawsuit in 2020 for approximately $20 million, with additional legislative remediation ongoing."
+  ],
+  tapeItems:["GPWS 0.0","ALL 5 CONDITIONS ABSENT","40K+ FALSE FRAUD DETERMINATIONS","93% FALSE POSITIVE RATE AT PEAK","AUTOMATIC BANK LEVIES","STATE KNEW WITHIN ONE YEAR","DEPLOYED 2013 — SHUTDOWN 2015","SETTLED CLASS ACTION 2020"],
+  timeline:[
+    {date:"2013", type:"neutral", event:"MiDAS deployed — automated fraud determinations without human review", detail:"The Michigan UIA deploys MiDAS with the ability to issue fraud determinations automatically, without human review, and to levy penalties, demand repayment, and initiate collection actions — including bank levies — automatically. No independent validation of the fraud detection methodology is commissioned before deployment. No named individual is documented as accountable for the accuracy of the automated determinations."},
+    {date:"2013–2014", type:"harm", event:"False determinations begin — claimants penalised, accounts levied", detail:"MiDAS begins issuing fraud determinations that are wrong at a very high rate. Claimants receiving false fraud flags are assessed a 400% penalty, required to repay benefits they legitimately received, and subjected to collection actions including bank levies. Many are unemployed and have no other income. The appeals process requires claimants to affirmatively challenge determinations — the default is that the determination stands."},
+    {date:"2014–2015", type:"harm", event:"State aware of accuracy problems — system continues operating", detail:"Internal and external reviews identify significant accuracy problems with MiDAS. The state continues operating the system. The Legislature Auditor General begins examining MiDAS. Claimants continue receiving false fraud determinations. The harm window continues for approximately two years after significant accuracy concerns are documented internally."},
+    {date:"2015", type:"accountability", event:"Auditor General report — 93% false positive rate documented", detail:"The Michigan Legislature Auditor General's report documents that MiDAS has issued approximately 40,000 fraud determinations of which approximately 93% are incorrect. The report is the first public documentation of the scale of the problem. MiDAS is shut down following the report."},
+    {date:"2016", type:"accountability", event:"Class action lawsuit filed", detail:"Claimants who received false fraud determinations file a class action lawsuit. The lawsuit alleges due process violations — the automatic determination process did not provide adequate notice or opportunity to be heard before collection actions were initiated."},
+    {date:"2020", type:"accountability", event:"Class action settlement — approximately $20 million", detail:"Michigan settles the class action for approximately $20 million. Additional legislative remediation addresses some claimants not covered by the settlement. The accountability arc closes with settlement — no individual officials face criminal or civil accountability for deploying and continuing to operate a system with a 93% false positive rate."}
+  ],
+  conditions:[
+    {id:"C1", name:"Named Accountable Owner", score:"ABSENT", finding:"ABSENT",
+     text:["No individual at the Michigan UIA is documented as the named accountable owner for the accuracy of MiDAS's fraud determinations. The system was procured from a vendor and operated by the Agency without a named official whose documented role required them to certify the accuracy of the determinations before collection actions could be initiated.",
+     "The accuracy problem was identifiable — any examination of the determinations against outcome data would have shown the false positive rate rising sharply from the early months of operation. No one was accountable for looking at that data and acting on it. The system's outputs flowed directly to collection actions without a named human in the loop who owned the question of whether the outputs were accurate enough to act on."],
+     quote:"No named individual owned the question of whether MiDAS was accurate enough to levy bank accounts.", source:"HSRL C1 analysis — MiDAS"},
+    {id:"C2", name:"Independent Validation", score:"ABSENT", finding:"ABSENT",
+     text:["MiDAS was deployed without independent validation of the fraud detection methodology. The cross-matching approach — comparing unemployment benefit records against employer wage records — has known accuracy limitations when employer records are incomplete, delayed, or categorised differently than benefit records. No independent validation assessed the false positive rate of this approach before it was used to issue fraud determinations with automatic collection actions.",
+     "The 93% false positive rate at peak is the outcome of deploying an unvalidated methodology with automatic adverse consequences. Independent validation would have established an acceptable false positive rate before deployment — and the pre-established rate would have triggered shutdown far earlier than the Auditor General's report."],
+     quote: null, source: null},
+    {id:"C3", name:"Structured Monitoring", score:"ABSENT", finding:"ABSENT",
+     text:["MiDAS was deployed with no structured monitoring of its false positive rate. The basic monitoring question — of the fraud determinations MiDAS issues, how many are upheld on appeal? — would have provided a real-time signal of accuracy problems. The appeals data was available. No monitoring system connected it to a review of whether the underlying methodology was producing accurate outputs.",
+     "The Auditor General's 2015 report documented the 93% false positive rate using data that had been available to the UIA throughout the harm window. The data existed. The monitoring mechanism that would have required someone to look at it and act on it did not exist. This is the operational definition of C3 absence: the signal was there, the instrument to read it was not."],
+     quote: null, source: null},
+    {id:"C4", name:"Pre-Established Accountability Protocol", score:"ABSENT", finding:"ABSENT",
+     text:["No pre-established protocol defined the false positive rate threshold at which MiDAS would be suspended pending review. The system was designed with automatic adverse consequences — penalty assessments, repayment demands, bank levies — and no pre-established checkpoint between the automated determination and the collection action.",
+     "If the operational policy had included: any month in which the MiDAS appeal reversal rate exceeds X% triggers automatic suspension of new determinations pending accuracy review, the system would have been suspended within the first year of operation. The threshold was never defined, which meant the system operated until external pressure — the Auditor General, litigation — forced it to stop."],
+     quote: null, source: null},
+    {id:"C5", name:"No Active Suppression", score:"ABSENT", finding:"ABSENT",
+     text:["C5 for MiDAS is ABSENT without confirmed active suppression. The pattern is operational continuation of a known-inaccurate system rather than deliberate concealment of adverse findings. Internal reviews identified accuracy problems; the state continued operating the system. Whether this constitutes active suppression — deliberate concealment of known adverse findings — or institutional inertia and accountability diffusion is not established in the public record at the level required for confirmed C5.",
+     "The harm is real and documented regardless of the C5 classification. The state's awareness of accuracy problems and continued operation creates a different accountability question than confirmed suppression: at what point does continued operation of a known-inaccurate automated decision system become legally equivalent to deliberate harm? The class action settlement addressed this in civil terms. The criminal accountability question remains unanswered."],
+     laundering:{
+       tags:["L-01 Accountability diffusion","L-09 Compliance artifacts substitute for safety","L-16 Responsibility shifted to victims"],
+       desc:"L-09 (Compliance artifacts substitute for safety): The UIA's continued operation of MiDAS after accuracy concerns were raised was supported by vendor compliance documentation — the system was operating as specified, even though the specification produced 93% false positives. L-16 (Responsibility shifted to victims): Claimants were required to affirmatively appeal false determinations; the default was that the determination stood and collection proceeded."
+     },
+     quote: null, source: null}
+  ],
+  prevention:[
+    {c:"C1", title:"A named UIA official accountable for the accuracy of MiDAS fraud determinations", desc:"Before MiDAS issued its first fraud determination with automatic collection consequences, one named official should have been documented as accountable for the accuracy of those determinations. That person's accountability would have required them to review the appeal reversal rate monthly. The 93% false positive rate would have been visible to that person within the first three months of operation."},
+    {c:"C2", title:"Pre-deployment validation of the cross-matching methodology with published false positive rate", desc:"The cross-matching approach has known accuracy limitations. An independent validation study — testing the methodology against historical fraud data with known outcomes — would have established the expected false positive rate before deployment. If that rate was published in advance, the Auditor General's 2015 finding of 93% would have been measurable against a pre-established acceptable threshold rather than discovered as a surprise."},
+    {c:"C3", title:"Monthly monitoring of appeal reversal rates against a pre-defined accuracy threshold", desc:"The appeals data provided a real-time accuracy signal throughout the harm window. A structured monitoring protocol requiring the UIA to publish monthly appeal reversal rates against a pre-defined threshold — say, any month in which more than 10% of determinations are reversed on appeal triggers a system review — would have surfaced the accuracy problem within months of deployment and long before 40,000 people were wrongly assessed."},
+    {c:"C4", title:"A human review checkpoint before automatic collection actions for first-time flagged claimants", desc:"MiDAS's most harmful feature was the automatic progression from fraud determination to bank levy without human review. A pre-established protocol requiring human review before any collection action above a defined dollar threshold, or for any first-time fraud flag, would have inserted a checkpoint that human reviewers would have used to identify the accuracy problem independently of any formal monitoring system."},
+    {c:"C5", title:"A mandatory accuracy reporting requirement to the State Legislature", desc:"If the UIA had been required to report MiDAS's accuracy metrics to the State Legislature quarterly — including appeal reversal rates by determination type — the 93% false positive rate would have been publicly available within the first year of operation. Mandatory public reporting creates the external accountability pressure that C5 absence prevents from forming internally."}
+  ],
+  comparables:[
+    {slug:"robodebt", name:"Australia Robodebt", meta:"Australia · Benefits & Welfare · 2016–2019", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 CONFIRMED"], desc:"Direct domain comparator: automated debt/fraud detection in welfare benefits, reversal of burden of proof, claimants required to disprove automated determinations. Robodebt operated at larger scale with confirmed suppression; MiDAS operated for a shorter harm window with faster shutdown. Together they bracket what C3 monitoring would have changed.", score:"0.0", scoreColor:"red"},
+    {slug:"compas", name:"COMPAS Risk Assessment", meta:"United States · Criminal Justice · 1998–present", tags:["C1 ABSENT","C2 ABSENT","C3 ABSENT","C4 ABSENT","C5 ABSENT"], desc:"Direct US domestic comparator: automated adverse determination system deployed without independent validation, used to determine outcomes for vulnerable populations, with no structured monitoring of accuracy over time. Different domain, identical structural failure pattern.", score:"0.0", scoreColor:"red"},
+    {slug:"norway-nav", name:"Norway NAV", meta:"Norway · Benefits & Welfare · 2012–2019", tags:["C1 PRESENT","C2 PRESENT","C3 PRESENT"], desc:"Resilient domain comparator. Norway's welfare system self-identified a systematic calculation error, disclosed it publicly, and remediated it within 18 months. The contrast with MiDAS — which operated for two years after accuracy concerns were internally identified — demonstrates what C1, C2, and C3 presence looks like in practice.", score:"0.9", scoreColor:"green"}
+  ],
+  metadata:{"Case ID":"F008","Classification":"Failure — Benefits & Welfare","GPWS Score":"0.0 · DANGER","Conditions Absent":"5 of 5 — C1, C2, C3, C4, C5","Suppression Confirmed":"Not confirmed (continued operation documented)","Country":"United States","Operational Period":"2013 – 2015","Justice Lag":"7 years (deploy to class action settlement)","Harm Scale":"40,000+ false fraud determinations · 93% false positive rate","Last Verified":"January 2025"},
+  sources:["Michigan Auditor General — Performance Audit of the Unemployment Insurance Agency, 2015","Cahoo v. SAS Analytics (Class Action) — filed 2016","Michigan Legislature Auditor General — MiDAS audit documentation, 2015–2016","Detroit Free Press investigative reporting 2015–2016"],
+  related:[
+    {slug:"robodebt",type:"Failure",domain:"Benefits & Welfare",name:"Australia Robodebt",meta:"Australia · 2016–2019 · 470K notices",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"compas",type:"Failure",domain:"Criminal Justice",name:"COMPAS Risk Assessment",meta:"US · 1998–present · ongoing",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"},
+    {slug:"horizon",type:"Failure",domain:"Public Infrastructure",name:"UK Post Office Horizon",meta:"UK · 1999–2015 · 900+ prosecutions",conds:["ABSENT","ABSENT","ABSENT","ABSENT","ABSENT"],dotColor:"red"}
+  ],
+  triggers:{"A-01":"YES","A-02":"YES","B-01":"YES","B-02":"YES","B-03":"NEEDS HUMAN REVIEW","B-04":"YES","C-01":"YES","C-02":"YES","C-03":"YES","D-01":"YES","D-02":"YES","D-03":"YES","E-01":"NEEDS HUMAN REVIEW","E-02":"YES","E-03":"UNKNOWN","F-01":"YES","F-02":"YES","G-01":"YES","G-02":"YES","G-03":"NEEDS HUMAN REVIEW","H-01":"NEEDS HUMAN REVIEW","H-02":"NEEDS HUMAN REVIEW","H-03":"NEEDS HUMAN REVIEW","I-01":"YES","I-02":"NEEDS HUMAN REVIEW","J-01":"YES","J-02":"NEEDS HUMAN REVIEW","K-01":"YES","K-02":"NEEDS HUMAN REVIEW","K-03":"YES","K-04":"YES","K-05":"NEEDS HUMAN REVIEW","K-06":"NEEDS HUMAN REVIEW","L-00":"YES","L-01":"YES","L-02":"YES","L-03":"YES","L-04":"NEEDS HUMAN REVIEW","L-05":"NEEDS HUMAN REVIEW","L-06":"NEEDS HUMAN REVIEW","L-07":"NEEDS HUMAN REVIEW","L-08":"NEEDS HUMAN REVIEW","L-09":"NEEDS HUMAN REVIEW","L-10":"NEEDS HUMAN REVIEW","L-11":"NEEDS HUMAN REVIEW","L-12":"NEEDS HUMAN REVIEW","L-13":"NEEDS HUMAN REVIEW","L-14":"NEEDS HUMAN REVIEW","L-15":"NEEDS HUMAN REVIEW","L-16":"NEEDS HUMAN REVIEW","M-01":"YES","M-02":"NEEDS HUMAN REVIEW","M-03":"YES","M-04":"NEEDS HUMAN REVIEW","N-01":"NEEDS HUMAN REVIEW","N-02":"NEEDS HUMAN REVIEW","N-03":"YES"}
+}
+
+}; // end CASES
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════════════════════════
+const TRIGGER_NAMES = {
+  'A-01':'System affects human outcomes','A-02':'Non-trivial human outcome possible',
+  'B-01':'Output influences / substitutes human judgment','B-02':'Cannot interrupt or override in real time',
+  'B-03':'Behavior differs under time pressure','B-04':'System must be stoppable post-deployment',
+  'C-01':'Decisions must be auditable / litigable','C-02':'Inputs/outputs compressed or lossy',
+  'C-03':'Evidence may be challenged post-fact',
+  'D-01':'Missing or biased inputs possible','D-02':'May operate outside design assumptions',
+  'D-03':'May need to refuse or degrade safely',
+  'E-01':'Outputs replicated across many users or cases','E-02':'Small errors could affect large populations',
+  'E-03':'Output becomes input to another system',
+  'F-01':'Cases or users are queued or deprioritized','F-02':'Delays or backlogs can themselves cause harm',
+  'G-01':'System behavior may drift over time','G-02':'Performance or populations may change post-deploy',
+  'G-03':'Harm may emerge only after prolonged exposure',
+  'H-01':'System optimizes for proxy metrics','H-02':'Success definitions may shift',
+  'H-03':'Org incentives favor speed or cost over safety',
+  'I-01':'Outputs may be over-trusted','I-02':'Users may misuse or work around outputs',
+  'J-01':'Handles sensitive personal, legal, or medical data','J-02':'Unauthorized access could cause human harm',
+  'K-01':'Incentive to manipulate inputs or outputs','K-02':'Identity spoofing or false authority possible',
+  'K-03':'Evidence contamination or fabrication plausible','K-04':'Persuasive framing could override scrutiny',
+  'K-05':'Volume or flooding could degrade safeguards','K-06':'Org seams or vendors can be exploited',
+  'L-00':'Laundering dynamics active (presence gate)','L-01':'Accountability diffusion — no owner',
+  'L-02':'Authority denied after harm','L-03':'Evidence degraded or narrativized',
+  'L-04':'Responsibility shifted across time','L-05':'Responsibility shifted across teams or vendors',
+  'L-06':'Blame shifted onto tools','L-07':'Automation cited as inevitability',
+  'L-08':'Harm erased through aggregation or statistics','L-09':'Compliance artifacts substitute for safety',
+  'L-10':'Confidence substitutes for evidence','L-11':'Unnamed experts invoked as authority',
+  'L-12':'Scale framed as unavoidable','L-13':'Good intent used to negate outcomes',
+  'L-14':'Committees dissolve accountability','L-15':'Low probability excuses high-impact harm',
+  'L-16':'Moral responsibility shifted to users or victims',
+  'M-01':'Residual risk remains after mitigation','M-02':'System remains operational over time',
+  'M-03':'Incidents or near-misses occurred','M-04':'Long-tail harms are plausible',
+  'N-01':'Safety execution depends on staffing or resources',
+  'N-02':'Financial pressure may override safeguards',
+  'N-03':'Raising safety concerns carries career risk',
+};
+
+const TRIGGER_SECTIONS = [
+  {key:'A', name:'Entry & Safety Relevance Gates', keys:['A-01','A-02']},
+  {key:'B', name:'Authority, Control & Human Oversight', keys:['B-01','B-02','B-03','B-04']},
+  {key:'C', name:'Evidence, Traceability & Reconstructability', keys:['C-01','C-02','C-03']},
+  {key:'D', name:'Failure Modes, Absence & Degraded Operation', keys:['D-01','D-02','D-03']},
+  {key:'E', name:'Scale, Propagation & Amplification', keys:['E-01','E-02','E-03']},
+  {key:'F', name:'Queueing, Triage & Time-Based Harm', keys:['F-01','F-02']},
+  {key:'G', name:'Monitoring, Drift & Long-Term Operation', keys:['G-01','G-02','G-03']},
+  {key:'H', name:'Incentives, Objectives & Misalignment', keys:['H-01','H-02','H-03']},
+  {key:'I', name:'Human Interpretation & Use', keys:['I-01','I-02']},
+  {key:'J', name:'Security, Access & Cross-Domain Risk', keys:['J-01','J-02']},
+  {key:'K', name:'Adversarial, Crime & Abuse', keys:['K-01','K-02','K-03','K-04','K-05','K-06']},
+  {key:'L', name:'Responsibility & Evidence Laundering Suite', keys:['L-00','L-01','L-02','L-03','L-04','L-05','L-06','L-07','L-08','L-09','L-10','L-11','L-12','L-13','L-14','L-15','L-16']},
+  {key:'M', name:'Residual Risk & Lifecycle Governance', keys:['M-01','M-02','M-03','M-04']},
+  {key:'N', name:'Organizational Capacity', keys:['N-01','N-02','N-03']},
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// ROUTER
+// ═══════════════════════════════════════════════════════════════════
+function getSlug() {
+  const path = window.location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  // Support /cases/horizon or /horizon
+  if (parts.length >= 2 && parts[parts.length - 2] === 'cases') return parts[parts.length - 1];
+  if (parts.length === 1 && parts[0] !== 'index.html') return parts[0];
+  return null;
+}
+
+function navigate(slug) {
+  if (slug) {
+    window.history.pushState({}, '', `/cases/${slug}`);
+  } else {
+    window.history.pushState({}, '', '/cases/');
+  }
+  render();
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('popstate', () => { render(); window.scrollTo(0,0); });
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function badgeClass(score) {
+  if (!score) return 'badge-a';
+  if (score.startsWith('ABSENT')) return 'badge-a';
+  if (score === 'PRESENT') return 'badge-p';
+  return 'badge-x';
+}
+
+function scoreColor(s) {
+  if (s <= 0.2) return 'var(--red)';
+  if (s <= 0.6) return 'var(--amber2)';
+  return 'var(--green)';
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy Link', 2000); }
+  });
+}
+
+function printCase() { window.print(); }
+
+// ═══════════════════════════════════════════════════════════════════
+// TRIGGER MATRIX
+// ═══════════════════════════════════════════════════════════════════
+function renderTriggerMatrix(triggers) {
+  const total = Object.keys(triggers).length;
+  const yesC = Object.values(triggers).filter(v => v === 'YES').length;
+  const nhrC = Object.values(triggers).filter(v => v === 'NEEDS HUMAN REVIEW').length;
+  const unkC = Object.values(triggers).filter(v => v === 'UNKNOWN' || !v).length;
+
+  let html = `
+    <div class="trigger-legend">
+      <div class="tleg"><div class="tleg-dot" style="background:#28885a"></div>YES — ${yesC} triggers</div>
+      <div class="tleg"><div class="tleg-dot" style="background:var(--amber)"></div>NEEDS HUMAN REVIEW — ${nhrC}</div>
+      <div class="tleg"><div class="tleg-dot" style="background:var(--muted);opacity:.5"></div>UNKNOWN — ${unkC}</div>
+    </div>
+    <div class="trigger-summary">
+      <div style="width:${Math.max(2,yesC/total*100)}%;background:#28885a;height:100%"></div>
+      <div style="width:${nhrC/total*100}%;background:var(--amber);height:100%"></div>
+      <div style="width:${unkC/total*100}%;background:var(--muted);opacity:.4;height:100%"></div>
+    </div>`;
+
+  TRIGGER_SECTIONS.forEach((sec, idx) => {
+    const sYes = sec.keys.filter(k => triggers[k] === 'YES').length;
+    const sNhr = sec.keys.filter(k => triggers[k] === 'NEEDS HUMAN REVIEW').length;
+    const sUnk = sec.keys.filter(k => !triggers[k] || triggers[k] === 'UNKNOWN').length;
+    const parts = [];
+    if (sYes) parts.push(`${sYes} YES`);
+    if (sNhr) parts.push(`${sNhr} NHR`);
+    if (sUnk) parts.push(`${sUnk} UNKNOWN`);
+    const isL = sec.key === 'L';
+    const open = idx < 2;
+
+    let rows = '';
+    sec.keys.forEach(k => {
+      const v = triggers[k];
+      let cls = 'tr-unk', txt = '—';
+      if (v === 'YES') { cls = 'tr-yes'; txt = 'YES'; }
+      else if (v === 'NEEDS HUMAN REVIEW') { cls = 'tr-nhr'; txt = 'NHR'; }
+      else if (v === 'UNKNOWN') { cls = 'tr-unk'; txt = 'UNKNOWN'; }
+      rows += `<div class="trigger-row"><span class="tr-id">${k}</span><span class="tr-name">${TRIGGER_NAMES[k]||''}</span><span class="tr-score ${cls}">${txt}</span></div>`;
+    });
+
+    html += `<div class="trigger-section-block">
+      <div class="tsec-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';this.querySelector('.tsec-toggle').classList.toggle('open')"
+        style="${isL ? 'border-left:3px solid var(--red)' : ''}">
+        <span class="tsec-label" style="${isL ? 'color:var(--red)' : ''}">Section ${sec.key} — ${sec.name}</span>
+        <span class="tsec-count">${sec.keys.length} triggers · ${parts.join(' · ')}</span>
+        <span class="tsec-toggle ${open ? 'open' : ''}">▼</span>
+      </div>
+      <div class="tsec-rows" style="display:${open ? 'flex' : 'none'};flex-direction:column;gap:1px">${rows}</div>
+    </div>`;
+  });
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CASE DETAIL PAGE
+// ═══════════════════════════════════════════════════════════════════
+function renderCaseDetail(c) {
+  const fillPct = Math.max(2, c.gpws * 100);
+  document.title = `${c.name} · ${c.id} — Case Record — Human Systems Risk Lab`;
+
+  const tapeItems = [...c.tapeItems, ...c.tapeItems];
+  const tapeHtml = tapeItems.map(t => `<span class="tape-item">${t}</span><span class="tape-sep">·</span>`).join('');
+
+  const harmStatsHtml = c.harmStats.map(s => `
+    <div class="hstat">
+      <div class="hstat-n ${s.color === 'amber' ? 'amber' : ''}">${s.n}</div>
+      <div class="hstat-l">${s.label.replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+
+  const timelineHtml = c.timeline.map(t => {
+    const dc = t.type === 'harm' ? 'r' : t.type === 'accountability' ? 'g' : '';
+    return `<div class="tl-item">
+      <div class="tl-dot ${dc}"><div class="tl-pip"></div></div>
+      <div>
+        <div class="tl-date ${dc}">${t.date}</div>
+        <div class="tl-event">${t.event}</div>
+        <div class="tl-detail">${t.detail}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const conditionsHtml = c.conditions.map(cond => `
+    <div class="cdive">
+      <div class="cdive-top">
+        <div>
+          <div class="cdive-id">${cond.id} — ${cond.name}</div>
+          <div class="cdive-name">${cond.text[0].substring(0,80)}...</div>
+          <div class="cdive-finding">${cond.finding}</div>
+        </div>
+        <span class="cond-badge ${badgeClass(cond.score)}" style="flex-shrink:0;margin-top:4px">${cond.score}</span>
+      </div>
+      ${cond.text.map(t => `<p class="cdive-text">${t}</p>`).join('')}
+      ${cond.quote ? `<div class="cdive-quote">${cond.quote}</div><div class="cdive-source">${cond.source}</div>` : ''}
+      ${cond.laundering ? `
+        <div class="launder-box">
+          <div class="launder-lbl">Laundering Suite patterns — ${cond.id} analysis</div>
+          <div class="launder-tags">${cond.laundering.tags.map(t => `<span class="ltag">${t}</span>`).join('')}</div>
+          <p class="launder-desc">${cond.laundering.desc}</p>
+        </div>` : ''}
+    </div>`).join('');
+
+  const prevHtml = c.prevention.map(p => `
+    <div class="prev-item">
+      <div class="prev-cond">${p.c}</div>
+      <div>
+        <div class="prev-title">${p.title}</div>
+        <div class="prev-desc">${p.desc}</div>
+      </div>
+    </div>`).join('');
+
+  const compHtml = c.comparables.map(comp => `
+    <div class="comp-card" onclick="navigate('${comp.slug}')" style="${comp.scoreColor === 'green' ? 'border-left-color:rgba(40,136,90,.4)' : ''}">
+      <div>
+        <div class="comp-name">${comp.name}</div>
+        <div class="comp-meta">${comp.meta}</div>
+        <div class="comp-overlaps">${comp.tags.map(t => `<span class="comp-tag">${t}</span>`).join('')}</div>
+        <p class="comp-desc">${comp.desc}</p>
+      </div>
+      <div class="comp-score-col">
+        <div class="comp-score-n" style="color:${comp.scoreColor === 'green' ? 'var(--green)' : 'var(--red)'}">${comp.score}</div>
+        <div class="comp-score-l">GPWS Score</div>
+      </div>
+    </div>`).join('');
+
+  const metaHtml = Object.entries(c.metadata).map(([k,v]) => `
+    <div class="meta-cell">
+      <div class="meta-cell-label">${k}</div>
+      <div class="meta-cell-value ${v.includes('DANGER') || v.includes('Failure') || v.includes('Yes') || v.includes('5 of 5') ? 'red' : ''}">${v}</div>
+    </div>`).join('');
+
+  const sourcesHtml = c.sources.map(s => `<div style="font-size:13px;color:var(--warm);padding:4px 0;border-bottom:1px solid var(--border)">${s}</div>`).join('');
+
+  const relatedHtml = c.related.map(r => `
+    <div class="rc" onclick="navigate('${r.slug}')">
+      <div class="rc-type"><span class="rc-dot" style="background:var(--${r.dotColor})"></span>${r.type} · ${r.domain}</div>
+      <div class="rc-name">${r.name}</div>
+      <div class="rc-meta">${r.meta}</div>
+      <div class="rc-conds">${r.conds.map((s,i) => `<span class="rct ${s==='ABSENT'?'rct-a':'rct-p'}">C${i+1}</span>`).join('')}</div>
+    </div>`).join('');
+
+  return `
+    <div class="record-bar">
+      <div class="record-bar-inner">
+        <div class="record-id">HSRL Dataset Record <strong>${c.id}</strong> &nbsp;·&nbsp; ${c.name} &nbsp;·&nbsp; Last verified ${c.verified} &nbsp;·&nbsp; ${c.domain}</div>
+        <div class="record-actions">
+          <button id="copyBtn" class="record-btn" onclick="copyLink()">Copy Link</button>
+          <button class="record-btn" onclick="printCase()">Print / PDF</button>
+          <button class="record-btn" onclick="navigate(null)">← Case Library</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="case-hero">
+      <div class="hero-glow"></div>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="breadcrumb">
+              <span onclick="navigate(null)" style="color:var(--amber);cursor:pointer">Case Library</span>
+              <span>›</span> ${c.name}
+            </div>
+            <div class="case-flag">
+              <div class="flag-dot"></div>
+              <span class="flag-type">${c.type}</span>
+              <span class="flag-domain">· ${c.domain}</span>
+            </div>
+            <h1 class="case-h1">${c.name}</h1>
+            <p class="case-h2">${c.subtitle}</p>
+            <div class="case-meta">
+              <span class="meta-chip">Case ID: ${c.id}</span>
+              <span class="meta-chip">Country: ${c.country}</span>
+              <span class="meta-chip">Domain: ${c.domain}</span>
+              ${c.suppressionConfirmed ? '<span class="meta-chip" style="color:var(--red)">Suppression: Confirmed</span>' : ''}
+              <span class="meta-chip">${c.conditions ? c.conditions.filter(x=>x.score.startsWith('ABSENT')).length : 5} conditions absent</span>
+            </div>
+          </div>
+          <div>
+            <div class="gpws-panel">
+              <div class="gpws-label">Governance Process Watchdog Score (GPWS)</div>
+              <div class="gpws-score">${c.gpws.toFixed(1)}</div>
+              <div class="gpws-tier">⛔ Structural Risk — ${c.gpwsTier}</div>
+              <div class="gpws-bar-track">
+                <div class="gpws-bar-fill" style="width:${fillPct}%"></div>
+              </div>
+              <div class="gpws-note">Scale 0.0–1.0. Score reflects presence of five structural governance conditions. 0.0 = all five absent.</div>
+              <div class="cond-table">
+                ${['c1','c2','c3','c4','c5'].map((k,i) => `
+                  <div class="cond-row">
+                    <span class="cond-id">C${i+1}</span>
+                    <span class="cond-name">${['Named Accountable Owner','Independent Validation','Structured Monitoring','Pre-Established Accountability','No Active Suppression'][i]}</span>
+                    <span class="cond-badge ${badgeClass(c[k])}">${c[k]}</span>
+                  </div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:32px"></div>
+    </section>
+
+    <div class="tape"><div class="tape-track">${tapeHtml}</div></div>
+
+    <div class="sec-nav">
+      <div class="sec-nav-track">
+        <button class="sec-nav-link" onclick="scrollToSec('harm')">Scale of Harm</button>
+        <button class="sec-nav-link" onclick="scrollToSec('timeline')">Timeline</button>
+        <button class="sec-nav-link" onclick="scrollToSec('conditions')">Conditions</button>
+        <button class="sec-nav-link" onclick="scrollToSec('triggers')">57-Trigger Matrix</button>
+        <button class="sec-nav-link" onclick="scrollToSec('prevention')">Prevention</button>
+        <button class="sec-nav-link" onclick="scrollToSec('comparable')">Comparable Cases</button>
+        <button class="sec-nav-link" onclick="scrollToSec('record')">Record &amp; Sources</button>
+      </div>
+    </div>
+
+    <div class="case-body">
+
+      <section class="sec" id="harm">
+        <div class="harm-stats">${harmStatsHtml}</div>
+        <div class="two-col">
+          <div class="sticky-col">
+            <div class="col-label">Harm Context</div>
+            <div class="col-title">${c.overviewTitle}</div>
+            <p class="col-note">${c.overviewNote}</p>
+          </div>
+          <div>
+            ${c.overview.map(p => `<p class="body-p">${p}</p>`).join('')}
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="timeline">
+        <div class="two-col">
+          <div class="sticky-col">
+            <div class="col-label">Timeline</div>
+            <div class="col-title">Deploy to accountability</div>
+            <p class="col-note" style="margin-top:14px;font-size:12px">
+              <span style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--amber);display:inline-block"></span>Neutral / Deployment</span>
+              <span style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--red);display:inline-block"></span>Harm event</span>
+              <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--green);display:inline-block"></span>Accountability</span>
+            </p>
+          </div>
+          <div class="tl">${timelineHtml}</div>
+        </div>
+      </section>
+
+      <section class="sec" id="conditions">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Condition Analysis</div>
+          <h2 class="sec-title">Why each condition scored <em>ABSENT</em></h2>
+        </div>
+        ${conditionsHtml}
+      </section>
+
+      <section class="sec" id="triggers">
+        <div class="sec-header">
+          <div class="sec-eyebrow">57-Trigger Matrix</div>
+          <h2 class="sec-title">Full trigger<br><em>assessment record.</em></h2>
+        </div>
+        ${renderTriggerMatrix(c.triggers)}
+      </section>
+
+      <section class="sec" id="prevention">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Prevention Analysis</div>
+          <h2 class="sec-title">What would have<br><em>changed the outcome.</em></h2>
+        </div>
+        <p class="body-p" style="max-width:680px;margin-bottom:32px">Specific structural conditions whose pre-deployment presence would have interrupted the harm pathway before it began.</p>
+        <div>${prevHtml}</div>
+        <div style="margin-top:36px;background:var(--navy2);border:1px solid var(--border);border-top:2px solid var(--amber);padding:28px">
+          <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:12px">If a GCR record had existed before deployment</div>
+          <p class="body-p">A pre-deployment Governance Confirmation Record for ${c.name} would have required the deploying organisation to answer in plain language what happens when the system produces adverse outputs — and to sign that answer before deployment. That signed record fixes accountability at the deployment date and closes the evasion window that every case in this dataset exploited.</p>
+        </div>
+      </section>
+
+      <section class="sec" id="comparable">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Comparable Cases</div>
+          <h2 class="sec-title">Systems with matching<br><em>governance profiles.</em></h2>
+        </div>
+        ${compHtml}
+      </section>
+
+      <section class="sec" id="record">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Record &amp; Sources</div>
+          <h2 class="sec-title">Classification &amp;<br><em>evidentiary basis.</em></h2>
+        </div>
+        <div class="meta-grid">${metaHtml}</div>
+        <div style="margin-top:16px;background:var(--navy2);border:1px solid var(--border);padding:24px">
+          <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Primary evidentiary sources</div>
+          ${sourcesHtml}
+        </div>
+        <div style="margin-top:12px;background:rgba(192,122,24,.05);border:1px solid rgba(192,122,24,.2);padding:22px">
+          <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Using this record</div>
+          <p style="font-size:13px;color:var(--warm);line-height:1.75">This record may be cited for research, policy analysis, journalism, and advocacy with attribution to the Human Systems Risk Lab. For formal legal or regulatory submissions, contact HSRL to discuss certified documentation formats.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <section style="padding:72px 0;background:var(--navy2);border-top:1px solid var(--border)">
+      <div class="wrap">
+        <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:16px">Related Cases</div>
+        <h2 style="font-family:var(--ff-display);font-size:clamp(22px,3vw,38px);font-weight:600;color:var(--cream);line-height:1.15;margin-bottom:32px">More from the dataset</h2>
+        <div class="related-grid">${relatedHtml}</div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-ghost" onclick="navigate(null)">Browse All Cases →</button>
+        </div>
+      </div>
+    </section>
+
+    <style>
+    @media print {
+      .record-bar .record-actions, .sec-nav, .tape { display:none!important }
+      body { background:white!important; color:#1a1a1a!important }
+      .case-hero, .sec, section { background:white!important }
+      .case-h1, .sec-title, .cdive-name { color:#0a0a0a!important }
+      .body-p, .cdive-text, .tl-detail, .prev-desc { color:#2a2a2a!important }
+      .badge-a { color:#c83030!important; border-color:#c83030!important }
+      .badge-p { color:#28885a!important; border-color:#28885a!important }
+      .gpws-score { color:#c83030!important }
+      .tsec-rows { display:flex!important; flex-direction:column!important }
+      .sec { page-break-inside:avoid }
+    }
+    </style>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LIBRARY INDEX
+// ═══════════════════════════════════════════════════════════════════
+let filterState = { search: '', type: 'all', conditions: new Set() };
+
+function renderLibrary() {
+  document.title = 'Case Library — Human Systems Risk Lab';
+  const caseList = Object.values(CASES);
+  const built = caseList.filter(c => c.built).length;
+
+  return `
+    <div class="lib-hero">
+      <div class="wrap">
+        <div class="lib-hero-eyebrow">Human Systems Risk Lab</div>
+        <h1 class="lib-hero-title">Case Library</h1>
+        <p style="font-size:15px;color:var(--warm);max-width:560px;line-height:1.8">Documented governance failures in automated and sociotechnical systems. Validated against the five-condition diagnostic framework.</p>
+        <div class="lib-stats">
+          <div class="lib-stat"><strong>${caseList.length}</strong>Total cases</div>
+          <div class="lib-stat"><strong>${caseList.filter(c=>c.type==='Failure'||c.type==='Cybersecurity Failure').length}</strong>Failures</div>
+          <div class="lib-stat"><strong>${built}</strong>Full case analyses</div>
+          <div class="lib-stat"><strong>${caseList.filter(c=>c.suppressionConfirmed).length}</strong>Suppression confirmed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+      <div class="filter-inner">
+        <div class="search-row">
+          <input class="search-input" id="searchInput" placeholder="Search by name, domain, or country…" oninput="updateSearch(this.value)">
+        </div>
+        <div class="chip-row" id="typeChips">
+          <button class="chip active" onclick="setType('all',this)">All</button>
+          <button class="chip" onclick="setType('Failure',this)">Failures</button>
+          <button class="chip" onclick="setType('Resilient',this)">Resilient</button>
+          <button class="chip" onclick="setType('RTF',this)">RTF</button>
+        </div>
+        <div class="chip-row" id="condChips">
+          <button class="chip" onclick="toggleCond('c1-absent',this)">C1 Absent</button>
+          <button class="chip" onclick="toggleCond('c2-absent',this)">C2 Absent</button>
+          <button class="chip" onclick="toggleCond('c3-absent',this)">C3 Absent</button>
+          <button class="chip" onclick="toggleCond('c4-absent',this)">C4 Absent</button>
+          <button class="chip" onclick="toggleCond('c5-absent',this)">C5 Absent</button>
+          <button class="chip" onclick="toggleCond('suppression',this)">Suppression Confirmed</button>
+          <button class="chip" onclick="toggleCond('built',this)">Full Analysis Only</button>
+        </div>
+        <div class="results-count" id="resultsCount"></div>
+      </div>
+    </div>
+
+    <div class="case-grid" id="caseGrid"></div>`;
+}
+
+function filterAndRenderCards() {
+  const caseList = Object.values(CASES);
+  const q = filterState.search.toLowerCase();
+
+  const filtered = caseList.filter(c => {
+    if (q && !`${c.name} ${c.domain} ${c.country} ${c.id}`.toLowerCase().includes(q)) return false;
+    if (filterState.type !== 'all' && c.type !== filterState.type) return false;
+    for (const cond of filterState.conditions) {
+      if (cond === 'c1-absent' && !c.c1.startsWith('ABSENT')) return false;
+      if (cond === 'c2-absent' && !c.c2.startsWith('ABSENT')) return false;
+      if (cond === 'c3-absent' && !c.c3.startsWith('ABSENT')) return false;
+      if (cond === 'c4-absent' && !c.c4.startsWith('ABSENT')) return false;
+      if (cond === 'c5-absent' && !c.c5.startsWith('ABSENT')) return false;
+      if (cond === 'suppression' && !c.suppressionConfirmed) return false;
+      if (cond === 'built' && !c.built) return false;
+    }
+    return true;
+  });
+
+  const grid = document.getElementById('caseGrid');
+  const countEl = document.getElementById('resultsCount');
+  if (!grid) return;
+
+  countEl.textContent = `Showing ${filtered.length} of ${caseList.length} cases`;
+
+  grid.innerHTML = filtered.map(c => {
+    const dot = (c.type === 'Failure' || c.type === 'Cybersecurity Failure') ? 'var(--red)' : 'var(--green)';
+    const sc = scoreColor(c.gpws);
+    const conds = ['c1','c2','c3','c4','c5'].map((k,i) =>
+      `<span class="cc ${c[k].startsWith('ABSENT') ? 'cc-a' : 'cc-p'}">C${i+1}</span>`).join('');
+    return `<div class="case-card" onclick="navigate('${c.slug}')">
+      <div class="card-type-row">
+        <div class="card-type-dot" style="background:${dot}"></div>
+        <span class="card-type-label">${c.type}</span>
+        <span class="card-domain-label">${c.domain}</span>
+      </div>
+      <div class="card-name">${c.name}</div>
+      <div class="card-meta">${c.country}${c.deployYear ? ' · ' + c.deployYear : ''}</div>
+      <div class="card-conditions">${conds}</div>
+      <div class="card-bottom">
+        <div class="card-score" style="color:${sc}">${c.gpws.toFixed(1)}</div>
+        ${c.built ? '<span class="card-link">Full analysis →</span>' : '<span class="card-no-link">Dataset record</span>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateSearch(v) { filterState.search = v; filterAndRenderCards(); }
+function setType(t, btn) {
+  filterState.type = t;
+  document.querySelectorAll('#typeChips .chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterAndRenderCards();
+}
+function toggleCond(c, btn) {
+  btn.classList.toggle('active');
+  if (filterState.conditions.has(c)) filterState.conditions.delete(c);
+  else filterState.conditions.add(c);
+  filterAndRenderCards();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SCROLL HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function scrollToSec(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════
+function render() {
+  const slug = getSlug();
+  const app = document.getElementById('app');
+
+  if (slug && CASES[slug]) {
+    app.innerHTML = renderCaseDetail(CASES[slug]);
+  } else if (slug && !CASES[slug]) {
+    app.innerHTML = `<div style="padding:120px 48px;text-align:center">
+      <div style="font-family:var(--ff-mono);font-size:11px;color:var(--amber);letter-spacing:.2em;margin-bottom:16px">404 — NOT FOUND</div>
+      <h1 style="font-family:var(--ff-display);font-size:48px;color:var(--cream);margin-bottom:20px">Case not found</h1>
+      <p style="color:var(--warm);margin-bottom:28px">No case record exists for "${slug}".</p>
+      <button class="btn btn-ghost" onclick="navigate(null)">← Back to Case Library</button>
+    </div>`;
+  } else {
+    app.innerHTML = renderLibrary();
+    setTimeout(filterAndRenderCards, 0);
+  }
+}
+
+render();
+</script>
+</body>
+</html>
