@@ -1,0 +1,8 @@
+{
+  "name": "hsrl-case-library",
+  "version": "1.0.0",
+  "description": "HSRL Case Library and Diagnostic Tool",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
