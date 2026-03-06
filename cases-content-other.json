@@ -1,0 +1,287 @@
+{
+  "therac25": {
+    "overviewTitle": "A race condition killed people \u2014 and AECL's early response minimised it",
+    "overviewNote": "The Therac-25 removed hardware safety interlocks that existed in previous models, relying entirely on software. When that software had a race condition, there was nothing else to stop it delivering a lethal dose.",
+    "overview": [
+      "The Therac-25 was a radiation therapy machine manufactured by Atomic Energy of Canada Limited (AECL). Unlike its predecessors, the Therac-20 and Therac-6, the Therac-25 removed hardware safety interlocks and relied entirely on software for safety. The software contained a race condition \u2014 a timing-dependent bug that could be triggered by an experienced operator entering mode and parameter changes rapidly. When triggered, the machine could deliver a radiation dose 100 times higher than intended, directly to the patient's skin rather than through the beam-flattening filter.",
+      "Between 1985 and 1987, at least six patients received massive radiation overdoses from Therac-25 machines. At least three died. AECL's initial response to incident reports was to minimise them: the company attributed early reports to operator error, denied that the software could be the cause, and issued fixes that did not address the underlying race condition. The Therac-25 is one of the foundational cases in software safety literature because it demonstrated the danger of removing hardware interlocks, the risk of relying on untested software for safety-critical functions, and the harm that results when a manufacturer's response to safety incidents is denial rather than investigation."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "3 DEATHS ATTRIBUTED",
+      "HARDWARE INTERLOCKS REMOVED",
+      "RACE CONDITION IN SAFETY SOFTWARE",
+      "AECL INITIALLY BLAMED OPERATORS",
+      "FOUNDATIONAL SOFTWARE SAFETY CASE",
+      "NO INDEPENDENT VALIDATION"
+    ],
+    "harmStats": [
+      {
+        "n": "3",
+        "label": "Deaths directly\nattributed",
+        "color": "red"
+      },
+      {
+        "n": "6",
+        "label": "Patients given\nmassive overdoses",
+        "color": "red"
+      },
+      {
+        "n": "5 yr",
+        "label": "First incident to\nlast known overdose",
+        "color": "amber"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "1982",
+        "type": "neutral",
+        "event": "Therac-25 released \u2014 hardware interlocks removed",
+        "detail": "AECL releases the Therac-25 with hardware safety interlocks removed from previous models. The decision to rely on software alone for safety is made without independent validation of whether the software could produce the safety guarantees the hardware previously provided. No named individual is documented as accountable for this architectural decision and its safety implications."
+      },
+      {
+        "date": "1985\u20131986",
+        "type": "harm",
+        "event": "First overdose incidents \u2014 AECL attributes to operator error",
+        "detail": "Therac-25 machines begin delivering overdoses to patients. Early incident reports to AECL describe patients experiencing unusual burns and pain. AECL investigates and concludes that the machine cannot have delivered an overdose \u2014 the software prevents it. AECL's response attributes the incidents to operator error. This response is wrong and delays identification of the actual cause."
+      },
+      {
+        "date": "1986",
+        "type": "harm",
+        "event": "Kendy 1986 \u2014 patient Verdon Kidd receives fatal overdose",
+        "detail": "A patient at a facility in Ontario receives a massive overdose. The clinical team cannot explain the burn. AECL investigates, finds no fault, and the incident is not linked to a software defect. The race condition that caused it remains unidentified. The machine continues operating."
+      },
+      {
+        "date": "1986\u20131987",
+        "type": "harm",
+        "event": "Further overdoses \u2014 pattern emerges despite AECL denials",
+        "detail": "Additional patients receive overdoses. Hospital physicists and medical physicists begin sharing information and identifying a pattern: the overdoses occur when operators enter data rapidly using a specific key sequence. AECL continues to maintain that the machine cannot deliver an overdose. Field patches are issued that do not address the underlying race condition."
+      },
+      {
+        "date": "1987",
+        "type": "accountability",
+        "event": "FDA investigation \u2014 race condition identified",
+        "detail": "The US Food and Drug Administration opens an investigation. Working with AECL and independent engineers, the race condition is finally identified: a timing-dependent bug that can be triggered by an experienced operator entering mode and energy level changes within a specific time window. The flaw had existed in the software since before deployment."
+      },
+      {
+        "date": "1987",
+        "type": "accountability",
+        "event": "Therac-25 recalled and taken out of service",
+        "detail": "All Therac-25 machines are taken out of service. The recall comes five years after the first machine was deployed and two years after the first overdose incidents. The harm window covers at least six patients, at least three of whom died. The Therac-25 becomes the foundational case for software safety literature and for the principle that hardware interlocks in safety-critical systems should not be removed without independent validation of software alternatives."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No individual at AECL is documented as the named accountable owner for the software safety of the Therac-25 at deployment. The decision to remove hardware interlocks was an architectural choice that should have required a named individual to sign off on the safety implications \u2014 specifically, to document that the software had been independently validated to provide equivalent safety to the hardware it replaced.",
+          "AECL's response to early incident reports illustrates the C1 absence: the company investigated and concluded the machine was not the cause. There was no named individual whose documented accountability required them to commission independent investigation of the software when operator error was reported as a possible cause. The responsibility diffused across AECL's engineering team in a way that allowed five years of harm to occur before the root cause was identified."
+        ],
+        "quote": "The decision to remove hardware interlocks had no named owner \u2014 and when incidents occurred, neither did the response.",
+        "source": "HSRL C1 analysis \u2014 Therac-25"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "The Therac-25 software was not independently validated before deployment. The safety analysis that justified removing hardware interlocks relied on AECL's internal assessment of software reliability. No independent software safety body reviewed the code for race conditions, timing dependencies, or other failure modes before the machine was deployed in clinical settings.",
+          "This is the definitional C2 failure for software-based medical devices: the safety claim \u2014 that software alone can provide the safety guarantees that hardware interlocks previously provided \u2014 was not tested by anyone independent of the manufacturer. The race condition that caused the overdoses was a known category of software defect that independent code review would have been likely to identify."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No structured monitoring mechanism connected incident reports from multiple facilities to a systematic review of whether the Therac-25 software was the common cause. AECL received reports of unusual patient outcomes from multiple facilities across multiple years. Each was investigated as an isolated incident. The pattern \u2014 that overdoses occurred at multiple facilities, to patients operated by experienced operators, triggered by rapid data entry \u2014 was identified by hospital physicists sharing information informally, not by a monitoring system.",
+          "If AECL had operated a structured adverse event monitoring system that aggregated incident reports across all Therac-25 installations and flagged multiple incidents with similar clinical presentations, the pattern would have been visible within months of the first incident rather than years."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol defined what happened when a patient experienced an unexplained radiation injury from a Therac-25. The default response \u2014 AECL investigates, AECL concludes machine is not at fault, machine continues operating \u2014 was not a formally adopted safety protocol. It was the operational default that emerged from the absence of any pre-established halt condition.",
+          "A pre-established accountability protocol would have defined: any unexplained radiation injury to a patient treated by a Therac-25 triggers immediate suspension of that machine pending independent technical investigation. That protocol would have removed the Therac-25 from service after the first overdose incident rather than after the sixth."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "C5 for Therac-25 is ABSENT but without the confirmed active suppression pattern of Robodebt, Horizon, or MCAS. AECL's early incident response was denial rather than investigation \u2014 the company maintained for years that the machine could not have caused the injuries \u2014 but this is documented as incorrect technical conclusion rather than deliberate suppression of known adverse information.",
+          "The C5 signal is present but not confirmed at the level that Royal Commission findings or congressional investigation provide for other cases in the dataset. AECL's response pattern \u2014 attributing incidents to operator error, issuing patches that didn't address the root cause, maintaining the machine was safe \u2014 is consistent with motivated reasoning rather than documented deliberate suppression. The dataset marks this as ABSENT without confirmed active suppression."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-06 Blame shifted onto tools",
+            "L-13 Good intent used to negate outcomes"
+          ],
+          "desc": "L-06 (Blame shifted onto tools): AECL consistently attributed early incidents to operator error rather than examining the software. L-13 (Good intent): AECL's investigation reports framed the company as actively investigating and finding no fault \u2014 the good-faith investigation narrative substituted for a finding that the software had a defect."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named individual accountable for the safety implications of removing hardware interlocks",
+        "desc": "The architectural decision to remove hardware interlocks required someone to own the safety claim: this software provides equivalent safety to the hardware it replaces. That person's name should have been on record before the first Therac-25 was deployed. When incidents occurred, that person would have had documented accountability for commissioning independent investigation, not for defending the original safety claim."
+      },
+      {
+        "c": "C2",
+        "title": "Independent code review before deployment in clinical settings",
+        "desc": "Software safety for a device that can deliver lethal radiation doses should not rest on the developer's own assessment. An independent software safety engineer reviewing the Therac-25 code for race conditions, timing dependencies, and single points of failure would have been likely to identify the defect before deployment. The category of defect \u2014 a race condition triggered by rapid operator input \u2014 is a known software failure mode that safety-specific code review looks for."
+      },
+      {
+        "c": "C3",
+        "title": "A mandatory adverse event reporting system aggregated across all Therac-25 installations",
+        "desc": "AECL received incident reports from multiple facilities over multiple years. A structured monitoring system that aggregated those reports and flagged clinical presentations with similar features \u2014 unexplained radiation injury, experienced operator, rapid data entry \u2014 would have identified the pattern within months. The pattern was eventually identified by hospital physicists sharing information informally. A formal system would have done it faster."
+      },
+      {
+        "c": "C4",
+        "title": "An automatic halt condition for any unexplained patient injury from a radiation therapy system",
+        "desc": "Any unexplained radiation injury to a patient treated by a Therac-25 should have triggered automatic suspension of that machine pending independent investigation. This is the pre-established halt condition that C4 requires. It would have removed the Therac-25 from service after the first overdose incident. The harm window covers at least six patients. A mandatory halt after incident one would have prevented incidents two through six."
+      },
+      {
+        "c": "C5",
+        "title": "An independent reporting pathway for clinical staff to escalate concerns without going through the manufacturer",
+        "desc": "Clinical physicists who suspected the Therac-25 was the cause of patient injuries had no independent reporting pathway \u2014 their concerns went to AECL, which investigated and concluded the machine was not at fault. A mandatory adverse event reporting pathway to an independent body \u2014 the FDA, a medical device safety authority \u2014 independent of the manufacturer would have brought the pattern to regulatory attention years earlier."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "mcas",
+        "name": "Boeing 737 MAX MCAS",
+        "meta": "USA (Global) \u00b7 Aviation Safety \u00b7 2017\u20132019",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Closest structural comparator for safety-critical software failure pattern: removal of redundancy (hardware interlocks / dual sensors), reliance on software alone for safety, incidents treated as isolated rather than systemic, manufacturer initial response minimising severity. Decades apart, identical structural failure pattern.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "compas",
+        "name": "COMPAS Risk Assessment",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 1998\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 ABSENT"
+        ],
+        "desc": "Cross-domain comparator for removal of independent validation: proprietary software deployed in high-stakes settings without independent validation of accuracy, with the developer's own assessment as the only available evaluation. Different domain, identical C2 failure structure.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "robodebt",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 Benefits & Welfare \u00b7 2016\u20132019",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Cross-domain comparator: different automated system, same consequence of C1 absence \u2014 when incidents occurred, no named owner existed with authority and responsibility to halt the system pending investigation.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "T002 / T026",
+      "Classification": "RTF \u2014 Medical Devices",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Not confirmed (denial pattern documented)",
+      "Country": "Canada / USA",
+      "Operational Period": "1982 \u2013 1987",
+      "Justice Lag": "5 years (first incident to recall)",
+      "Harm Scale": "6 overdoses \u00b7 3 deaths attributed",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "Leveson & Turner \u2014 'An Investigation of the Therac-25 Accidents', IEEE Computer, 1993",
+      "FDA \u2014 Serious Accident Investigation Report, Therac-25, 1988",
+      "AECL \u2014 internal incident investigation reports (via Leveson & Turner)",
+      "Joyce Kaye Longbotham v. AECL and others (civil litigation record)"
+    ],
+    "related": [
+      {
+        "slug": "mcas",
+        "type": "Failure",
+        "domain": "Aviation Safety",
+        "name": "Boeing 737 MAX MCAS",
+        "meta": "Global \u00b7 2017\u20132019 \u00b7 346 deaths",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "compas",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "COMPAS Risk Assessment",
+        "meta": "US \u00b7 1998\u2013present \u00b7 ongoing",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "michigan-midas",
+        "type": "Failure",
+        "domain": "Benefits & Welfare",
+        "name": "Michigan MiDAS",
+        "meta": "US \u00b7 2013\u20132015 \u00b7 40K+ false fraud",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  }
+}

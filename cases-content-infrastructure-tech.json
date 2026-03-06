@@ -1,0 +1,600 @@
+{
+  "horizon": {
+    "overviewTitle": "Prosecuted for a computer's errors \u2014 900 times over 15 years",
+    "overviewNote": "Software bugs produced phantom shortfalls. Post Office Ltd knew. They prosecuted subpostmasters anyway. The largest miscarriage of justice in British legal history.",
+    "overview": [
+      "The Post Office Horizon IT system was a computerised accounting and point-of-sale platform developed by Fujitsu and deployed across the UK Post Office network from 1999. The system contained software bugs that produced phantom shortfalls in branch accounts \u2014 apparent discrepancies between the cash held at a branch and what Horizon recorded. Post Office Ltd prosecuted subpostmasters for theft, fraud, and false accounting based on these computer-generated figures, which courts accepted as reliable without independent scrutiny.",
+      "Between 1999 and 2015, over 900 subpostmasters were prosecuted \u2014 the largest miscarriage of justice in British legal history. Many were imprisoned. Many lost their homes, their businesses, and their livelihoods. At least four took their own lives. Post Office Ltd was aware of Horizon bugs from the early 2000s and actively suppressed that knowledge in legal proceedings for over a decade. The Post Office Horizon IT Inquiry (Sir Wyn Williams, 2021\u20132024) found systemic dishonesty at senior levels of the organisation."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "900+ WRONGFUL PROSECUTIONS",
+      "LARGEST UK MISCARRIAGE OF JUSTICE",
+      "BUGS KNOWN FROM EARLY 2000s",
+      "SUPPRESSED IN COURT 15 YEARS",
+      "PUBLIC INQUIRY 2021\u20132024",
+      "25 YEAR JUSTICE LAG"
+    ],
+    "harmStats": [
+      {
+        "n": "900+",
+        "label": "Wrongful\nprosecutions",
+        "color": "red"
+      },
+      {
+        "n": "25 yr",
+        "label": "Deploy to\nmass exoneration",
+        "color": "amber"
+      },
+      {
+        "n": "4+",
+        "label": "Deaths attributed\nto harm window",
+        "color": "red"
+      },
+      {
+        "n": "\u00a358M+",
+        "label": "Compensation\n(ongoing)",
+        "color": "amber"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "1999",
+        "type": "neutral",
+        "event": "Horizon deployed across Post Office network",
+        "detail": "Fujitsu's Horizon system goes live. No named individual at Post Office Ltd is documented as accountable for the accuracy of the system's financial outputs. No independent validation of the accounting methodology is commissioned. No structured monitoring connects reported shortfalls to system performance review."
+      },
+      {
+        "date": "Early 2000s",
+        "type": "harm",
+        "event": "Bugs documented internally \u2014 prosecutions begin",
+        "detail": "Software faults causing phantom shortfalls are identified and documented within Fujitsu and Post Office Ltd. Subpostmasters raising concerns are told the system is reliable and that no one else is experiencing problems. This was false. Prosecutions begin. Internal knowledge of bugs is not disclosed in legal proceedings."
+      },
+      {
+        "date": "2000\u20132015",
+        "type": "harm",
+        "event": "900+ prosecutions \u2014 suppression sustained for 15 years",
+        "detail": "Post Office Ltd prosecutes over 900 subpostmasters for theft, fraud, and false accounting. In each proceeding, Horizon records are presented as reliable. Post Office Ltd holds documentation of known bugs and does not disclose it. This is not a single act of suppression but a sustained institutional pattern operating across hundreds of individual cases."
+      },
+      {
+        "date": "2009",
+        "type": "harm",
+        "event": "Second Sight investigation commissioned \u2014 then terminated",
+        "detail": "Post Office Ltd commissions forensic accountants Second Sight to investigate Horizon. Second Sight identifies significant problems. Post Office Ltd terminates the investigation and attempts to suppress the findings. The Parliamentary Business, Innovation and Skills Committee later identifies this as deliberate suppression of adverse findings."
+      },
+      {
+        "date": "2019",
+        "type": "accountability",
+        "event": "High Court finds Post Office engaged in abuse of process",
+        "detail": "Justice Fraser finds that Post Office Ltd engaged in conduct amounting to an abuse of the court's process. He finds that Horizon did have bugs causing phantom shortfalls and that Post Office Ltd knew this. The judgment is the first formal judicial finding of the suppression pattern."
+      },
+      {
+        "date": "2021",
+        "type": "accountability",
+        "event": "Court of Appeal quashes 39 convictions \u2014 inquiry opens",
+        "detail": "The Court of Appeal quashes 39 convictions, finding Post Office Ltd had failed to disclose material evidence. The Post Office Horizon IT Inquiry opens under Sir Wyn Williams. This is the start of the formal accountability arc \u2014 22 years after deployment."
+      },
+      {
+        "date": "2021\u20132024",
+        "type": "accountability",
+        "event": "Public Inquiry \u2014 systemic dishonesty found at senior levels",
+        "detail": "The Inquiry hears evidence from hundreds of witnesses and finds evidence of systemic dishonesty at senior levels of Post Office Ltd. Multiple referrals made to prosecuting authorities. Witness statements are found to have been altered. Senior Fujitsu executives give evidence."
+      },
+      {
+        "date": "2024 \u2014 ongoing",
+        "type": "accountability",
+        "event": "Mass exoneration legislation \u2014 accountability arc incomplete",
+        "detail": "The Post Office (Horizon System) Offences Act 2024 automatically quashes convictions related to Horizon. Compensation payments begin. Criminal referrals ongoing. The accountability arc from deployment in 1999 to mass exoneration in 2024 is 25 years. Individual criminal accountability for those responsible remains incomplete."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "Post Office Ltd operated Horizon under a contract with Fujitsu that distributed responsibility across two organisations without clearly assigning it to either. When subpostmasters reported shortfalls they could not explain, there was no named individual at Post Office Ltd whose documented role included investigating whether Horizon itself was the source of the discrepancy. The default assumption \u2014 that the system was reliable and the subpostmaster was responsible \u2014 was never formally assigned as a governance position with a named owner who could be held to it.",
+          "The Inquiry found that senior Post Office Ltd executives made decisions about litigation strategy, disclosure obligations, and how to characterise Horizon to courts and subpostmasters. None had documented accountability for the question that mattered: is this system producing accurate outputs? That question had no owner, which is why it was never seriously asked across 15 years of prosecutions."
+        ],
+        "quote": "The organisation prosecuted hundreds of people on the basis of a system no one was accountable for verifying.",
+        "source": "HSRL C1 analysis \u2014 Horizon"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "Horizon's accounting outputs were never independently validated before being used as the basis for criminal prosecutions. Courts accepted Horizon's records as reliable based on the legal presumption that computers produce accurate outputs unless proven otherwise. Post Office Ltd did not commission independent validation before using its records as prosecution evidence. The Second Sight investigation \u2014 the closest thing to independent review \u2014 was terminated before its findings could be finalised.",
+          "The consequence of C2 absence here is structurally distinct. In Robodebt, the unlawful methodology was simple enough to identify in a single legal review. In Horizon, the bugs were complex software faults requiring forensic examination of Fujitsu's code. That forensic examination was available \u2014 Fujitsu held the records \u2014 but Post Office Ltd never commissioned it for any proceeding in which it was prosecuting a subpostmaster."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "The pattern of unexplained shortfalls across hundreds of branches was a monitoring signal of exactly the kind C3 is designed to capture. Hundreds of subpostmasters reported identical experiences \u2014 accounts that balanced and then suddenly showed large discrepancies they could not account for. No mechanism connected these reports to a systematic review of whether Horizon was producing them.",
+          "Post Office Ltd's Helpline documented the volume and nature of Horizon-related complaints throughout the harm window. Those call records were not used as a monitoring dataset. They were used to reassure subpostmasters that the system was reliable. The difference between using complaint data as a monitoring signal versus using it as a reassurance script is the difference between C3 present and C3 absent."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "The subpostmaster contract made personal liability for shortfalls the default position. There was no pre-established protocol requiring independent investigation of Horizon's outputs before a subpostmaster could be held liable. No defined threshold existed at which the volume of unexplained shortfalls would trigger a system audit. No pre-established appeals mechanism gave subpostmasters access to Fujitsu's source code or bug logs.",
+          "The accountability architecture was constructed entirely in the direction of prosecuting subpostmasters, with no structural pathway for system accountability to flow in the other direction. A pre-established protocol requiring system audit before prosecution would have created that pathway in 1999 and ended the harm within years, not decades."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT \u2014 Confirmed",
+        "finding": "ABSENT \u2014 ACTIVE SUPPRESSION CONFIRMED",
+        "text": [
+          "This is the longest-sustained confirmed C5 suppression pattern in the HSRL dataset. Post Office Ltd had legal disclosure obligations \u2014 duties to share with defendants any evidence that could undermine the prosecution \u2014 and failed to meet those obligations across hundreds of proceedings over more than a decade. This was not a single decision. It was a sustained institutional behaviour pattern.",
+          "The Inquiry found evidence of systemic dishonesty at senior levels of the organisation. Executives who gave evidence about what they knew and when they knew it were found in multiple instances to have given evidence inconsistent with the documentary record. The Second Sight investigation was actively terminated to prevent adverse findings from becoming public. Witness statements were altered. The scale of the suppression is proportionate to the scale of the harm."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-02 Authority denied after harm",
+            "L-03 Evidence degraded",
+            "L-06 Blame shifted onto tools",
+            "L-16 Responsibility shifted to victims"
+          ],
+          "desc": "L-03: Fujitsu bug logs not disclosed in prosecutions across 15 years. L-06: Horizon presented as the reliable authority, subpostmaster conduct as the variable. L-16: Subpostmaster contracts made personal liability the legal default, requiring victims to prove a negative against a system whose source code they could not access."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named individual responsible for system accuracy \u2014 not just contract compliance",
+        "desc": "If one person at Post Office Ltd had been documented as accountable for the accuracy of Horizon's financial outputs \u2014 with explicit authority to pause prosecutions pending system review \u2014 the question 'is this system producing the figures, or is the subpostmaster?' would have had an owner. Without that owner, the question was never asked across 15 years and 900 prosecutions."
+      },
+      {
+        "c": "C2",
+        "title": "Independent validation of Horizon's accuracy before use as prosecution evidence",
+        "desc": "Courts accepted Horizon records as reliable without independent verification. If Post Office Ltd had been required to obtain independent validation of the system's error rate before using its outputs in criminal proceedings, the bug documentation that Fujitsu held would have been examined years before the 2019 High Court ruling."
+      },
+      {
+        "c": "C3",
+        "title": "A monitoring protocol treating the shortfall complaint rate as a system signal",
+        "desc": "Hundreds of identical complaints from subpostmasters across the network were a clear and accurate signal. If the Helpline call volume on unexplained shortfalls had been a defined monitoring metric \u2014 reviewed monthly, with an escalation threshold \u2014 the pattern would have been visible within the first two years of operation, not after 15 years and 900 prosecutions."
+      },
+      {
+        "c": "C4",
+        "title": "A pre-established protocol requiring system audit before prosecution",
+        "desc": "If the subpostmaster contract and prosecution policy had included a requirement that any shortfall above a defined threshold trigger an independent audit of Horizon's outputs before criminal action could proceed, the prosecution pathway would have hit a structural checkpoint. That checkpoint did not exist. The only pathway available was criminal liability."
+      },
+      {
+        "c": "C5",
+        "title": "An independent oversight body with statutory access to Fujitsu's bug logs",
+        "desc": "The suppression in Horizon was sustained because the information that would have ended it was held inside two organisations with strong incentives to keep it there. An independent technical oversight body with statutory access to that documentation, reviewing it against the prosecution record, would have identified the pattern within the first decade. The 25-year justice lag required both C5 failure and the absence of any external body with access and authority to break it."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "robodebt",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 Benefits & Welfare \u00b7 2016\u20132019",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Closest structural comparator: Royal Commission finding of deliberate concealment, sustained institutional suppression, comparable justice lag. Suppression mechanism differs \u2014 Robodebt used briefing architecture; Horizon used litigation disclosure failures \u2014 but the institutional behaviour pattern is identical.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "compas",
+        "name": "COMPAS Risk Assessment",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 1998\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 ABSENT"
+        ],
+        "desc": "Same domain pattern: algorithmic outputs used in criminal proceedings without independent validation, accepted by courts without scrutiny. C2 failure is structurally identical \u2014 system outputs treated as reliable because no one was required to verify them before they were used to make decisions about people's liberty.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "estonia-xroad",
+        "name": "Estonia X-Road",
+        "meta": "Estonia \u00b7 Digital Infrastructure \u00b7 2001\u2013present",
+        "tags": [
+          "C1 PRESENT",
+          "C2 PRESENT",
+          "C5 PRESENT"
+        ],
+        "desc": "Resilient comparator for government digital infrastructure. Named accountable owners, independent validation, no suppression of adverse findings across 25+ years. Included as the structural contrast: what C1 and C2 presence looks like in a long-running government system.",
+        "score": "1.0",
+        "scoreColor": "green"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F040",
+      "Classification": "Failure \u2014 Public Infrastructure",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Yes \u2014 Active suppression",
+      "Country": "United Kingdom",
+      "Operational Period": "1999 \u2013 2015 (prosecutions continued to 2015)",
+      "Justice Lag": "25 years (deploy to mass exoneration)",
+      "Harm Scale": "900+ wrongful prosecutions \u00b7 4+ deaths",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "Post Office Horizon IT Inquiry \u2014 Sir Wyn Williams, 2021\u20132024",
+      "Bates & Ors v Post Office Ltd \u2014 High Court judgment, Justice Fraser, 2019",
+      "Court of Appeal \u2014 Hamilton & Ors, 2021 (first group exoneration)",
+      "Post Office (Horizon System) Offences Act 2024",
+      "Computer Weekly / Private Eye investigative reporting 2009\u20132020"
+    ],
+    "related": [
+      {
+        "slug": "robodebt",
+        "type": "Failure",
+        "domain": "Benefits & Welfare",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 2016\u20132019 \u00b7 470K notices",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "compas",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "COMPAS Risk Assessment",
+        "meta": "US \u00b7 1998\u2013present \u00b7 ongoing",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "mcas",
+        "type": "Failure",
+        "domain": "Aviation Safety",
+        "name": "Boeing 737 MAX MCAS",
+        "meta": "Global \u00b7 2017\u20132019 \u00b7 346 deaths",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  },
+  "mcas": {
+    "overviewTitle": "346 deaths. No named owner for MCAS safety. Simulator data suppressed.",
+    "overviewNote": "Boeing certified MCAS without telling pilots it existed. The FAA's oversight was structurally captured. No individual was accountable for the system's safety before Lion Air 610.",
+    "overview": [
+      "The Boeing 737 MAX Maneuvering Characteristics Augmentation System (MCAS) was a flight control software system designed to compensate for the handling characteristics of the 737 MAX's larger, repositioned engines. Boeing certified MCAS under an existing 737 type certificate without disclosing the system's full authority to the FAA. Pilots were not trained on MCAS. In some variants, MCAS was not included in the flight manual. MCAS relied on a single angle-of-attack sensor \u2014 a single point of failure with no redundancy.",
+      "Lion Air Flight 610 crashed on October 29, 2018, killing 189 people. Ethiopian Airlines Flight 302 crashed on March 10, 2019, killing 157 people. Both crashes were caused by MCAS activating erroneously based on a faulty AoA sensor reading and repeatedly pushing the nose down in a pattern pilots could not overcome. The 737 MAX was grounded globally in March 2019. The House Transportation and Infrastructure Committee found that Boeing had suppressed simulator data showing MCAS's true authority from the FAA, and that the FAA's oversight had been captured by Boeing's own designated engineering representatives."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "346 DEATHS",
+      "MCAS NOT IN FLIGHT MANUAL",
+      "SINGLE SENSOR \u2014 NO REDUNDANCY",
+      "SIMULATOR DATA SUPPRESSED",
+      "FAA REGULATORY CAPTURE",
+      "$2.5B DOJ SETTLEMENT"
+    ],
+    "harmStats": [
+      {
+        "n": "346",
+        "label": "Deaths across\ntwo crashes",
+        "color": "red"
+      },
+      {
+        "n": "20 mo",
+        "label": "Lion Air to\nfull grounding",
+        "color": "amber"
+      },
+      {
+        "n": "$2.5B",
+        "label": "DOJ settlement\n(criminal)",
+        "color": "red"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "2016\u20132017",
+        "type": "neutral",
+        "event": "MCAS design \u2014 single sensor, no pilot notification",
+        "detail": "Boeing designs MCAS to rely on a single angle-of-attack sensor with no redundancy. The decision not to require AoA disagree alerting as standard equipment is made. MCAS is certified under the existing 737 type certificate, avoiding a new type certification that would require new pilot training and simulator hours. Pilots are not told MCAS exists."
+      },
+      {
+        "date": "2017",
+        "type": "neutral",
+        "event": "FAA certification \u2014 oversight delegated to Boeing designees",
+        "detail": "The FAA delegates significant certification responsibility to Boeing's own Designated Engineering Representatives (DERs). The House Committee later finds that Boeing employees acting as FAA designees approved MCAS safety analyses that understated MCAS's authority. The FAA's oversight structure creates conditions for regulatory capture by design."
+      },
+      {
+        "date": "October 2018",
+        "type": "harm",
+        "event": "Lion Air Flight 610 \u2014 189 deaths",
+        "detail": "MCAS activates repeatedly based on a faulty AoA sensor reading. Pilots attempt to disable the system but are fighting a system they have not been trained on and that was not fully described in the flight manual. All 189 people on board are killed. Boeing issues a bulletin after the crash \u2014 the first time many pilots learn MCAS exists."
+      },
+      {
+        "date": "Oct 2018\u2013Mar 2019",
+        "type": "harm",
+        "event": "737 MAX continues flying \u2014 Boeing resists grounding",
+        "detail": "After Lion Air 610, Boeing lobbies against grounding the 737 MAX. Internally, engineers raise safety concerns. Boeing's position to regulators and airlines is that pilot error was the cause and the MAX is safe to continue operating. Simulator data showing MCAS's authority is not disclosed to the FAA during this period."
+      },
+      {
+        "date": "March 2019",
+        "type": "harm",
+        "event": "Ethiopian Airlines Flight 302 \u2014 157 deaths",
+        "detail": "The same MCAS failure sequence that caused Lion Air 610 causes Ethiopian Airlines 302. Five months after Lion Air, 157 more people are killed by an identical mechanism that Boeing had the information to address and chose not to ground the aircraft over. The 737 MAX is grounded globally four days later."
+      },
+      {
+        "date": "2019\u20132020",
+        "type": "accountability",
+        "event": "House Committee investigation \u2014 suppression of simulator data documented",
+        "detail": "The House Transportation and Infrastructure Committee investigation finds that Boeing concealed from the FAA simulator data showing MCAS could move the horizontal stabilizer to its maximum limit \u2014 far beyond what Boeing had represented to the FAA and to pilots. This is the documented suppression event that confirms C5 in this case record."
+      },
+      {
+        "date": "2021",
+        "type": "accountability",
+        "event": "DOJ $2.5B criminal settlement \u2014 no individual prosecutions",
+        "detail": "Boeing enters a $2.5 billion deferred prosecution agreement with the Department of Justice. The agreement includes a $243.6 million criminal fine, $1.77 billion to airline customers, and $500 million to a crash victim fund. No individual Boeing employees are criminally prosecuted. The accountability arc closes at the organisational level while the individuals responsible for the suppression decisions face no criminal consequence."
+      },
+      {
+        "date": "2024",
+        "type": "accountability",
+        "event": "Plea agreement revised \u2014 criminal charge reinstated",
+        "detail": "The DOJ moves to reinstate criminal fraud charges against Boeing after the company is found to have violated the deferred prosecution agreement terms. The accountability arc remains incomplete and contested."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "The House Committee investigation found that no individual at Boeing was documented as the named accountable owner for MCAS safety. The system was developed across multiple engineering teams with divided responsibility. When safety concerns were raised internally about MCAS's authority \u2014 its ability to move the stabilizer to its maximum limit \u2014 there was no named individual whose documented role required them to escalate those concerns to a hold-deployment decision.",
+          "This is a C1 failure with documented consequences: engineers who raised concerns about MCAS were unable to escalate them through a defined accountability pathway because that pathway did not exist. The accountability for MCAS safety was diffused across Boeing's engineering organisation, across the FAA's oversight structure, and across the DER delegation system in a way that ensured no one person owned the question."
+        ],
+        "quote": "No single individual was documented as accountable for whether MCAS was safe to deploy.",
+        "source": "HSRL C1 analysis \u2014 MCAS"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "MCAS was certified under the existing 737 type certificate through a process that delegated significant validation responsibility to Boeing's own engineers acting as FAA designees. This is not independent validation \u2014 it is self-certification. The FAA's DER system created a structural conflict of interest: Boeing employees, with Boeing employment interests, were certifying Boeing's own safety analyses.",
+          "The specific C2 failure is documented: Boeing's safety analysis submitted to the FAA represented MCAS as having a limited authority of 0.6 degrees of stabilizer movement. The actual authority was 2.5 degrees. This discrepancy was not identified by the FAA because the validation process relied on Boeing's own representations. Independent validation \u2014 by a body with no financial relationship to Boeing \u2014 would have tested those representations against the simulator data Boeing held internally."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "After Lion Air 610, there was a period of approximately five months during which 737 MAX aircraft continued to fly. During that period, no structured monitoring mechanism connected the Lion Air crash's causal chain to a systematic re-evaluation of MCAS's safety across the fleet. Boeing's response was operational \u2014 issue a bulletin, modify pilot procedures \u2014 not structural.",
+          "A structured monitoring framework for safety-critical systems would have required Boeing and the FAA to answer a specific question after Lion Air: is there any other 737 MAX flight crew that could encounter this failure sequence? Answering that question required examining MCAS's authority, the AoA sensor single-point-of-failure, and the absence of training. Boeing had the information to answer it. The monitoring mechanism that would have required them to ask the question did not exist."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol defined the conditions under which a fatal crash involving a control system anomaly would trigger automatic grounding pending independent investigation. The FAA's post-Lion Air response was discretionary \u2014 it evaluated Boeing's position that pilot error was the cause and accepted it \u2014 rather than mandatory, which would have required grounding on defined criteria.",
+          "If a pre-established protocol had required: any crash where MCAS activation is identified in flight data triggers automatic grounding pending independent safety review, the 157 deaths on Ethiopian Airlines 302 would not have occurred. Ethiopian Airlines 302 happened because there was no mandatory halt condition between a known failure mechanism and continued operation."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT \u2014 Confirmed",
+        "finding": "ABSENT \u2014 ACTIVE SUPPRESSION CONFIRMED",
+        "text": [
+          "The House Committee investigation documents a specific suppression event: Boeing concealed from the FAA simulator data that showed MCAS's true stabilizer authority was 2.5 degrees rather than the 0.6 degrees represented in the safety analysis submitted for certification. This is confirmed C5 suppression in the record.",
+          "The five-month period between Lion Air 610 and Ethiopian Airlines 302 also involves a documented suppression pattern: Boeing's position to regulators and airlines was that the aircraft was safe to continue operating, while internally engineers were raising concerns about MCAS that were not escalated. The DOJ deferred prosecution agreement includes a charge of conspiracy to defraud the FAA \u2014 a formal legal finding that Boeing engaged in deliberate misrepresentation of MCAS's safety profile."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-02 Authority denied after harm",
+            "L-03 Evidence degraded",
+            "L-05 Responsibility shifted across teams",
+            "L-06 Blame shifted onto tools"
+          ],
+          "desc": "L-05 (Responsibility shifted across teams): Accountability for MCAS safety was diffused across Boeing engineering, FAA oversight, and DER delegation \u2014 no team owned it. L-06 (Blame shifted onto tools): After Lion Air, Boeing's initial position attributed the crash to pilot error rather than MCAS design. L-03 (Evidence degraded): Simulator data showing true MCAS authority not disclosed to FAA during certification."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named individual at Boeing documented as accountable for MCAS safety before first flight",
+        "desc": "One person. Named. With documented authority to hold the first 737 MAX revenue flight pending resolution of any open safety question about MCAS. When engineers raised concerns about MCAS's authority, that person would have had both the responsibility and the documented authority to act on those concerns. The concerns were raised. The named accountable owner did not exist."
+      },
+      {
+        "c": "C2",
+        "title": "Independent validation of MCAS safety analysis \u2014 not by Boeing's own DERs",
+        "desc": "Boeing's employees acting as FAA designees certified Boeing's own safety analysis. An independent validation body \u2014 with no employment or financial relationship to Boeing \u2014 testing the safety analysis against Boeing's own simulator data would have identified the discrepancy between the represented 0.6 degree authority and the actual 2.5 degree authority before certification."
+      },
+      {
+        "c": "C3",
+        "title": "A post-incident monitoring protocol requiring structured re-evaluation after any control system anomaly",
+        "desc": "After Lion Air 610, a structured monitoring protocol would have required Boeing and the FAA to answer: can this failure sequence recur on any 737 MAX in service? Answering that question required examining MCAS's authority and the AoA single-point-of-failure. Boeing had the data. The protocol that would have required them to produce it publicly did not exist."
+      },
+      {
+        "c": "C4",
+        "title": "An automatic grounding condition for fatal crashes involving identified control system anomalies",
+        "desc": "If the FAA's operational policy had defined: any fatal crash where flight data shows an automated control system activation inconsistent with pilot input triggers automatic grounding pending independent review, Ethiopian Airlines 302 would not have happened. The grounding would have been mandatory, not discretionary. Discretion allowed Boeing's lobbying to delay it."
+      },
+      {
+        "c": "C5",
+        "title": "Mandatory disclosure of all safety analyses to the FAA in unredacted form at certification",
+        "desc": "The specific suppression in MCAS certification was that Boeing's submitted safety analysis misrepresented MCAS's authority. If certification required Boeing to disclose all internal simulator data relevant to the safety analysis \u2014 not a summarised representation \u2014 an independent FAA engineer reviewing the raw data would have identified the discrepancy. The DER delegation system allowed Boeing to control what the FAA saw."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "therac25",
+        "name": "Therac-25 Radiation Therapy System",
+        "meta": "Canada/USA \u00b7 Medical Devices \u00b7 1985\u20131987",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 ABSENT"
+        ],
+        "desc": "Closest structural comparator for safety-critical software failure: single point of failure in a system that affects human life, no named accountable owner for software safety, incidents treated as isolated rather than systemic, manufacturer response that minimised severity before the pattern was established.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "robodebt",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 Benefits & Welfare \u00b7 2016\u20132019",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Cross-domain comparator for documented suppression pattern: different system type, same mechanism \u2014 adverse information held internally while harm continues externally. Included because the Royal Commission's findings about what would have changed the outcome maps directly onto what FAA oversight was structured to prevent.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "horizon",
+        "name": "UK Post Office Horizon",
+        "meta": "United Kingdom \u00b7 Public Infrastructure \u00b7 1999\u20132015",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Cross-domain comparator for sustained suppression and accountability diffusion across organisational boundaries. The Fujitsu/Post Office split mirrors the Boeing/FAA/DER split \u2014 accountability distributed across enough organisations that no single one owned the safety question.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F096",
+      "Classification": "Failure \u2014 Aviation Safety",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Yes \u2014 Simulator data suppressed from FAA",
+      "Country": "USA (Global)",
+      "Operational Period": "August 2017 \u2013 March 2019 (grounded)",
+      "Justice Lag": "20 months (Lion Air to global grounding)",
+      "Harm Scale": "346 deaths \u00b7 two crashes",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "House Transportation and Infrastructure Committee \u2014 Final Committee Report, September 2020",
+      "DOJ Deferred Prosecution Agreement \u2014 Boeing, January 2021",
+      "NTSB/KNKT \u2014 Lion Air Flight 610 Final Report",
+      "Ethiopian AAIA \u2014 Ethiopian Airlines Flight 302 Final Report",
+      "Senate Commerce Committee \u2014 Boeing 737 MAX hearings, October 2019"
+    ],
+    "related": [
+      {
+        "slug": "therac25",
+        "type": "Failure",
+        "domain": "Medical Devices",
+        "name": "Therac-25",
+        "meta": "Canada/USA \u00b7 1985\u20131987 \u00b7 3 deaths",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "robodebt",
+        "type": "Failure",
+        "domain": "Benefits & Welfare",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 2016\u20132019 \u00b7 470K notices",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "horizon",
+        "type": "Failure",
+        "domain": "Public Infrastructure",
+        "name": "UK Post Office Horizon",
+        "meta": "UK \u00b7 1999\u20132015 \u00b7 900+ prosecutions",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  }
+}

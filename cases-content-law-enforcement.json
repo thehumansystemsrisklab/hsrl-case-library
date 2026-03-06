@@ -1,0 +1,1146 @@
+{
+  "compas": {
+    "overviewTitle": "A proprietary black box used to sentence people for 20 years",
+    "overviewNote": "No court ever independently validated COMPAS's accuracy. Northpointe refused to disclose the algorithm. Courts accepted the scores anyway.",
+    "overview": [
+      "COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) is a proprietary risk assessment tool developed by Northpointe (now Equivant) and used across the United States criminal justice system to inform decisions about bail, sentencing, and parole. The algorithm produces a recidivism risk score \u2014 a numerical prediction of how likely a defendant is to reoffend \u2014 which judges use as an input to sentencing decisions. The algorithm is proprietary and has never been publicly disclosed.",
+      "In 2016, ProPublica published an analysis of COMPAS scores in Broward County, Florida, finding that Black defendants were nearly twice as likely as white defendants to be falsely flagged as high risk, while white defendants were more likely to be incorrectly flagged as low risk and then reoffend. The fundamental problem is structural: COMPAS has never been independently validated for accuracy or racial bias before being deployed in any jurisdiction. Courts in multiple states have ruled that defendants do not have the right to examine the algorithm that scored them, because it is a trade secret."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "PROPRIETARY ALGORITHM",
+      "NO INDEPENDENT VALIDATION",
+      "20+ YEARS DEPLOYED",
+      "BLACK DEFENDANTS 2X FALSE HIGH-RISK",
+      "TRADE SECRET RULING",
+      "NO NAMED ACCOUNTABLE OWNER"
+    ],
+    "harmStats": [
+      {
+        "n": "25+",
+        "label": "US states using\nCOMPAS or equivalent",
+        "color": "red"
+      },
+      {
+        "n": "20+ yr",
+        "label": "Deployed without\nindependent validation",
+        "color": "amber"
+      },
+      {
+        "n": "2x",
+        "label": "Black defendants scored\nhigh-risk vs white",
+        "color": "red"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "1998",
+        "type": "neutral",
+        "event": "COMPAS deployed \u2014 algorithm never publicly validated",
+        "detail": "Northpointe releases COMPAS. No independent validation of accuracy or bias is commissioned before deployment. No court requires validation before accepting COMPAS scores as evidence. The algorithm is proprietary and Northpointe does not disclose the weighting methodology."
+      },
+      {
+        "date": "1998\u20132013",
+        "type": "harm",
+        "event": "Expansion across 25+ states without validation",
+        "detail": "COMPAS is adopted across the United States without any jurisdiction commissioning independent validation of accuracy or racial equity before purchase. Each adoption decision is made by corrections departments evaluating administrative utility, not by independent technical bodies evaluating whether the tool produces accurate and unbiased outputs."
+      },
+      {
+        "date": "2013",
+        "type": "harm",
+        "event": "Wisconsin v. Loomis \u2014 defendant denied access to algorithm",
+        "detail": "Eric Loomis challenges his sentence on the grounds that the COMPAS score used cannot be independently verified because the algorithm is a trade secret. The Wisconsin Supreme Court rules in 2016 that using COMPAS does not violate due process, even though the defendant cannot examine the scoring methodology. This ruling is cited in subsequent cases across multiple jurisdictions."
+      },
+      {
+        "date": "2016",
+        "type": "accountability",
+        "event": "ProPublica analysis \u2014 Black defendants nearly 2x false high-risk",
+        "detail": "ProPublica publishes 'Machine Bias,' an analysis of 7,000 COMPAS scores in Broward County, Florida. The analysis finds Black defendants are nearly twice as likely as white defendants to be falsely flagged as future criminals. Northpointe publishes a response disputing the methodology. The dispute itself illustrates the C2 problem: without independent validation, there is no agreed methodology for evaluating accuracy."
+      },
+      {
+        "date": "2016\u2013present",
+        "type": "harm",
+        "event": "Ongoing deployment \u2014 no federal validation requirement",
+        "detail": "Despite the ProPublica findings and the Wisconsin ruling, COMPAS and similar tools continue to be deployed across the United States without a federal requirement for independent validation. The harm window remains open. No jurisdiction has established a pre-deployment validation requirement for risk assessment tools used in criminal sentencing."
+      },
+      {
+        "date": "2019\u2013present",
+        "type": "accountability",
+        "event": "Growing legislative attention \u2014 no resolution",
+        "detail": "Multiple states begin considering or passing legislation requiring audits of algorithmic tools used in criminal justice. None has established the pre-deployment independent validation framework that C2 requires. The accountability arc for COMPAS is ongoing and unresolved."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No individual at any court, corrections department, or government agency is documented as accountable for the accuracy of COMPAS scores used in their jurisdiction. When a defendant is scored and sentenced based on that score, the accountability chain is: Northpointe built the algorithm, the corrections department purchased it, the judge used it. No one in that chain has documented accountability for whether the score is accurate for this defendant.",
+          "The trade secret ruling compounds this. By ruling that defendants cannot examine the algorithm, courts have explicitly held that the accountability for algorithmic accuracy sits with the private vendor \u2014 a vendor with financial incentives to maintain the algorithm's deployment, not to validate its accuracy."
+        ],
+        "quote": "No one in the accountability chain has documented responsibility for whether this score is accurate for this person.",
+        "source": "HSRL C1 analysis \u2014 COMPAS"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "COMPAS has been deployed in over 25 states for over 20 years without independent validation of its accuracy, its error rates, or its racial equity properties by any body independent of its developer. The ProPublica analysis is the only publicly available independent evaluation, and it was conducted by journalists, not by the jurisdictions deploying the tool.",
+          "Northpointe's response to ProPublica illustrates the C2 problem precisely: when the tool's developer and its critics dispute how to measure accuracy, there is no independent validator whose methodology is agreed upon in advance. C2 is not just about commissioning a review \u2014 it's about commissioning a review using a pre-established methodology before the tool is deployed, so that the criteria for acceptable accuracy are set before there are institutional incentives to find the tool accurate."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No jurisdiction deploying COMPAS has published structured monitoring data on the accuracy of COMPAS predictions against observed outcomes. The basic monitoring question \u2014 do the people COMPAS scores as high-risk actually reoffend at higher rates than those scored low-risk, and does this relationship hold equally across racial groups \u2014 has never been answered by a monitoring program that any deploying jurisdiction runs.",
+          "Northpointe publishes its own validation studies. These are not independent and do not constitute C3 monitoring. C3 requires that the deploying organisation \u2014 the court, the corrections department, the government \u2014 runs and publishes its own monitoring of outcomes against predictions, independently of the vendor."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol exists in any COMPAS-deploying jurisdiction for what happens when a defendant challenges the accuracy of their score. The Wisconsin v. Loomis ruling resolved this question in the direction of continuing to use COMPAS without examination. No protocol defines: at what accuracy level should COMPAS be withdrawn from use? At what racial disparity level? Who decides?",
+          "The absence of C4 here means that even if COMPAS were found to be systematically inaccurate, there is no pre-established process for that finding to result in remediation. The accountability pathway that C4 creates \u2014 a defined protocol for responding to accuracy failures \u2014 does not exist for any risk assessment tool in any US jurisdiction."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "C5 for COMPAS is ABSENT but not confirmed suppression in the same mode as Robodebt or Horizon. The mechanism is structural rather than involving documented suppression of specific adverse findings. The trade secret designation functions as a structural suppression mechanism: by classifying the algorithm as proprietary, Northpointe prevents independent scrutiny of a tool being used to determine people's liberty.",
+          "The Wisconsin ruling that defendants cannot examine the algorithm because it is a trade secret formalised this structural suppression. The effect is equivalent to suppression of adverse findings: information that could challenge the tool's accuracy in individual cases is structurally inaccessible to the people it affects. Whether or not Northpointe made active decisions to suppress adverse findings is not established in the dataset \u2014 what is established is that the structure prevents those findings from being surfaced."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-03 Evidence degraded or narrativized",
+            "L-06 Blame shifted onto tools",
+            "L-09 Compliance artifacts substitute for safety"
+          ],
+          "desc": "L-06 (Blame shifted onto tools): Courts cite COMPAS scores without owning the scoring decision. L-09 (Compliance artifacts substitute for safety): Jurisdictions treat the act of purchasing a validated-by-vendor tool as equivalent to independent validation. The vendor's own validation studies are the compliance artifact."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named individual in each jurisdiction accountable for the accuracy of scores used in sentencing",
+        "desc": "Before any jurisdiction deploys COMPAS, one person should be documented as accountable for confirming the tool produces accurate outputs for the jurisdiction's population. That person's name should be on record before the first score is used. If no one is willing to sign their name to the accuracy claim, the tool should not be used."
+      },
+      {
+        "c": "C2",
+        "title": "Pre-deployment independent validation with publicly disclosed methodology",
+        "desc": "Every jurisdiction should commission independent validation \u2014 not by Northpointe \u2014 of COMPAS accuracy and racial equity before deployment, using a methodology published in advance. The methodology should define acceptable error rates and disparity thresholds before testing begins, so that the criteria for acceptable accuracy are set before there are institutional incentives to find the tool acceptable."
+      },
+      {
+        "c": "C3",
+        "title": "Mandatory outcome monitoring published annually by each deploying jurisdiction",
+        "desc": "Each jurisdiction should publish annual data comparing COMPAS predictions against observed outcomes, disaggregated by race, gender, and prior record category. This data should be publicly available and auditable by independent researchers. If the monitoring data shows disparate error rates, a pre-defined remediation process should activate automatically."
+      },
+      {
+        "c": "C4",
+        "title": "Pre-established accuracy thresholds that trigger withdrawal from use",
+        "desc": "Each jurisdiction should define in advance: if COMPAS accuracy falls below X%, or if racial disparity in false positive rates exceeds Y%, the tool is suspended pending independent review. These thresholds should be defined before deployment and should be public. They are currently undefined in every jurisdiction."
+      },
+      {
+        "c": "C5",
+        "title": "A public interest exemption from trade secret protection for tools used in criminal sentencing",
+        "desc": "The trade secret designation for COMPAS prevents defendants, courts, and researchers from examining a tool being used to determine their liberty. A legislative requirement that any algorithmic tool used in criminal sentencing must disclose its methodology to an independent oversight body \u2014 even if not publicly \u2014 would break the structural suppression mechanism without requiring Northpointe to make the algorithm fully public."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "horizon",
+        "name": "UK Post Office Horizon",
+        "meta": "United Kingdom \u00b7 Public Infrastructure \u00b7 1999\u20132015",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Strongest comparator for C2 absence: algorithmic outputs used in legal proceedings without independent validation, courts accepting system outputs as reliable without requiring verification. The harm mechanism differs but the structural gap is identical.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "michigan-midas",
+        "name": "Michigan MiDAS",
+        "meta": "United States \u00b7 Benefits & Welfare \u00b7 2013\u20132015",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C3 ABSENT",
+          "C4 ABSENT",
+          "C5 ABSENT"
+        ],
+        "desc": "Closest US domestic comparator: automated system generating adverse determinations about individuals, used without independent validation, affecting a vulnerable population without meaningful avenue to challenge the system's outputs.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "robodebt",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 Benefits & Welfare \u00b7 2016\u20132019",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "C5 CONFIRMED"
+        ],
+        "desc": "Cross-domain comparator: different automated system, same structural failure pattern. Included because the Royal Commission's findings about what pre-deployment governance would have prevented directly maps onto what COMPAS jurisdictions have never required.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F001",
+      "Classification": "Failure \u2014 Criminal Justice & Policing",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Structural \u2014 trade secret mechanism",
+      "Country": "United States",
+      "Operational Period": "1998\u2013present (ongoing)",
+      "Justice Lag": "Ongoing \u2014 no resolution",
+      "Harm Scale": "25+ states \u00b7 20+ years \u00b7 racial disparity documented",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "ProPublica \u2014 'Machine Bias', May 2016 (Angwin, Larson, Mattu, Kirchner)",
+      "Wisconsin v. Loomis, Wisconsin Supreme Court, 2016",
+      "Northpointe \u2014 'Response to ProPublica', July 2016",
+      "National Institute of Justice \u2014 'Risk Assessment in Criminal Sentencing', 2021",
+      "Hamilton et al. \u2014 'The Accuracy, Fairness, and Limits of Predicting Recidivism', Science Advances 2018"
+    ],
+    "related": [
+      {
+        "slug": "horizon",
+        "type": "Failure",
+        "domain": "Public Infrastructure",
+        "name": "UK Post Office Horizon",
+        "meta": "UK \u00b7 1999\u20132015 \u00b7 900+ prosecutions",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "michigan-midas",
+        "type": "Failure",
+        "domain": "Benefits & Welfare",
+        "name": "Michigan MiDAS",
+        "meta": "US \u00b7 2013\u20132015 \u00b7 40K+ false fraud",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "robodebt",
+        "type": "Failure",
+        "domain": "Benefits & Welfare",
+        "name": "Australia Robodebt",
+        "meta": "Australia \u00b7 2016\u20132019 \u00b7 470K notices",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  },
+  "detroit-pd-facial-recognition-williams": {
+    "overviewTitle": "Robert Williams was arrested in his driveway because an algorithm said so",
+    "overviewNote": "Detroit Police arrested Robert Williams based solely on a facial recognition match. No corroborating evidence. No human review of the match quality. The technology misidentified a Black man. It is the most documented wrongful arrest by facial recognition AI in the United States.",
+    "overview": [
+      "On January 9, 2020, Robert Williams, a Black man, was arrested in front of his family at his home in suburban Detroit based on a facial recognition match generated by the Detroit Police Department. The match was made by the Michigan State Police's facial recognition system, which compared a still image from a surveillance video of a shoplifting incident at a Shinola store against a driver's license database. The system returned Williams as the top match. A Detroit Police detective confirmed the match by comparing the surveillance still to Williams's driver's license photo \u2014 a comparison that does not constitute independent validation. No other evidence connected Williams to the crime.",
+      "Williams was held for 30 hours, questioned, and then released. During questioning, when shown the surveillance still and his driver's license photo side by side, Williams held them up and said: 'I hope you don't think all Black men look alike.' He was charged with larceny. The charges were eventually dismissed. The Williams case is the first publicly documented wrongful arrest attributable to facial recognition AI in the United States and is the most-cited case in US legislative and policy debates about facial recognition in law enforcement. The Detroit Police Department subsequently acknowledged that facial recognition matches should not be used as the sole basis for arrest \u2014 an acknowledgment that confirmed the department had no such policy in place when Williams was arrested."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "FIRST DOCUMENTED US FACIAL RECOGNITION WRONGFUL ARREST",
+      "HELD 30 HOURS \u2014 NO CORROBORATING EVIDENCE",
+      "NO PRE-DEPLOYMENT ACCURACY VALIDATION",
+      "BLACK MAN MISIDENTIFIED",
+      "CHARGES DISMISSED",
+      "SUPPRESSION CONFIRMED"
+    ],
+    "harmStats": [
+      {
+        "n": "30 hr",
+        "label": "Wrongful detention\nbefore release",
+        "color": "red"
+      },
+      {
+        "n": "0",
+        "label": "Pieces of corroborating\nevidence at arrest",
+        "color": "red"
+      },
+      {
+        "n": "600+",
+        "label": "US agencies using\nClearview AI alone",
+        "color": "amber"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "2019",
+        "type": "neutral",
+        "event": "Detroit PD adopts facial recognition \u2014 no accuracy policy for arrests",
+        "detail": "Detroit Police Department begins using the Michigan State Police facial recognition system. No departmental policy defines the accuracy threshold required before a facial recognition match can be used as the basis for arrest. No named official is documented as accountable for ensuring the technology is accurate for the demographic populations it will be used against before deployment."
+      },
+      {
+        "date": "October 2019",
+        "type": "neutral",
+        "event": "Shoplifting at Shinola \u2014 surveillance footage obtained",
+        "detail": "A shoplifting incident at a Shinola store in Detroit is captured on surveillance video. The footage is of poor quality. A still image is extracted and submitted to the Michigan State Police facial recognition system for comparison against the state driver's license database."
+      },
+      {
+        "date": "Late 2019",
+        "type": "harm",
+        "event": "Facial recognition match returned \u2014 Williams identified",
+        "detail": "The facial recognition system returns Robert Williams as the top match. A Detroit Police detective compares the surveillance still to Williams's driver's license photo and confirms the match. This confirmation is not independent validation \u2014 it is one officer comparing two photographs, one of which was generated by the same process being validated. No other evidence is sought before the decision to arrest is made."
+      },
+      {
+        "date": "January 9, 2020",
+        "type": "harm",
+        "event": "Williams arrested in front of his family \u2014 held 30 hours",
+        "detail": "Robert Williams is arrested at his home in front of his wife and daughters. He is taken to a Detroit detention facility and held for 30 hours. During interrogation, he is shown the surveillance still alongside his driver's license photo. He holds them up side by side and states: 'I hope you don't think all Black men look alike.' Detectives continue the interrogation. He is charged with larceny and released on a personal bond."
+      },
+      {
+        "date": "2020",
+        "type": "accountability",
+        "event": "ACLU documents the case \u2014 charges dismissed",
+        "detail": "The ACLU of Michigan documents Williams's case and publishes an account. The Wayne County Prosecutor's Office dismisses the charges, acknowledging that the facial recognition match was the only evidence and that it was insufficient. Detroit Police subsequently state that facial recognition matches should not be the sole basis for arrest \u2014 confirming that no such policy existed when Williams was arrested."
+      },
+      {
+        "date": "2021",
+        "type": "accountability",
+        "event": "ACLU files complaint \u2014 congressional hearings",
+        "detail": "The ACLU files a civil rights complaint on Williams's behalf. The case is cited in multiple congressional hearings on facial recognition in law enforcement. Detroit City Council passes an ordinance restricting facial recognition use. Williams testifies before Congress about his experience. The case becomes the primary reference point in US legislative debates about facial recognition governance."
+      },
+      {
+        "date": "2021\u2013present",
+        "type": "accountability",
+        "event": "Legislative and policy responses \u2014 no federal standard established",
+        "detail": "Multiple cities ban or restrict facial recognition use by law enforcement. Several states introduce legislation. No federal standard for accuracy validation, use policy, or accountability framework for facial recognition in law enforcement has been established. The accountability arc at the federal level remains open."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No named Detroit Police Department official was documented as accountable for the accuracy of facial recognition matches before they could be used as the basis for arrest. The decision to use a facial recognition match as the sole basis for arrest was made by individual detectives without a named supervisor or compliance officer whose documented role required them to confirm the match met a defined accuracy standard.",
+          "The department's post-arrest acknowledgment \u2014 that facial recognition matches should not be the sole basis for arrest \u2014 is itself evidence of C1 absence. A named accountable owner for facial recognition use policy would have established that standard before the Williams arrest, not in response to it."
+        ],
+        "quote": "The department acknowledged after the arrest that a match alone shouldn't justify one. No one owned that question before Williams was in handcuffs.",
+        "source": "HSRL C1 analysis \u2014 Williams"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "The facial recognition system used in the Williams case was not independently validated for accuracy across demographic groups \u2014 specifically across skin tones \u2014 before Detroit Police deployed it for use in criminal investigations. Academic research published before the Williams arrest, including NIST's Face Recognition Vendor Testing and MIT Media Lab's Gender Shades study, had established that facial recognition systems have significantly higher error rates for dark-skinned individuals than for light-skinned individuals.",
+          "Detroit Police deployed the system without commissioning an independent accuracy assessment for the demographic composition of Detroit's population. Williams was misidentified. The misidentification was predictable given the known accuracy disparities for darker-skinned individuals in the systems in use at the time."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No structured monitoring mechanism tracked the accuracy of facial recognition matches used in Detroit Police investigations \u2014 specifically, the rate at which matches led to identifications that were confirmed versus overturned by subsequent investigation. The Williams case was not the first facial recognition match Detroit Police had acted on. There is no public record of any monitoring of prior match accuracy.",
+          "A monitoring system tracking the confirmed-match rate, disaggregated by the demographic characteristics of individuals identified, would have provided a signal about the system's accuracy in practice before the Williams arrest. That monitoring system did not exist."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol defined the corroboration required before a facial recognition match could be the basis for arrest. The operational default \u2014 that a match confirmed by a detective's visual comparison could justify arrest \u2014 was not a formally adopted policy. It was the absence of any policy.",
+          "The department's post-Williams statement that matches should not be the sole basis for arrest defined a protocol in response to harm. C4 would have required that protocol to exist before the first arrest based on facial recognition was made. The Williams arrest demonstrates what C4 absence produces: a man arrested and held for 30 hours on the basis of a technology the department had no governance framework for using."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT \u2014 Confirmed",
+        "finding": "ABSENT \u2014 CONFIRMED",
+        "text": [
+          "The suppression pattern in the Williams case is the non-disclosure of the facial recognition match to the defendant at the time of arrest and interrogation. Williams was not told that he had been identified by facial recognition technology. He was questioned as though the identification were the result of a traditional investigative process. The technology that produced the identification \u2014 and its known accuracy limitations \u2014 were not disclosed.",
+          "The confirmation is in the interrogation record: detectives continued to question Williams after he directly challenged the identification ('I hope you don't think all Black men look alike'), without disclosing that the identification came from a system with documented accuracy disparities for dark-skinned individuals. The non-disclosure was not inadvertent \u2014 it was the operational practice."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-03 Evidence degraded or narrativized",
+            "L-06 Blame shifted onto tools",
+            "L-09 Compliance artifacts substitute for safety"
+          ],
+          "desc": "L-06 (Blame shifted onto tools): The detective's visual confirmation of the match created an appearance of human review that substituted for genuine independent validation. L-03: Williams was interrogated without disclosure of the technology's role, framing the identification as the result of traditional investigation. L-09: The existence of a facial recognition program, purchased and operational, was treated as evidence of appropriate capability without any governance framework governing its use."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named official accountable for facial recognition use policy before deployment",
+        "desc": "Before Detroit Police ran its first facial recognition query for a criminal investigation, one named official should have been documented as accountable for confirming the department had a lawful and accurate use policy. That person's name on record as responsible for the policy means the Williams arrest \u2014 based on a match with no corroborating evidence \u2014 would have required their sign-off on a use that violated their documented responsibility."
+      },
+      {
+        "c": "C2",
+        "title": "Independent accuracy validation for Detroit's population demographics before deployment",
+        "desc": "NIST and academic research had established that facial recognition systems have significantly higher error rates for dark-skinned individuals before Detroit deployed this technology. Detroit Police should have commissioned independent accuracy testing specifically for the demographic composition of Detroit before using the system in criminal investigations. If tested, the system's elevated false match rate for dark-skinned individuals would have been quantified and required to meet a defined standard before use."
+      },
+      {
+        "c": "C3",
+        "title": "Mandatory tracking of match accuracy against investigation outcomes",
+        "desc": "Every facial recognition match used in a Detroit Police investigation should have been tracked: was the match confirmed by investigation, or overturned? Disaggregated by demographic characteristics of the identified individual. A monitoring database of this kind, reviewed quarterly, would have provided a real-time signal of the system's accuracy in actual use before the Williams arrest."
+      },
+      {
+        "c": "C4",
+        "title": "A written policy requiring corroborating evidence before arrest on a facial recognition match",
+        "desc": "Detroit Police's post-Williams acknowledgment that a match alone should not justify arrest was the policy that should have existed from day one. Written, published, with named accountability for enforcement. If this policy had existed before the Williams case, the arresting detective would have faced a documented obligation they could be held to. The policy did not exist. The arrest happened."
+      },
+      {
+        "c": "C5",
+        "title": "A mandatory disclosure requirement \u2014 suspects must be told if facial recognition was used",
+        "desc": "Williams was interrogated without knowing his identification came from an algorithm with documented accuracy problems. A departmental policy \u2014 or statutory requirement \u2014 mandating disclosure to any individual that facial recognition technology was used in their identification, and that they have the right to challenge the match quality, would have changed the interrogation dynamic and made the suppression of the technology's role formally impermissible."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "compas",
+        "name": "COMPAS Risk Assessment",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 1998\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "Black defendants disproportionately affected"
+        ],
+        "desc": "Closest structural comparator in the criminal justice domain: algorithmic system used to make decisions affecting individual liberty, not independently validated before deployment, documented racial disparity in outputs, trade secret / non-disclosure mechanism preventing scrutiny. COMPAS in sentencing, facial recognition in identification: same structural failure pattern across the pre-trial process.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "clearview-ai-immigration-enforcement-use",
+        "name": "Clearview AI",
+        "meta": "USA/Multiple \u00b7 Criminal Justice \u00b7 2019\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "600+ agencies \u2014 no governance framework"
+        ],
+        "desc": "Direct technology comparator: facial recognition deployed to law enforcement at scale without accuracy validation or governance framework. Clearview is the vendor-side case; Williams is the operational consequence case. Together they define the facial recognition governance failure from supply to harm.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "horizon",
+        "name": "UK Post Office Horizon",
+        "meta": "United Kingdom \u00b7 Public Infrastructure \u00b7 1999\u20132015",
+        "tags": [
+          "C2 ABSENT",
+          "Algorithm outputs used as sole evidence",
+          "Suppression confirmed"
+        ],
+        "desc": "Cross-domain comparator for algorithm outputs used as the sole evidentiary basis in legal proceedings. Horizon's accounting records used to prosecute 900+ subpostmasters; Williams's facial recognition match used to arrest and charge him. Same structural failure: a system's outputs treated as definitive without independent validation.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F002",
+      "Classification": "Failure \u2014 Criminal Justice & Policing",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Yes \u2014 Technology role not disclosed to suspect",
+      "Country": "United States",
+      "Operational Period": "2019\u20132020 (incident); ongoing deployment",
+      "Justice Lag": "Charges dismissed within months; systemic reform ongoing",
+      "Harm Scale": "Wrongful arrest \u00b7 first documented US facial recognition arrest",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "ACLU of Michigan \u2014 'Detroit Man Wrongly Arrested Due to Facial Recognition', January 2020",
+      "MIT Media Lab \u2014 'Gender Shades', Joy Buolamwini & Timnit Gebru, 2018",
+      "NIST Face Recognition Vendor Testing (FRVT) \u2014 demographic accuracy data",
+      "US House Committee on Oversight and Reform \u2014 Facial Recognition hearing, June 2020 (Williams testimony)",
+      "Detroit City Council \u2014 facial recognition ordinance, 2021"
+    ],
+    "related": [
+      {
+        "slug": "compas",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "COMPAS Risk Assessment",
+        "meta": "US \u00b7 1998\u2013present \u00b7 ongoing",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "clearview-ai-immigration-enforcement-use",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "Clearview AI",
+        "meta": "USA/Multiple \u00b7 2019\u2013present \u00b7 600+ agencies",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "predpol-geolitica-predictive-policing",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "PredPol / Geolitica",
+        "meta": "USA \u00b7 2012\u20132021 \u00b7 150+ cities",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  },
+  "clearview-ai-immigration-enforcement-use": {
+    "overviewTitle": "600 agencies. No accuracy standard. No governance framework. Scraped without consent.",
+    "overviewNote": "Clearview AI scraped 10+ billion facial images from the internet without consent, sold access to 600+ law enforcement agencies, and was deployed in criminal investigations before any jurisdiction established a governance framework for its use.",
+    "overview": [
+      "Clearview AI is a facial recognition company that assembled a database of over 10 billion facial images scraped from publicly accessible internet sources \u2014 social media profiles, news photographs, professional directories \u2014 without the consent of the individuals depicted. Beginning in 2019, Clearview sold access to its facial recognition search engine to law enforcement agencies, enabling investigators to search an image against the scraped database and receive potential matches with links to the source pages. By early 2020, more than 600 law enforcement agencies had used Clearview, including federal agencies and local police departments, before any governance framework governing its use had been established by any jurisdiction.",
+      "Clearview's accuracy across demographic groups has never been independently validated and published. NIST testing of comparable systems, and academic research on facial recognition accuracy disparities, establishes that systems of this type have higher error rates for dark-skinned individuals, women, and older people. Multiple wrongful arrests have been documented in which Clearview matches were used in investigations. Regulatory actions have been taken in multiple jurisdictions \u2014 the FTC, UK ICO, Australian Privacy Commissioner, Canadian privacy authorities \u2014 finding that Clearview's data collection was unlawful. The company continues to operate in the United States with active contracts with federal immigration enforcement agencies."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "10B+ IMAGES SCRAPED WITHOUT CONSENT",
+      "600+ LAW ENFORCEMENT AGENCIES",
+      "NO INDEPENDENT ACCURACY VALIDATION",
+      "FTC ACTION",
+      "WRONGFUL ARRESTS DOCUMENTED",
+      "ACTIVE IMMIGRATION ENFORCEMENT USE"
+    ],
+    "harmStats": [
+      {
+        "n": "10B+",
+        "label": "Facial images scraped\nwithout consent",
+        "color": "red"
+      },
+      {
+        "n": "600+",
+        "label": "Law enforcement agencies\nbefore any governance existed",
+        "color": "red"
+      },
+      {
+        "n": "0",
+        "label": "Independent accuracy\nvalidations published",
+        "color": "red"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "2017\u20132019",
+        "type": "neutral",
+        "event": "Clearview assembles 10B+ image database \u2014 law enforcement pilots begin",
+        "detail": "Clearview AI scrapes publicly accessible facial images from social media, news sites, and other internet sources. The scraping violates the terms of service of every major platform from which images are taken. Law enforcement pilots begin without public disclosure. No independent validation of accuracy across demographic groups is conducted before law enforcement use begins."
+      },
+      {
+        "date": "2019\u20132020",
+        "type": "harm",
+        "event": "600+ agencies using Clearview \u2014 no governance framework anywhere",
+        "detail": "More than 600 law enforcement agencies gain access to Clearview before any jurisdiction has established a governance framework governing its use: no accuracy standard, no use policy, no audit trail requirement, no prohibition on using matches as sole basis for investigative action. Federal agencies including ICE begin using Clearview for immigration enforcement."
+      },
+      {
+        "date": "January 2020",
+        "type": "accountability",
+        "event": "New York Times investigation \u2014 existence of Clearview revealed publicly",
+        "detail": "The New York Times publishes an investigation revealing Clearview's existence, its law enforcement customer base, and the scale of its database. This is the first public disclosure. Before this investigation, most of the 600+ agencies using Clearview had not publicly disclosed their use. The investigation triggers regulatory inquiries in multiple jurisdictions."
+      },
+      {
+        "date": "2020\u20132021",
+        "type": "accountability",
+        "event": "Platform cease-and-desist orders \u2014 Clearview defies them",
+        "detail": "Twitter, Facebook, Google, YouTube, and LinkedIn send cease-and-desist letters to Clearview. Clearview's legal position is that scraping publicly accessible images is protected by the First Amendment. The company continues operating and continues adding to its database."
+      },
+      {
+        "date": "2022",
+        "type": "accountability",
+        "event": "FTC action \u2014 Clearview prohibited from selling to most private entities",
+        "detail": "The FTC reaches a settlement with Clearview prohibiting the company from selling its facial recognition database to most private sector entities. The settlement does not prohibit sales to law enforcement. Clearview continues operating with law enforcement and government agency customers. No federal standard for accuracy validation or use policy for law enforcement facial recognition has been established."
+      },
+      {
+        "date": "2019\u2013present",
+        "type": "harm",
+        "event": "Wrongful arrests documented \u2014 accuracy disparities unquantified",
+        "detail": "Multiple wrongful arrests in which Clearview matches played a role are documented, including cases in which Black men were arrested based on Clearview matches. Clearview has not published independent accuracy data disaggregated by demographic characteristics. The harm window remains open as the company continues operating with active law enforcement and immigration enforcement contracts."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No named official at any of the 600+ law enforcement agencies that used Clearview was documented as accountable for the accuracy of Clearview matches before they were used in criminal or immigration investigations. Each agency made an individual procurement or access decision without a named accountability owner whose documented role required them to confirm the technology met an accuracy standard before investigators could use it.",
+          "The scale of C1 absence in Clearview is multiplicative: it is not absent in one agency but absent in every agency simultaneously, because no agency established an accountability framework before use. The absence of named accountability at the vendor level is compounded by its absence at every customer agency."
+        ],
+        "quote": "600 agencies used this technology before any of them had a policy governing how. No one was named as accountable for what it got wrong.",
+        "source": "HSRL C1 analysis \u2014 Clearview"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "Clearview AI's accuracy across demographic groups has never been independently validated and published. The company has not submitted its system to NIST Face Recognition Vendor Testing. No law enforcement agency that contracted with Clearview commissioned independent demographic accuracy testing before use. The known accuracy disparities in comparable systems \u2014 higher error rates for dark-skinned individuals, women, and older people \u2014 were not assessed for Clearview before its deployment to 600+ agencies.",
+          "This is the highest-stakes C2 absence in the dataset for the criminal justice domain: a system used in criminal and immigration investigations, with documented accuracy disparities in comparable systems, deployed to hundreds of agencies without a single independent validation of whether its outputs meet the accuracy standard required for law enforcement use."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No structured monitoring mechanism tracked the accuracy of Clearview matches across the 600+ agencies using it. No aggregated data exists on the number of Clearview-assisted investigations, the confirmation rate of matches, or the demographic characteristics of individuals falsely identified. The wrongful arrests that have been publicly documented were identified through individual litigation and journalism, not through any systematic monitoring process.",
+          "The absence of monitoring at scale is itself a governance choice: deploying a technology to 600+ agencies without a monitoring requirement means the error rate in practice is permanently invisible. The harm that is visible is the minimum \u2014 only cases where the wrongful identification was discovered and documented. The full error rate is unknown and, without C3, unknowable."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol defined what corroboration was required before a Clearview match could be used as a basis for investigative action in any of the 600+ agencies using the technology. The operational default \u2014 that a match is a lead that can be acted on \u2014 was not a formally adopted policy with named accountability. It was the absence of any policy.",
+          "The consequence of C4 absence at scale is that each of 600+ agencies developed its own informal practice, without any requirement to document it, validate it, or hold named individuals accountable for it. The variation in practice across agencies is itself a governance failure \u2014 some agencies may have developed sound practices informally; others did not; and there is no mechanism to distinguish between them or to enforce a standard."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT \u2014 Confirmed",
+        "finding": "ABSENT \u2014 CONFIRMED",
+        "text": [
+          "The suppression pattern in Clearview is the concealment of the technology's use from the individuals it was used against. Defendants in criminal cases were not told that Clearview had been used to identify them. This was not inadvertent \u2014 it was the operational practice across agencies. The New York Times investigation revealed the technology's existence to the public; before that investigation, most individuals identified by Clearview in criminal investigations had no way of knowing the technology had been used.",
+          "The confirmed suppression element is the active effort by Clearview to prevent disclosure of its customer list. Clearview refused to identify which agencies had access to its technology and actively resisted disclosure requests. This is a vendor-level suppression of information that would have enabled defendants to challenge their identification \u2014 structurally identical to the trade secret mechanism in COMPAS, applied at the vendor level rather than in individual proceedings."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-03 Evidence degraded",
+            "L-05 Responsibility shifted across vendors",
+            "L-06 Blame shifted onto tools",
+            "L-11 Unnamed experts invoked as authority"
+          ],
+          "desc": "L-05 (Responsibility shifted across vendors): Clearview treated accuracy as the deploying agency's responsibility; deploying agencies treated accuracy as Clearview's responsibility. No one owned it. L-11 (Unnamed experts): Clearview's marketing materials cited unnamed law enforcement success stories as accuracy evidence, substituting anecdote for independent validation. L-03: Customer list concealment prevented defendants from knowing the technology's role in their identification."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named agency official accountable for facial recognition accuracy before any investigative use",
+        "desc": "Before any agency used Clearview in a criminal or immigration investigation, one named official should have been documented as accountable for confirming the technology met an accuracy standard for the demographic populations it would be used against in that jurisdiction. 600 agencies using a technology with no named accountability owner at any of them is the operational definition of C1 absent at scale."
+      },
+      {
+        "c": "C2",
+        "title": "Mandatory NIST testing submission before law enforcement sale",
+        "desc": "Any facial recognition vendor selling to law enforcement should be required to submit their system to NIST Face Recognition Vendor Testing and publish the results \u2014 including demographic accuracy data \u2014 before their first law enforcement contract. Clearview has never submitted to NIST testing. A pre-market validation requirement would have made this a condition of sale, not a voluntary choice."
+      },
+      {
+        "c": "C3",
+        "title": "A federal mandate for law enforcement agencies to report facial recognition match outcomes",
+        "desc": "Every agency using facial recognition in criminal investigations should be required to report, to a federal oversight body, the number of matches used, the number confirmed by independent evidence, and the demographic characteristics of individuals identified. Aggregated and published annually. This creates the monitoring baseline that currently does not exist across 600+ agencies using technology with unknown real-world accuracy."
+      },
+      {
+        "c": "C4",
+        "title": "A federal standard prohibiting arrest based solely on a facial recognition match",
+        "desc": "The post-Williams acknowledgments from individual departments that a match alone is insufficient should be federal policy, not department-by-department informal practice. A federal standard \u2014 codified in DOJ guidance or statute \u2014 defining the corroboration required before a facial recognition match can be used as the basis for arrest would have prevented every documented wrongful arrest in this dataset."
+      },
+      {
+        "c": "C5",
+        "title": "A mandatory disclosure requirement in criminal proceedings when facial recognition was used",
+        "desc": "Any defendant in a criminal proceeding in which facial recognition contributed to their identification should be entitled to disclosure of that fact, the technology used, the match quality score, and the vendor's published accuracy data for their demographic group. This is a Brady material disclosure question \u2014 exculpatory or impeachment evidence relevant to the reliability of the identification \u2014 and should be treated as such in every jurisdiction."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "detroit-pd-facial-recognition-williams",
+        "name": "Detroit PD Facial Recognition (Williams)",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 2020",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "Wrongful arrest documented"
+        ],
+        "desc": "Direct operational comparator: the Williams case is what Clearview deployment produces at the individual case level. Clearview is the vendor-side case; Williams is the operational consequence. Together they define the facial recognition governance failure from supply to individual harm.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "compas",
+        "name": "COMPAS Risk Assessment",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 1998\u2013present",
+        "tags": [
+          "Proprietary algorithm",
+          "C2 ABSENT",
+          "Trade secret shield"
+        ],
+        "desc": "Structural comparator for proprietary algorithm deployment in criminal justice without independent validation and with active suppression of accuracy information. COMPAS and Clearview represent the two dominant proprietary AI governance failures in US criminal justice \u2014 one in sentencing, one in identification.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "predpol-geolitica-predictive-policing",
+        "name": "PredPol / Geolitica",
+        "meta": "USA \u00b7 Criminal Justice \u00b7 2012\u20132021",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "Bias amplification documented"
+        ],
+        "desc": "Companion case in the criminal justice AI governance failure cluster: predictive policing deployed to 150+ cities without independent validation of bias, discontinued after LAPD audit found bias amplification. Clearview, Williams, and PredPol together define the three failure modes in law enforcement AI: identification, prediction, and deployment at scale.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F050",
+      "Classification": "Failure \u2014 Criminal Justice & Policing",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Yes \u2014 Customer list concealment; non-disclosure to defendants",
+      "Country": "USA / Multiple",
+      "Operational Period": "2019\u2013present (active)",
+      "Justice Lag": "Ongoing \u2014 no resolution",
+      "Harm Scale": "600+ agencies \u00b7 wrongful arrests documented \u00b7 active immigration enforcement",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "New York Times \u2014 'The Secretive Company That Might End Privacy as We Know It', January 2020",
+      "FTC \u2014 Clearview AI settlement, 2022",
+      "NIST Face Recognition Vendor Testing \u2014 demographic accuracy reports",
+      "MIT Media Lab \u2014 Gender Shades, 2018",
+      "UK Information Commissioner's Office \u2014 Clearview enforcement notice, 2022",
+      "Australian Information Commissioner \u2014 Clearview finding, 2021"
+    ],
+    "related": [
+      {
+        "slug": "detroit-pd-facial-recognition-williams",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "Detroit PD Facial Recognition (Williams)",
+        "meta": "US \u00b7 2020 \u00b7 first documented wrongful arrest",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "compas",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "COMPAS Risk Assessment",
+        "meta": "US \u00b7 1998\u2013present \u00b7 ongoing",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "predpol-geolitica-predictive-policing",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "PredPol / Geolitica",
+        "meta": "USA \u00b7 2012\u20132021 \u00b7 150+ cities",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  },
+  "predpol-geolitica-predictive-policing": {
+    "overviewTitle": "Bias fed the algorithm. The algorithm amplified the bias. The LAPD used it for nine years.",
+    "overviewNote": "PredPol predicted crime locations using historical arrest data \u2014 data that reflects decades of racially biased policing. It directed officers to over-police the same communities that had been over-policed to generate the data. The LAPD's own audit confirmed bias amplification. They terminated the contract in 2021.",
+    "overview": [
+      "PredPol (later rebranded Geolitica) was a predictive policing software system that used historical crime and arrest data to generate predictions of where crimes were most likely to occur, directing patrol deployment to predicted 'hotspot' locations. The system was deployed by over 150 law enforcement agencies across the United States beginning in 2012, including the Los Angeles Police Department, which used PredPol for nine years. The LAPD was PredPol's largest and most prominent customer.",
+      "The structural problem with PredPol is that its training data \u2014 historical arrest records \u2014 reflects the deployment decisions of previous policing generations, which were shaped by racially biased patrol practices. An algorithm trained on biased data learns to replicate the bias. More patrols in a neighbourhood produce more arrests; more arrests in the historical record predict more patrols; the feedback loop amplifies the original bias rather than detecting underlying crime rates. A 2021 internal LAPD audit found that PredPol's predictions were disproportionately concentrated in minority communities and that officers were being directed to locations at rates inconsistent with crime data. The LAPD terminated its PredPol contract in 2021. Santa Cruz, California, became the first US city to ban predictive policing entirely in 2020."
+    ],
+    "tapeItems": [
+      "GPWS 0.0",
+      "ALL 5 CONDITIONS ABSENT",
+      "150+ CITIES DEPLOYED",
+      "BIAS AMPLIFICATION CONFIRMED \u2014 LAPD AUDIT",
+      "9 YEARS \u2014 NO INDEPENDENT VALIDATION",
+      "SANTA CRUZ FIRST US BAN 2020",
+      "LAPD TERMINATED 2021",
+      "FEEDBACK LOOP: BIASED DATA \u2192 BIASED PREDICTIONS"
+    ],
+    "harmStats": [
+      {
+        "n": "150+",
+        "label": "US agencies\ndeployed without validation",
+        "color": "red"
+      },
+      {
+        "n": "9 yr",
+        "label": "LAPD deployment\nbefore termination",
+        "color": "amber"
+      },
+      {
+        "n": "2020",
+        "label": "Santa Cruz \u2014 first\nUS predictive policing ban",
+        "color": "amber"
+      },
+      {
+        "n": "0.0",
+        "label": "GPWS Score\n(DANGER)",
+        "color": "red"
+      }
+    ],
+    "timeline": [
+      {
+        "date": "2011\u20132012",
+        "type": "neutral",
+        "event": "PredPol developed \u2014 LAPD pilot begins",
+        "detail": "PredPol is developed at UCLA with LAPD collaboration and begins a pilot deployment. The algorithm uses historical crime and arrest data to predict future crime locations. No independent validation of whether the algorithm produces predictions that reflect actual crime rates \u2014 rather than historical policing patterns \u2014 is conducted before deployment. No named LAPD official is documented as accountable for the algorithm's accuracy or equity."
+      },
+      {
+        "date": "2012\u20132019",
+        "type": "harm",
+        "event": "150+ agencies deploy \u2014 no independent validation in any jurisdiction",
+        "detail": "PredPol expands to over 150 law enforcement agencies. No agency commissions independent validation of whether the algorithm's predictions reflect underlying crime rates or amplify historical policing biases. Officers directed by PredPol to hotspot locations are increasing patrol presence in areas already subject to higher policing, generating more arrests, which feed back into the training data to predict more patrols."
+      },
+      {
+        "date": "2018",
+        "type": "harm",
+        "event": "Upturn / The Guardian investigation \u2014 feedback loop documented",
+        "detail": "Investigative reporting by Upturn and The Guardian documents the structural feedback loop in PredPol: biased historical data produces biased predictions, which produce more arrests in the same communities, which reinforce the predictions. The documentation is public. PredPol continues to operate in 150+ jurisdictions. No agency initiates an independent audit in response."
+      },
+      {
+        "date": "2020",
+        "type": "accountability",
+        "event": "Santa Cruz bans predictive policing \u2014 first US city",
+        "detail": "Santa Cruz, California, becomes the first US city to ban predictive policing by ordinance. The ordinance cites the feedback loop between biased training data and biased predictions as the primary basis for the ban. Other cities begin reviewing their contracts."
+      },
+      {
+        "date": "2021",
+        "type": "accountability",
+        "event": "LAPD internal audit \u2014 bias amplification confirmed \u2014 contract terminated",
+        "detail": "An internal LAPD audit finds that PredPol's predictions were disproportionately concentrated in minority communities and that patrol deployment directed by the algorithm was inconsistent with crime data. The LAPD terminates its PredPol contract. This is the most significant accountability outcome for PredPol: the bias amplification finding came from the deploying agency's own audit, nine years after deployment."
+      },
+      {
+        "date": "2021\u2013present",
+        "type": "accountability",
+        "event": "Geolitica rebrand \u2014 other agencies continue use",
+        "detail": "PredPol rebrands as Geolitica and continues marketing to law enforcement agencies. Other agencies that deployed PredPol review their contracts with varying outcomes. No federal standard for predictive policing validation or bias assessment has been established. The accountability arc for agencies other than LAPD and Santa Cruz remains open."
+      }
+    ],
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "Named Accountable Owner",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No named LAPD official was documented as accountable for the equity and accuracy of PredPol's predictions throughout nine years of deployment. The algorithm generated patrol deployment recommendations that shaped where officers spent their time across the city. No named official had documented responsibility for monitoring whether those recommendations were producing equitable outcomes or amplifying historical bias.",
+          "The LAPD's own audit eventually confirmed the bias amplification. That audit was conducted internally, nine years after deployment, in response to external pressure. A named accountable owner with documented responsibility for equity monitoring would have commissioned that audit in the first year, not the ninth."
+        ],
+        "quote": "Nine years of deployment. The bias amplification was confirmed by the agency's own audit. No one had been accountable for looking.",
+        "source": "HSRL C1 analysis \u2014 PredPol"
+      },
+      {
+        "id": "C2",
+        "name": "Independent Validation",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "PredPol was never independently validated for whether its predictions reflected actual underlying crime rates or amplified historical policing bias before being deployed in any of the 150+ jurisdictions that used it. The fundamental validation question \u2014 does this algorithm predict crime or predict policing? \u2014 was not answered by any independent body before deployment.",
+          "This is the methodologically specific C2 failure for predictive policing: the validity of the algorithm's predictions cannot be assessed using the same arrest data used to train it, because arrests reflect policing deployment rather than crime rates. Independent validation requires comparing predictions against victimisation survey data or other crime measures independent of policing deployment. No such validation was conducted."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C3",
+        "name": "Structured Monitoring",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No structured monitoring mechanism tracked whether PredPol's predictions were producing equitable patrol deployment across demographic and geographic groups throughout its nine-year LAPD deployment. The audit that eventually confirmed bias amplification used data that had been available and accumulating throughout the deployment period. No monitoring framework required anyone to look at that data and act on it.",
+          "The feedback loop structure makes C3 especially critical for predictive policing: without monitoring that compares predictions against independent crime measures, the system's outputs look accurate \u2014 more patrols in predicted areas produce more arrests \u2014 while actually amplifying bias. Only monitoring that steps outside the feedback loop can detect the problem. That monitoring did not exist."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C4",
+        "name": "Pre-Established Accountability Protocol",
+        "score": "ABSENT",
+        "finding": "ABSENT",
+        "text": [
+          "No pre-established protocol defined the disparity threshold at which PredPol's deployment recommendations would be suspended pending independent equity review. The operational default \u2014 direct patrols to predicted hotspots, accept the algorithm's outputs as valid deployment guidance \u2014 was not a formally adopted policy with equity conditions attached. It was the absence of any policy.",
+          "A pre-established accountability protocol would have required LAPD to define in advance: if PredPol recommendations direct X% more patrol time to minority communities than is proportionate to call-for-service data, suspend the algorithm pending independent review. That threshold was never set. The algorithm directed patrols for nine years without a defined equity condition."
+        ],
+        "quote": null,
+        "source": null
+      },
+      {
+        "id": "C5",
+        "name": "No Active Suppression",
+        "score": "ABSENT \u2014 Confirmed",
+        "finding": "ABSENT \u2014 CONFIRMED",
+        "text": [
+          "The suppression pattern in PredPol is the non-disclosure of the algorithm's training data composition and prediction methodology to the communities subject to its deployment. Residents of neighbourhoods designated as hotspots by PredPol were not told that an algorithm was directing increased police presence in their neighbourhood, what data the algorithm used, or what the feedback loop implications of that data were.",
+          "The confirmed suppression element is PredPol's active non-disclosure of its methodology. The company described its algorithm as proprietary and declined to disclose the specific features and weights used in predictions. This prevented independent researchers from assessing the feedback loop problem without access to the company's internal data \u2014 which was eventually documented through investigative reporting rather than through any transparency mechanism."
+        ],
+        "laundering": {
+          "tags": [
+            "L-01 Accountability diffusion",
+            "L-04 Responsibility shifted across time",
+            "L-07 Automation cited as inevitability",
+            "L-08 Harm erased through aggregation"
+          ],
+          "desc": "L-07 (Automation as inevitability): Predictive policing was marketed as data-driven and therefore objective \u2014 automation framed as removing human bias rather than encoding it. L-08 (Harm erased through aggregation): Individual over-policing harms were invisible in aggregate 'crime reduction' statistics that the algorithm was credited with. L-04 (Responsibility shifted across time): Each year's deployment was justified by the previous year's arrest data, deferring the bias question indefinitely into a historical record that could not be separated from the deployment itself."
+        },
+        "quote": null,
+        "source": null
+      }
+    ],
+    "prevention": [
+      {
+        "c": "C1",
+        "title": "A named LAPD official accountable for PredPol equity outcomes from year one",
+        "desc": "Before PredPol directed its first patrol deployment, one named LAPD official should have been documented as accountable for monitoring whether the algorithm's recommendations were producing equitable outcomes across demographic groups. That person's annual equity report, with their name attached, would have surfaced the bias amplification problem within the first two years \u2014 not the ninth."
+      },
+      {
+        "c": "C2",
+        "title": "Independent validation against victimisation survey data before deployment",
+        "desc": "PredPol's accuracy cannot be assessed using arrest data because arrests reflect policing, not crime. Independent validation requires comparison against victimisation surveys, 911 call data, or other crime measures independent of patrol deployment decisions. No agency deployed PredPol after commissioning this validation. An agency that had would have discovered the feedback loop problem before deployment."
+      },
+      {
+        "c": "C3",
+        "title": "Annual equity audit comparing PredPol predictions against call-for-service data",
+        "desc": "If LAPD had required an annual comparison of PredPol's predicted hotspots against 911 call-for-service data \u2014 a measure of crime reports independent of patrol deployment \u2014 the discrepancy between predictions and calls would have been visible from the early years of deployment. The audit that eventually confirmed bias amplification should have been the first year's monitoring report, not the ninth year's termination justification."
+      },
+      {
+        "c": "C4",
+        "title": "A pre-established disparity threshold that triggered algorithm suspension",
+        "desc": "Before deployment, LAPD should have defined: if PredPol directs more than X% disproportionate patrol time to any racial or demographic group relative to call-for-service data, the algorithm is suspended pending independent equity review. That threshold should have been set at deployment and published. Its absence meant the algorithm could direct racially disproportionate patrol deployment for nine years without a defined point at which the disparity became a governance obligation to act on."
+      },
+      {
+        "c": "C5",
+        "title": "A mandatory methodology disclosure requirement for predictive policing vendors",
+        "desc": "PredPol's proprietary methodology prevented independent researchers from assessing the feedback loop problem without access to the company's data. A municipal or state requirement that any predictive policing vendor must disclose their algorithm's training data composition, feature weights, and prediction methodology to an independent oversight body would have made the feedback loop assessable before deployment. The harm was in the structure of the algorithm. Disclosure would have made the structure visible."
+      }
+    ],
+    "comparables": [
+      {
+        "slug": "compas",
+        "name": "COMPAS Risk Assessment",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 1998\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "Racial disparity documented"
+        ],
+        "desc": "Closest structural comparator: algorithmic system used in criminal justice decision-making, documented racial disparity in outputs, no independent validation before deployment, proprietary methodology. COMPAS in sentencing prediction, PredPol in patrol deployment prediction: same structural failure, same domain, adjacent points in the criminal justice process.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "clearview-ai-immigration-enforcement-use",
+        "name": "Clearview AI",
+        "meta": "USA/Multiple \u00b7 Criminal Justice \u00b7 2019\u2013present",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "600+ agencies \u2014 no governance"
+        ],
+        "desc": "Companion case in the law enforcement AI governance failure cluster: deployed to hundreds of agencies without independent validation, proprietary methodology shield, documented harm. Clearview in identification, PredPol in deployment prediction: together they define the vendor-side governance failure pattern in law enforcement AI.",
+        "score": "0.0",
+        "scoreColor": "red"
+      },
+      {
+        "slug": "detroit-pd-facial-recognition-williams",
+        "name": "Detroit PD Facial Recognition (Williams)",
+        "meta": "United States \u00b7 Criminal Justice \u00b7 2020",
+        "tags": [
+          "C1 ABSENT",
+          "C2 ABSENT",
+          "Individual wrongful arrest"
+        ],
+        "desc": "Operational consequence comparator: the Williams arrest is what happens at the individual level when algorithms without independent validation are used in law enforcement. PredPol operates at neighbourhood scale; facial recognition at individual scale. Together with COMPAS they define the three layers of the law enforcement AI governance failure: identification, prediction, and sentencing.",
+        "score": "0.0",
+        "scoreColor": "red"
+      }
+    ],
+    "metadata": {
+      "Case ID": "F041",
+      "Classification": "Failure \u2014 Criminal Justice & Policing",
+      "GPWS Score": "0.0 \u00b7 DANGER",
+      "Conditions Absent": "5 of 5 \u2014 C1, C2, C3, C4, C5",
+      "Suppression Confirmed": "Yes \u2014 Methodology non-disclosure; feedback loop not disclosed to communities",
+      "Country": "USA (multiple cities)",
+      "Operational Period": "2012\u20132021 (LAPD); ongoing in other jurisdictions",
+      "Justice Lag": "9 years (LAPD deployment to termination)",
+      "Harm Scale": "150+ cities \u00b7 bias amplification confirmed \u00b7 ongoing in remaining jurisdictions",
+      "Last Verified": "January 2025"
+    },
+    "sources": [
+      "LAPD internal audit \u2014 PredPol equity assessment, 2021",
+      "Upturn \u2014 'The Perpetual Lineup', 2016",
+      "The Guardian \u2014 'Predictive Policing' investigation, 2018",
+      "Santa Cruz predictive policing ban ordinance, 2020",
+      "Lum & Isaac \u2014 'To predict and serve?', Significance, 2016 (feedback loop analysis)"
+    ],
+    "related": [
+      {
+        "slug": "compas",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "COMPAS Risk Assessment",
+        "meta": "US \u00b7 1998\u2013present \u00b7 ongoing",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "clearview-ai-immigration-enforcement-use",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "Clearview AI",
+        "meta": "USA/Multiple \u00b7 2019\u2013present",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      },
+      {
+        "slug": "detroit-pd-facial-recognition-williams",
+        "type": "Failure",
+        "domain": "Criminal Justice",
+        "name": "Detroit PD Facial Recognition (Williams)",
+        "meta": "US \u00b7 2020 \u00b7 wrongful arrest",
+        "conds": [
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT",
+          "ABSENT"
+        ],
+        "dotColor": "red"
+      }
+    ]
+  }
+}
