@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/((?!index\\.html|cases-data\\.json|cases-content\\.json).*)", "destination": "/index.html" }
-  ]
-}
