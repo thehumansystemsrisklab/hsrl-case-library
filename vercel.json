@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/cases/:slug", "destination": "/index.html" },
+    { "source": "/cases", "destination": "/index.html" },
+    { "source": "/:slug((?!.*\\.json$)(?!.*\\.html$)[^/]+)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.json",
+      "headers": [{ "key": "Content-Type", "value": "application/json" }]
+    }
+  ]
+}
