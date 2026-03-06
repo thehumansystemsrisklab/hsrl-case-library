@@ -1,0 +1,25 @@
+{
+  "rewrites": [
+    {
+      "source": "/diagnostic",
+      "destination": "/diagnostic.html"
+    },
+    {
+      "source": "/diagnostic/",
+      "destination": "/diagnostic.html"
+    },
+    {
+      "source": "/:slug",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*).json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    }
+  ]
+}
