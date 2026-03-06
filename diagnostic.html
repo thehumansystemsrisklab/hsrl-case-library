@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Deployment Diagnostic — Human Systems Risk Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0b1120;--navy2:#0f1826;--navy3:#131f2e;
+  --cream:#ede8df;--warm:#c4bba9;--muted:#7a8190;
+  --border:rgba(255,255,255,0.07);
+  --amber:#c07a18;--amber2:#e09030;
+  --red:#c83030;--green:#28885a;
+  --ff-display:'Cormorant Garamond',Georgia,serif;
+  --ff-body:'Source Sans 3',system-ui,sans-serif;
+  --ff-mono:'DM Mono','Courier New',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--warm);font-family:var(--ff-body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── PROGRESS BAR ── */
+.prog-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:3px;background:rgba(255,255,255,.04)}
+.prog-fill{height:100%;background:var(--amber);transition:width .4s ease;width:0%}
+
+/* ── WRAP ── */
+.wrap{max-width:860px;margin:0 auto;padding:0 40px}
+
+/* ── HEADER ── */
+.diag-header{background:var(--navy3);border-bottom:1px solid var(--border);padding:14px 0}
+.diag-header-inner{max-width:860px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between}
+.diag-brand{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);text-decoration:none}
+.diag-step-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+
+/* ── STAGE SCREENS ── */
+.stage{display:none;animation:fadeIn .35s ease}
+.stage.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── INTRO ── */
+.intro-hero{padding:72px 0 56px;text-align:center}
+.intro-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+.intro-h1{font-family:var(--ff-display);font-size:clamp(40px,6vw,72px);font-weight:700;color:var(--cream);line-height:1.06;margin-bottom:16px}
+.intro-sub{font-size:17px;color:var(--warm);max-width:580px;margin:0 auto 40px;line-height:1.75}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:48px 0;max-width:600px;margin-left:auto;margin-right:auto}
+.istat{background:var(--navy2);padding:22px 16px;text-align:center}
+.istat-n{font-family:var(--ff-display);font-size:36px;font-weight:700;color:var(--amber2);line-height:1;margin-bottom:4px}
+.istat-l{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.intro-form{background:var(--navy2);border:1px solid var(--border);padding:36px;max-width:520px;margin:0 auto}
+.form-row{margin-bottom:20px}
+.form-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.form-input{width:100%;background:var(--navy3);border:1px solid rgba(255,255,255,.12);color:var(--cream);font-family:var(--ff-body);font-size:15px;padding:12px 16px;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--amber)}
+.form-input::placeholder{color:var(--muted)}
+.domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.domain-chip{background:var(--navy3);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--ff-mono);font-size:10px;letter-spacing:.08em;padding:9px 14px;cursor:pointer;transition:all .15s;text-align:center}
+.domain-chip:hover{border-color:rgba(192,122,24,.4);color:var(--amber)}
+.domain-chip.sel{background:rgba(192,122,24,.12);border-color:var(--amber);color:var(--amber)}
+.btn-start{width:100%;background:var(--amber);color:var(--navy);border:none;font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:16px;cursor:pointer;transition:background .2s;margin-top:8px}
+.btn-start:hover{background:var(--amber2)}
+.btn-start:disabled{opacity:.4;cursor:not-allowed}
+.intro-note{font-family:var(--ff-mono);font-size:10px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:.06em}
+
+/* ── CONDITION HEADER ── */
+.cond-header{padding:48px 0 0}
+.cond-ribbon{background:var(--navy3);border:1px solid var(--border);padding:20px 28px;margin-bottom:40px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px}
+.cond-ribbon-left{}
+.cond-ribbon-id{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.cond-ribbon-title{font-family:var(--ff-display);font-size:clamp(22px,3.5vw,34px);font-weight:700;color:var(--cream);line-height:1.1}
+.cond-ribbon-desc{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.6}
+.cond-ribbon-right{text-align:right}
+.cond-num{font-family:var(--ff-display);font-size:60px;font-weight:700;color:rgba(255,255,255,.04);line-height:1}
+
+/* ── QUESTION CARD ── */
+.q-block{background:var(--navy2);border:1px solid var(--border);margin-bottom:12px;transition:border-color .2s}
+.q-block.answered{border-color:rgba(192,122,24,.2)}
+.q-top{padding:22px 24px 18px}
+.q-num{font-family:var(--ff-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.q-text{font-size:16px;color:var(--cream);line-height:1.6;margin-bottom:12px}
+.q-probe{font-size:13px;color:var(--muted);line-height:1.65;padding:12px 14px;background:rgba(0,0,0,.25);border-left:2px solid rgba(192,122,24,.25);margin-bottom:14px}
+.q-probe strong{color:var(--amber)}
+.q-flag{font-size:12px;color:var(--red);line-height:1.6;padding:10px 14px;background:rgba(200,48,48,.06);border-left:2px solid rgba(200,48,48,.3)}
+.q-answers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 24px 22px}
+.q-btn{background:var(--navy3);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:11px 8px;cursor:pointer;transition:all .15s;text-align:center}
+.q-btn:hover{border-color:rgba(192,122,24,.4);color:var(--warm)}
+.q-btn.sel-yes{background:rgba(40,136,90,.12);border-color:var(--green);color:var(--green)}
+.q-btn.sel-no{background:rgba(200,48,48,.1);border-color:var(--red);color:var(--red)}
+.q-btn.sel-partial{background:rgba(192,122,24,.1);border-color:var(--amber);color:var(--amber)}
+
+/* ── LIVE SCORE PANEL ── */
+.score-panel{position:sticky;bottom:0;z-index:100;background:rgba(11,17,32,.97);backdrop-filter:blur(14px);border-top:1px solid var(--border);padding:16px 0}
+.score-panel-inner{max-width:860px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.score-conds{display:flex;gap:16px}
+.score-cond{display:flex;flex-direction:column;align-items:center;gap:4px}
+.score-cond-id{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;color:var(--muted)}
+.score-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12);transition:background .3s}
+.score-dot.present{background:var(--green);box-shadow:0 0 8px rgba(40,136,90,.5)}
+.score-dot.partial{background:var(--amber);box-shadow:0 0 8px rgba(192,122,24,.4)}
+.score-dot.absent{background:var(--red);box-shadow:0 0 8px rgba(200,48,48,.5)}
+.score-dot.unanswered{background:rgba(255,255,255,.12)}
+.score-status{font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score-status.risk{color:var(--red)}
+.score-status.uncertain{color:var(--amber)}
+.score-status.ready{color:var(--green)}
+.btn-next-cond{background:var(--amber);color:var(--navy);border:none;font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;cursor:pointer;transition:background .2s}
+.btn-next-cond:hover{background:var(--amber2)}
+.btn-next-cond:disabled{opacity:.35;cursor:not-allowed}
+
+/* ── RESULTS ── */
+.results-hero{padding:60px 0 48px;text-align:center}
+.results-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.results-h1{font-family:var(--ff-display);font-size:clamp(36px,5vw,64px);font-weight:700;color:var(--cream);line-height:1.06;margin-bottom:10px}
+.status-badge{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border:1px solid;font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:32px}
+.status-badge.risk{color:var(--red);border-color:rgba(200,48,48,.4);background:rgba(200,48,48,.07)}
+.status-badge.uncertain{color:var(--amber);border-color:rgba(192,122,24,.4);background:rgba(192,122,24,.07)}
+.status-badge.ready{color:var(--green);border-color:rgba(40,136,90,.4);background:rgba(40,136,90,.07)}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-badge.risk .status-dot{background:var(--red)}
+.status-badge.uncertain .status-dot{background:var(--amber)}
+.status-badge.ready .status-dot{background:var(--green)}
+
+/* ── CONDITION RESULTS ── */
+.cond-results{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin:32px 0 48px}
+.cr-cell{background:var(--navy2);padding:20px 14px;text-align:center}
+.cr-id{font-family:var(--ff-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.cr-name{font-size:12px;color:var(--warm);margin-bottom:10px;line-height:1.4}
+.cr-badge{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;padding:4px 10px;text-transform:uppercase;display:inline-block}
+.cr-badge.a{color:var(--red);background:rgba(200,48,48,.1);border:1px solid rgba(200,48,48,.25)}
+.cr-badge.p{color:var(--green);background:rgba(40,136,90,.1);border:1px solid rgba(40,136,90,.25)}
+.cr-badge.x{color:var(--amber);background:rgba(192,122,24,.1);border:1px solid rgba(192,122,24,.25)}
+
+/* ── MATCHED CASES ── */
+.matched-sec{margin:48px 0}
+.sec-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.sec-title-sm{font-family:var(--ff-display);font-size:clamp(20px,2.5vw,30px);font-weight:600;color:var(--cream);margin-bottom:24px}
+.matched-grid{display:flex;flex-direction:column;gap:10px}
+.match-card{background:var(--navy2);border:1px solid var(--border);padding:20px 22px;display:grid;grid-template-columns:1fr auto;align-items:start;gap:16px;text-decoration:none;transition:border-color .15s}
+.match-card:hover{border-color:rgba(192,122,24,.3)}
+.match-card-left{}
+.match-case-domain{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.match-case-name{font-size:15px;color:var(--cream);margin-bottom:6px;line-height:1.4}
+.match-case-harm{font-size:13px;color:var(--muted);line-height:1.55}
+.match-conds{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.match-cond-tag{font-family:var(--ff-mono);font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase}
+.match-cond-tag.a{color:var(--red);background:rgba(200,48,48,.1);border:1px solid rgba(200,48,48,.2)}
+.match-cond-tag.p{color:var(--green);background:rgba(40,136,90,.08)}
+.match-card-score{font-family:var(--ff-display);font-size:32px;font-weight:700;color:var(--red);text-align:right}
+.match-score-label{font-family:var(--ff-mono);font-size:8px;letter-spacing:.1em;color:var(--muted);text-align:right}
+.match-arrow{font-size:11px;color:var(--amber);text-align:right;margin-top:8px;font-family:var(--ff-mono)}
+
+/* ── DOCUMENT CARDS ── */
+.docs-sec{margin:48px 0 72px}
+.doc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.doc-card{background:var(--navy2);border:1px solid var(--border);padding:28px 22px;display:flex;flex-direction:column;gap:16px;position:relative}
+.doc-card.featured{border-color:rgba(192,122,24,.3);background:rgba(192,122,24,.04)}
+.doc-card-badge{position:absolute;top:-1px;right:20px;background:var(--amber);color:var(--navy);font-family:var(--ff-mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px}
+.doc-card-id{font-family:var(--ff-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.doc-card-name{font-family:var(--ff-display);font-size:20px;font-weight:600;color:var(--cream);line-height:1.25}
+.doc-card-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1}
+.doc-card-price{font-family:var(--ff-display);font-size:36px;font-weight:700;color:var(--cream)}
+.doc-card-price span{font-size:14px;color:var(--muted);font-family:var(--ff-body);font-weight:400}
+.doc-card-features{display:flex;flex-direction:column;gap:5px}
+.doc-feat{font-family:var(--ff-mono);font-size:9px;letter-spacing:.08em;color:var(--muted);display:flex;align-items:center;gap:7px}
+.doc-feat::before{content:'↗';color:var(--amber);font-size:9px}
+.btn-generate{width:100%;background:transparent;color:var(--amber);border:1px solid rgba(192,122,24,.4);font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:12px;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-generate:hover{background:rgba(192,122,24,.1);border-color:var(--amber)}
+.doc-card.featured .btn-generate{background:var(--amber);color:var(--navy);border-color:var(--amber)}
+.doc-card.featured .btn-generate:hover{background:var(--amber2)}
+
+/* ── PDF PREVIEW OVERLAY ── */
+.pdf-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.pdf-overlay.on{display:flex}
+.pdf-modal{background:var(--navy2);border:1px solid var(--border);width:min(720px,95vw);max-height:90vh;overflow-y:auto;position:relative}
+.pdf-modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--navy2);z-index:10}
+.pdf-modal-title{font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.pdf-modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.pdf-modal-close:hover{color:var(--cream)}
+.pdf-preview{padding:32px 40px;font-family:var(--ff-body)}
+.pdf-actions{display:flex;gap:10px;padding:18px 24px;border-top:1px solid var(--border);justify-content:flex-end}
+.pdf-action-btn{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;cursor:pointer;transition:all .2s}
+.btn-pay{background:var(--amber);color:var(--navy);border:none}
+.btn-pay:hover{background:var(--amber2)}
+.btn-close-modal{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12)}
+.btn-close-modal:hover{border-color:rgba(255,255,255,.3);color:var(--cream)}
+.pay-note{font-family:var(--ff-mono);font-size:9px;color:var(--muted);text-align:right;padding:0 24px 16px;letter-spacing:.06em}
+
+/* ── DOC STYLES (render inside preview + print) ── */
+.doc-body{color:#111;background:#fff;font-family:'Source Sans 3',sans-serif;font-size:13px;line-height:1.7}
+.doc-header-bar{background:#0b1120;color:#ede8df;padding:24px 32px 20px;display:flex;justify-content:space-between;align-items:flex-start}
+.doc-header-left{}
+.doc-header-org{font-family:var(--ff-mono,'DM Mono',monospace);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#c4bba9;margin-bottom:6px}
+.doc-header-title{font-family:var(--ff-display,'Cormorant Garamond',serif);font-size:28px;font-weight:700;color:#ede8df;line-height:1.1}
+.doc-header-right{text-align:right}
+.doc-header-id{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#7a8190;margin-bottom:4px}
+.doc-header-date{font-family:var(--ff-mono,'DM Mono',monospace);font-size:11px;color:#c07a18}
+.doc-body-inner{padding:28px 32px}
+.doc-section{margin-bottom:24px}
+.doc-section-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c07a18;border-bottom:1px solid #eee;padding-bottom:5px;margin-bottom:12px}
+.doc-status-row{display:flex;align-items:center;gap:16px;padding:14px 16px;border-left:4px solid #c83030;background:#fff5f5;margin-bottom:16px}
+.doc-status-row.uncertain{border-left-color:#c07a18;background:#fffaf0}
+.doc-status-row.ready{border-left-color:#28885a;background:#f0faf5}
+.doc-status-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#c83030;font-weight:600}
+.doc-status-row.uncertain .doc-status-label{color:#c07a18}
+.doc-status-row.ready .doc-status-label{color:#28885a}
+.doc-status-text{font-size:12px;color:#555;line-height:1.5}
+.doc-cond-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.doc-cond-table th{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#999;text-align:left;padding:6px 8px;border-bottom:1px solid #eee}
+.doc-cond-table td{padding:8px 8px;border-bottom:1px solid #f5f5f5;font-size:12px;color:#333;vertical-align:top}
+.doc-cond-table .cond-id{font-family:var(--ff-mono,'DM Mono',monospace);font-size:9px;color:#c07a18;font-weight:600}
+.doc-badge-a{display:inline-block;font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#c83030;background:#fff0f0;border:1px solid #fcc}
+.doc-badge-p{display:inline-block;font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#28885a;background:#f0faf5;border:1px solid #c3e6d0}
+.doc-badge-x{display:inline-block;font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#c07a18;background:#fffaf0;border:1px solid #ffd980}
+.doc-match-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 12px;border-bottom:1px solid #f5f5f5;align-items:start}
+.doc-match-row:last-child{border-bottom:none}
+.doc-match-name{font-size:13px;color:#111;font-weight:600;margin-bottom:2px}
+.doc-match-meta{font-family:var(--ff-mono,'DM Mono',monospace);font-size:9px;color:#999;margin-bottom:4px}
+.doc-match-harm{font-size:11px;color:#666;line-height:1.5}
+.doc-match-score{font-family:var(--ff-display,'Cormorant Garamond',serif);font-size:28px;font-weight:700;color:#c83030;text-align:right;line-height:1}
+.doc-match-score-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.1em;color:#999;text-align:right}
+.doc-next-box{background:#f9f9f9;border:1px solid #e5e5e5;padding:14px 16px}
+.doc-next-title{font-family:var(--ff-mono,'DM Mono',monospace);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#c07a18;margin-bottom:6px}
+.doc-next-text{font-size:12px;color:#444;line-height:1.6}
+.doc-footer{background:#f5f5f5;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.1em;color:#999;border-top:1px solid #e5e5e5;text-transform:uppercase}
+.doc-footer a{color:#c07a18;text-decoration:none}
+.doc-disclaimer{font-size:10px;color:#999;line-height:1.6;margin-top:16px;padding-top:14px;border-top:1px solid #eee}
+
+/* trigger grid for DOC-02 */
+.trig-section{margin-bottom:14px}
+.trig-section-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#c07a18;margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid #eee}
+.trig-table{width:100%;border-collapse:collapse}
+.trig-table td{padding:5px 8px;font-size:11px;border-bottom:1px solid #f8f8f8;color:#444}
+.trig-table td:last-child{font-family:var(--ff-mono,'DM Mono',monospace);font-size:8px;text-align:right;white-space:nowrap}
+.trig-yes{color:#c83030}
+.trig-no{color:#999}
+
+/* procurement letter styles */
+.letter-body{font-family:'Source Sans 3',Georgia,serif;font-size:13px;line-height:1.8;color:#222;padding:40px 48px}
+.letter-date{margin-bottom:28px;color:#555}
+.letter-to{margin-bottom:24px;line-height:1.6;color:#333}
+.letter-re{font-weight:600;color:#111;margin-bottom:24px;padding-bottom:8px;border-bottom:1px solid #ddd}
+.letter-p{margin-bottom:16px}
+.letter-sig{margin-top:32px}
+.letter-sig-name{font-weight:600;color:#111}
+.letter-sig-title{font-size:12px;color:#777}
+
+/* ── PRINT STYLES ── */
+@media print{
+  body{background:#fff!important}
+  .pdf-modal-header,.pdf-actions,.pay-note,.diag-header,.prog-bar,.score-panel{display:none!important}
+  .pdf-modal{width:100%;border:none;box-shadow:none}
+  .pdf-preview{padding:0}
+}
+
+/* ── PAYMENT CONFIRMATION ── */
+.pay-confirm{display:none;position:fixed;inset:0;z-index:600;background:rgba(11,17,32,.97);align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.pay-confirm.on{display:flex}
+.pay-confirm-icon{font-size:48px;color:var(--green)}
+.pay-confirm-title{font-family:var(--ff-display);font-size:32px;color:var(--cream)}
+.pay-confirm-sub{font-family:var(--ff-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-align:center}
+.btn-download-final{background:var(--green);color:#fff;border:none;font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:16px 36px;cursor:pointer;transition:background .2s;margin-top:8px}
+.btn-download-final:hover{background:#32a06a}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .wrap{padding:0 20px}
+  .diag-header-inner{padding:0 20px}
+  .score-panel-inner{padding:0 20px}
+  .doc-cards{grid-template-columns:1fr}
+  .cond-results{grid-template-columns:repeat(3,1fr)}
+  .intro-stats{grid-template-columns:1fr}
+  .q-answers{grid-template-columns:1fr}
+  .domain-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+
+<header class="diag-header">
+  <div class="diag-header-inner">
+    <a href="/" class="diag-brand">HSRL — Structural Governance Diagnostics</a>
+    <span class="diag-step-label" id="stepLabel">Pre-Deployment Checklist · V2</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     STAGE 0: INTRO
+══════════════════════════════════════════ -->
+<div class="stage on" id="stageIntro">
+<div class="wrap">
+  <div class="intro-hero">
+    <div class="intro-eyebrow">HSRL Structural Governance Diagnostics Suite</div>
+    <h1 class="intro-h1">Pre-Deployment<br>Checklist</h1>
+    <p class="intro-sub">5 conditions · 20 questions · 10 minutes. Validated against 380 documented cases. Identifies whether the deploying organisation has the structural capacity to govern this system — not whether the technology is accurate.</p>
+    <div class="intro-stats">
+      <div class="istat"><div class="istat-n">380</div><div class="istat-l">Cases validated</div></div>
+      <div class="istat"><div class="istat-n">100%</div><div class="istat-l">Classification accuracy</div></div>
+      <div class="istat"><div class="istat-n">50+</div><div class="istat-l">Years of record</div></div>
+    </div>
+    <div class="intro-form">
+      <div class="form-row">
+        <label class="form-label" for="orgName">Organisation name</label>
+        <input class="form-input" id="orgName" type="text" placeholder="e.g. City of Phoenix, Department of Labor">
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="sysName">System or programme being assessed</label>
+        <input class="form-input" id="sysName" type="text" placeholder="e.g. Predictive risk scoring model, Benefits eligibility engine">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Primary domain (select one)</label>
+        <div class="domain-grid" id="domainGrid">
+          <div class="domain-chip" data-domain="Criminal Justice & Policing">Criminal Justice</div>
+          <div class="domain-chip" data-domain="Benefits & Welfare">Benefits & Welfare</div>
+          <div class="domain-chip" data-domain="Healthcare">Healthcare</div>
+          <div class="domain-chip" data-domain="Government IT">Government IT</div>
+          <div class="domain-chip" data-domain="Financial Systems">Financial Systems</div>
+          <div class="domain-chip" data-domain="Immigration">Immigration</div>
+          <div class="domain-chip" data-domain="Education">Education</div>
+          <div class="domain-chip" data-domain="Transportation & Aviation">Transportation</div>
+          <div class="domain-chip" data-domain="Other">Other / Multiple</div>
+        </div>
+      </div>
+      <button class="btn-start" id="btnStart" onclick="startDiagnostic()" disabled>Begin Diagnostic →</button>
+      <p class="intro-note">Anonymous · No account required · Results generated instantly</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STAGE 1–5: CONDITIONS
+══════════════════════════════════════════ -->
+<div class="stage" id="stageConditions">
+<div class="wrap">
+  <div class="cond-header">
+    <div class="cond-ribbon" id="condRibbon">
+      <div class="cond-ribbon-left">
+        <div class="cond-ribbon-id" id="ribbonId">C1 — NAMED OWNER</div>
+        <div class="cond-ribbon-title" id="ribbonTitle">Named Owner</div>
+        <div class="cond-ribbon-desc" id="ribbonDesc">Someone must own this system's decisions — by name, not by org chart.</div>
+      </div>
+      <div class="cond-ribbon-right">
+        <div class="cond-num" id="ribbonNum">1</div>
+      </div>
+    </div>
+    <div id="questionsContainer"></div>
+  </div>
+</div>
+
+<div class="score-panel">
+  <div class="score-panel-inner">
+    <div class="score-conds" id="scoreConds">
+      <div class="score-cond"><div class="score-cond-id">C1</div><div class="score-dot unanswered" id="dot-c1"></div></div>
+      <div class="score-cond"><div class="score-cond-id">C2</div><div class="score-dot unanswered" id="dot-c2"></div></div>
+      <div class="score-cond"><div class="score-cond-id">C3</div><div class="score-dot unanswered" id="dot-c3"></div></div>
+      <div class="score-cond"><div class="score-cond-id">C4</div><div class="score-dot unanswered" id="dot-c4"></div></div>
+      <div class="score-cond"><div class="score-cond-id">C5</div><div class="score-dot unanswered" id="dot-c5"></div></div>
+    </div>
+    <span class="score-status" id="scoreStatus">Questions remaining</span>
+    <button class="btn-next-cond" id="btnNextCond" onclick="nextCondition()" disabled>Next Condition →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STAGE 6: RESULTS
+══════════════════════════════════════════ -->
+<div class="stage" id="stageResults">
+<div class="wrap">
+
+  <div class="results-hero">
+    <div class="results-eyebrow">Diagnostic Complete</div>
+    <h1 class="results-h1" id="resultsOrgName">Organisation</h1>
+    <div class="status-badge risk" id="statusBadge">
+      <span class="status-dot"></span>
+      <span id="statusText">Structural Risk — Do Not Deploy</span>
+    </div>
+    <p style="font-size:15px;color:var(--muted);max-width:580px;margin:0 auto;line-height:1.75" id="statusDesc"></p>
+  </div>
+
+  <!-- CONDITION SUMMARY -->
+  <div class="cond-results" id="condResults"></div>
+
+  <!-- MATCHED CASES -->
+  <div class="matched-sec">
+    <div class="sec-eyebrow">Documented Comparable Failures</div>
+    <div class="sec-title-sm" id="matchedTitle">Cases with matching structural pattern</div>
+    <div class="matched-grid" id="matchedCases"></div>
+  </div>
+
+  <!-- DOCUMENT GENERATION -->
+  <div class="docs-sec">
+    <div class="sec-eyebrow">Governance Documentation</div>
+    <div class="sec-title-sm">Generate your structured governance record</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.7">These documents are generated from your diagnostic session and the HSRL 380-case dataset. Each is a structured record you can submit to procurement officers, agency leadership, legal counsel, or oversight bodies.</p>
+    <div class="doc-cards">
+
+      <div class="doc-card">
+        <div class="doc-card-id">DOC-01</div>
+        <div class="doc-card-name">Governance Condition Snapshot</div>
+        <div class="doc-card-desc">Single-page structured summary. Five conditions, one score, top matched cases. The fastest way to understand where a system stands.</div>
+        <div class="doc-card-price">$45 <span>/ document</span></div>
+        <div class="doc-card-features">
+          <div class="doc-feat">Five-condition assessment</div>
+          <div class="doc-feat">Top 3 comparable failure cases</div>
+          <div class="doc-feat">Structural status determination</div>
+          <div class="doc-feat">Instant PDF download</div>
+        </div>
+        <button class="btn-generate" onclick="openDocPreview('DOC-01')">Preview & Generate →</button>
+      </div>
+
+      <div class="doc-card featured">
+        <div class="doc-card-badge">Most Complete</div>
+        <div class="doc-card-id">DOC-02</div>
+        <div class="doc-card-name">Structural Governance Assessment Report</div>
+        <div class="doc-card-desc">Full diagnostic output. All 57 triggers mapped. Condition-level findings with precedent evidence. Case match appendix. The complete picture before you engage a practitioner.</div>
+        <div class="doc-card-price">$195 <span>/ document</span></div>
+        <div class="doc-card-features">
+          <div class="doc-feat">All 57 governance triggers</div>
+          <div class="doc-feat">Condition findings with precedent</div>
+          <div class="doc-feat">Top 5 comparable failure cases</div>
+          <div class="doc-feat">Recommended next diagnostic step</div>
+          <div class="doc-feat">Full PDF report + case appendix</div>
+        </div>
+        <button class="btn-generate" onclick="openDocPreview('DOC-02')">Preview & Generate →</button>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-card-id">DOC-03</div>
+        <div class="doc-card-name">Procurement Assessment Letter</div>
+        <div class="doc-card-desc">Professional letter format for institutional use. Summarizes diagnostic finding, structural exposure, and comparable documented cases. Formatted for submission to procurement officers, councils, and agency leadership.</div>
+        <div class="doc-card-price">$145 <span>/ document</span></div>
+        <div class="doc-card-features">
+          <div class="doc-feat">Letterhead format PDF</div>
+          <div class="doc-feat">Institutional submission ready</div>
+          <div class="doc-feat">Comparable failure cases cited</div>
+          <div class="doc-feat">Structural risk summary</div>
+        </div>
+        <button class="btn-generate" onclick="openDocPreview('DOC-03')">Preview & Generate →</button>
+      </div>
+
+    </div>
+    <p style="font-family:var(--ff-mono);font-size:10px;color:var(--muted);margin-top:18px;letter-spacing:.06em">These are self-service documents generated from your session data. For practitioner-led diagnostics, GCR records, and formal engagement, <a href="https://thehumansystemsrisklab.com/services" style="color:var(--amber)">contact HSRL</a>.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PDF PREVIEW OVERLAY
+══════════════════════════════════════════ -->
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-modal">
+    <div class="pdf-modal-header">
+      <span class="pdf-modal-title" id="pdfModalTitle">Document Preview</span>
+      <button class="pdf-modal-close" onclick="closePdfPreview()">✕</button>
+    </div>
+    <div class="pdf-preview" id="pdfPreview"></div>
+    <p class="pay-note" id="payNote">Preview only — payment required to download</p>
+    <div class="pdf-actions">
+      <button class="pdf-action-btn btn-close-modal" onclick="closePdfPreview()">Close</button>
+      <button class="pdf-action-btn btn-pay" id="btnPay" onclick="handlePayment()">Purchase & Download PDF →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Payment confirmation (shown after successful payment) -->
+<div class="pay-confirm" id="payConfirm">
+  <div class="pay-confirm-icon">✓</div>
+  <div class="pay-confirm-title">Payment Confirmed</div>
+  <div class="pay-confirm-sub" id="payConfirmSub">Your document is ready</div>
+  <button class="btn-download-final" onclick="downloadPdf()">Download PDF</button>
+  <button style="background:none;border:none;color:var(--muted);font-family:var(--ff-mono);font-size:10px;cursor:pointer;margin-top:8px;letter-spacing:.1em" onclick="document.getElementById('payConfirm').classList.remove('on')">Back to results</button>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+
+const CONDITIONS = [
+  {
+    id:'C1', key:'c1', name:'Named Owner',
+    title:'Named Owner',
+    desc:'Someone must own this system\'s decisions — by name, not by org chart.',
+    questions:[
+      {
+        id:'Q1.1',
+        text:'Can you name the individual — not the team, not the department — who is accountable if this system produces a harmful output?',
+        probe:'If a journalist called today and asked "who is responsible for this system?", would one person pick up the phone?',
+        flag:'If the answer is a committee, a vendor, or "it depends" — this condition is absent.'
+      },
+      {
+        id:'Q1.2',
+        text:'Is that person\'s authority over system decisions documented somewhere that isn\'t the vendor contract?',
+        probe:'Is there an internal policy, a governance charter, or a statutory designation that names them?',
+        flag:'Verbal agreements and informal understanding do not survive staff turnover or legal challenge.'
+      },
+      {
+        id:'Q1.3',
+        text:'Does that person have the authority to stop the system — unilaterally, without committee approval — if outputs are causing harm?',
+        probe:'What would actually happen if they said "pause this system today"?',
+        flag:'If they can\'t stop it alone, they don\'t own it.'
+      },
+      {
+        id:'Q1.4',
+        text:'Will the answer to the first three questions still be true in 18 months?',
+        probe:'Is ownership tied to a person or to a role? What happens when that person leaves?',
+        flag:'Role-based ownership survives; person-based ownership doesn\'t.'
+      }
+    ]
+  },
+  {
+    id:'C2', key:'c2', name:'Testable Controls',
+    title:'Testable Controls',
+    desc:'You must be able to verify what the system is doing and why.',
+    questions:[
+      {
+        id:'Q2.1',
+        text:'Can you explain, in plain language, how this system reaches a decision — without citing the vendor\'s proprietary methodology?',
+        probe:'Could your legal team defend the methodology in court without the vendor present?',
+        flag:'Absent in 96% of 160 documented failure cases. Opaque or proprietary methodology is the most reliable early indicator of absent C2.'
+      },
+      {
+        id:'Q2.2',
+        text:'Has an independent party — not the vendor — validated the system\'s performance in your specific deployment context?',
+        probe:'A vendor\'s accuracy claim in a controlled test environment is not validation for your population.',
+        flag:'Independent validation means someone with no financial interest in the outcome tested it against your data, in your context.'
+      },
+      {
+        id:'Q2.3',
+        text:'Do you have a defined acceptable error rate, and do you know the current error rate?',
+        probe:'What is your false positive rate? Your false negative rate? Who reviews these numbers and how often?',
+        flag:'If you don\'t know your error rate, you can\'t know if the system is functioning as intended.'
+      },
+      {
+        id:'Q2.4',
+        text:'If the system\'s outputs change significantly next month, will you notice — and how?',
+        probe:'What would a 20% increase in adverse decisions trigger? Would anyone detect it automatically?',
+        flag:'Drift in model outputs is a known failure mode. If you can\'t detect it, you can\'t correct it.'
+      }
+    ]
+  },
+  {
+    id:'C3', key:'c3', name:'Structured Monitoring',
+    title:'Structured Monitoring',
+    desc:'The organisation must be able to catch its own errors — before a journalist or a lawsuit does.',
+    questions:[
+      {
+        id:'Q3.1',
+        text:'If this system has been producing incorrect outputs for the past 90 days, what would have alerted you?',
+        probe:'Not "we review complaints" — what built-in mechanism would surface a systematic error pattern?',
+        flag:'In 91% of 160 documented failure cases, systematic errors were discovered externally — by journalists, litigants, researchers, or regulators.'
+      },
+      {
+        id:'Q3.2',
+        text:'Is there a defined process for reviewing a sample of system outputs against actual outcomes — regularly, not just after complaints?',
+        probe:'How often does a human review a random sample of decisions the system made?',
+        flag:'Sampling frequency should be proportional to decision volume and consequence severity.'
+      },
+      {
+        id:'Q3.3',
+        text:'When affected individuals appeal or complain, is that information systematically connected back to system performance review?',
+        probe:'Does complaint data feed into a review process, or does it go into a case file and stop there?',
+        flag:'UnitedHealthcare\'s nH Predict had a 90% appeal reversal rate that was never connected back to system review. That is an absent C3.'
+      },
+      {
+        id:'Q3.4',
+        text:'Does your monitoring cover populations that may be disproportionately affected — not just aggregate accuracy rates?',
+        probe:'A system can be 95% accurate overall while being systematically wrong for a specific subgroup.',
+        flag:'Aggregate accuracy statistics conceal the pattern that produces the most harm.'
+      }
+    ]
+  },
+  {
+    id:'C4', key:'c4', name:'Pre-Established Accountability',
+    title:'Pre-Established Accountability',
+    desc:'Accountability must be defined before harm occurs — not negotiated after.',
+    questions:[
+      {
+        id:'Q4.1',
+        text:'If this system produces a decision that causes documented harm to an individual, who is legally and operationally accountable — the vendor, the agency, or the deploying official?',
+        probe:'Does your contract define this? Has your legal team reviewed it?',
+        flag:'In 93% of 160 documented failure cases, accountability was absent at deployment and contested afterward.'
+      },
+      {
+        id:'Q4.2',
+        text:'Is there a defined appeals process — known to affected individuals before they are harmed, not after?',
+        probe:'Can someone who receives an adverse decision find the appeals process without hiring a lawyer?',
+        flag:'Inaccessible appeals are functionally equivalent to no appeals. The system\'s error rate is what survives review.'
+      },
+      {
+        id:'Q4.3',
+        text:'Are there defined consequences — for the system, and for responsible individuals — if accuracy thresholds are not met?',
+        probe:'What happens if the system\'s error rate exceeds your defined acceptable threshold?',
+        flag:'If there are no defined consequences, there is no accountability — only the appearance of it.'
+      },
+      {
+        id:'Q4.4',
+        text:'Has this accountability structure been reviewed by someone with no interest in the system proceeding?',
+        probe:'Not the vendor, not the project team — someone whose job it is to find gaps.',
+        flag:'Internal review by the project team is not independent. The goal of independent review is to find the thing the team is too invested to see.'
+      }
+    ]
+  },
+  {
+    id:'C5', key:'c5', name:'No Suppression',
+    title:'No Suppression',
+    desc:'Failure signals must reach decision-makers — not stop at the people whose jobs depend on the system succeeding.',
+    questions:[
+      {
+        id:'Q5.1',
+        text:'If a frontline operator or analyst identified a systematic problem with this system\'s outputs today, what would happen to that information?',
+        probe:'Is there a defined escalation path? Does it reach someone with authority to act, or someone with an incentive to minimise?',
+        flag:'Robodebt suppressed 220 tribunal rulings over 3 years. Horizon suppressed evidence for 20 years. The information existed — it just never reached anyone with authority and incentive to act.'
+      },
+      {
+        id:'Q5.2',
+        text:'Are there financial, contractual, or reputational incentives — for anyone in your organisation — to underreport or delay reporting system errors?',
+        probe:'If a project manager\'s performance review is tied to deployment success, are they the right person to escalate failure signals?',
+        flag:'Incentive structures that punish disclosure are suppression mechanisms, even when no one intends them to be.'
+      },
+      {
+        id:'Q5.3',
+        text:'Would affected individuals know if this system made an error affecting them — and would they know before significant harm occurred?',
+        probe:'Is the system\'s operation visible to the people it affects, or are they unaware a system made the decision?',
+        flag:'Opacity is a form of suppression. People who don\'t know a system affected them cannot contest it.'
+      },
+      {
+        id:'Q5.4',
+        text:'Is there an independent body — outside your organisation — that has the authority and the information access to identify systematic failure in this system?',
+        probe:'Audit bodies, oversight agencies, parliamentary committees — do they know this system exists and do they have access to its performance data?',
+        flag:'C5 is absent in 91% of failure cases. External oversight is the last line of defence. If it doesn\'t exist, the only remaining discovery mechanisms are litigation and investigative journalism.'
+      }
+    ]
+  }
+];
+
+// 57 triggers mapped to conditions — used in DOC-02
+const TRIGGER_SECTIONS = {
+  'A': {label:'Authority & Ownership', cond:'C1', triggers:['No named individual accountable for system decisions','Authority distributed across committee or vendor','No documented succession for system ownership','Vendor contract is primary governance document']},
+  'B': {label:'Methodology Transparency', cond:'C2', triggers:['Deploying org cannot explain decision logic independently','Proprietary methodology prevents independent review','No plain-language documentation of how outputs are generated','Legal team could not defend methodology without vendor']},
+  'C': {label:'Validation & Testing', cond:'C2', triggers:['No independent validation in deployment context','Validation conducted only by vendor or developer','No defined acceptable error rate prior to deployment','No ongoing accuracy measurement protocol']},
+  'D': {label:'Monitoring Infrastructure', cond:'C3', triggers:['No automated alerting for output anomalies','Monitoring relies on complaint volume not systematic review','No random sampling protocol for decision outputs','Monitoring covers aggregate only, not subgroup performance']},
+  'E': {label:'Error Detection', cond:'C3', triggers:['Errors discovered externally (media, litigation, researcher)','No process connecting appeals data to system review','Feedback loops not connected to governance review','90-day error window would go undetected internally']},
+  'F': {label:'Accountability Assignment', cond:'C4', triggers:['Accountability undefined or contested pre-deployment','Vendor/deployer accountability split not documented','No defined consequences for accuracy threshold breach','Contract does not assign liability for adverse outputs']},
+  'G': {label:'Appeals & Redress', cond:'C4', triggers:['Appeals process not communicated to affected individuals','Appeals process inaccessible without legal assistance','No human review of algorithm-influenced adverse decisions','Appeal outcomes not systematically tracked']},
+  'H': {label:'Escalation Pathways', cond:'C5', triggers:['No defined escalation path for frontline error reports','Escalation path terminates at project team, not leadership','Escalation recipient has incentive to minimise findings','No whistleblower protection for system error reports']},
+  'I': {label:'Incentive Structures', cond:'C5', triggers:['Performance metrics tied to deployment success','Suppression of failure signals financially incentivised','Reporting delays structurally encouraged','No separation between deployment accountability and error reporting']},
+  'J': {label:'Transparency to Affected Persons', cond:'C5', triggers:['Affected individuals unaware system influenced their decision','System operation concealed from affected population','No disclosure obligation to affected individuals','Opacity prevents contestation of adverse outputs']},
+  'K': {label:'External Oversight', cond:'C5', triggers:['No independent oversight body with access to performance data','Oversight body unaware of system existence','External audit authority not established pre-deployment','No parliamentary or legislative visibility of system']},
+  'L': {label:'Laundering Suite — Suppression Patterns', cond:'C5', triggers:['L1: Decision authority laundered through vendor relationship','L2: Accountability laundered through technical complexity','L3: Temporal laundering — harm period ends before accountability','L4: Definitional laundering — reframing failure as technical error','L5: Jurisdictional laundering — cross-boundary accountability evasion']},
+  'M': {label:'Change Governance', cond:'C1', triggers:['No governance review triggered by model updates','System changes deployed without accountability review','No version control tied to governance records','Procurement renewal not subject to re-assessment']},
+  'N': {label:'Population & Context Risk', cond:'C2', triggers:['System deployed on population not represented in training data','Context-specific risk factors not assessed pre-deployment','Subgroup accuracy not assessed prior to deployment','Harm concentration in protected or vulnerable populations not modelled']}
+};
+
+const COND_NEXT_STEP = {
+  risk: {
+    title:'Full Structural Authority Mapping & Oversight Viability Diagnostic',
+    desc:'Maps authority pathways, identifies exposure concentration, assesses whether oversight infrastructure can reach the decision level where harm originates. Recommended before any further procurement steps.'
+  },
+  uncertain: {
+    title:'Independent Governance Record & Evidence Reconstruction Assessment',
+    desc:'Evaluates whether existing governance claims are verifiable, reconstructs the documentary record, and identifies gaps before they become liability exposure.'
+  },
+  ready: {
+    title:'Ongoing Governance Ledger & Change Monitoring Protocol',
+    desc:'Establishes the structured governance record — traceable documentation of authority, exposure pathways, and change integrity — that makes "structurally ready" defensible over time.'
+  }
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+
+let state = {
+  org: '', system: '', domain: '',
+  currentCond: 0,
+  answers: {}, // key: 'Q1.1' etc, val: 'yes'|'no'|'partial'
+  condScores: {c1:null,c2:null,c3:null,c4:null,c5:null},
+  matchedCases: [],
+  activeDocType: null,
+  casesData: null
+};
+
+// ══════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════
+
+async function boot() {
+  try {
+    const r = await fetch('/cases-data.json');
+    const d = await r.json();
+    state.casesData = d.cases || d;
+  } catch(e) {
+    console.warn('cases-data.json not loaded — matching will be limited');
+    state.casesData = [];
+  }
+  // Wire form inputs
+  document.getElementById('orgName').addEventListener('input', checkStartReady);
+  document.getElementById('sysName').addEventListener('input', checkStartReady);
+  document.querySelectorAll('.domain-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.domain-chip').forEach(c => c.classList.remove('sel'));
+      chip.classList.add('sel');
+      state.domain = chip.dataset.domain;
+      checkStartReady();
+    });
+  });
+  // Check for payment success redirect
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('payment') === 'success') {
+    const docType = sessionStorage.getItem('pendingDocType');
+    if(docType) showPayConfirm(docType);
+  }
+}
+
+function checkStartReady() {
+  const org = document.getElementById('orgName').value.trim();
+  const sys = document.getElementById('sysName').value.trim();
+  document.getElementById('btnStart').disabled = !(org && sys && state.domain);
+}
+
+// ══════════════════════════════════════════
+// DIAGNOSTIC ENGINE
+// ══════════════════════════════════════════
+
+function startDiagnostic() {
+  state.org = document.getElementById('orgName').value.trim();
+  state.system = document.getElementById('sysName').value.trim();
+  state.currentCond = 0;
+  showStage('stageConditions');
+  renderCondition(0);
+  updateProgress();
+}
+
+function renderCondition(idx) {
+  const cond = CONDITIONS[idx];
+  document.getElementById('ribbonId').textContent = `${cond.id} — ${cond.name.toUpperCase()}`;
+  document.getElementById('ribbonTitle').textContent = cond.title;
+  document.getElementById('ribbonDesc').textContent = cond.desc;
+  document.getElementById('ribbonNum').textContent = idx + 1;
+  document.getElementById('stepLabel').textContent = `Condition ${idx+1} of 5 — ${cond.name}`;
+
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  cond.questions.forEach((q, qi) => {
+    const current = state.answers[q.id] || null;
+    container.innerHTML += `
+    <div class="q-block ${current ? 'answered' : ''}" id="qblock-${q.id}">
+      <div class="q-top">
+        <div class="q-num">${q.id}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="q-probe"><strong>Probe:</strong> ${q.probe}</div>
+        <div class="q-flag">⚑ ${q.flag}</div>
+      </div>
+      <div class="q-answers">
+        <button class="q-btn ${current==='yes'?'sel-yes':''}" onclick="answer('${q.id}','yes',this)">✓ Yes</button>
+        <button class="q-btn ${current==='partial'?'sel-partial':''}" onclick="answer('${q.id}','partial',this)">~ Partial</button>
+        <button class="q-btn ${current==='no'?'sel-no':''}" onclick="answer('${q.id}','no',this)">✗ No</button>
+      </div>
+    </div>`;
+  });
+  checkCondComplete();
+}
+
+function answer(qid, val, btn) {
+  state.answers[qid] = val;
+  // Update button styles
+  const block = document.getElementById(`qblock-${qid}`);
+  block.classList.add('answered');
+  block.querySelectorAll('.q-btn').forEach(b => b.classList.remove('sel-yes','sel-no','sel-partial'));
+  btn.classList.add(`sel-${val}`);
+  checkCondComplete();
+  updateCondScore(state.currentCond);
+}
+
+function checkCondComplete() {
+  const cond = CONDITIONS[state.currentCond];
+  const allAnswered = cond.questions.every(q => state.answers[q.id]);
+  document.getElementById('btnNextCond').disabled = !allAnswered;
+  if(allAnswered) {
+    const isLast = state.currentCond === 4;
+    document.getElementById('btnNextCond').textContent = isLast ? 'View Results →' : 'Next Condition →';
+  }
+}
+
+function updateCondScore(idx) {
+  const cond = CONDITIONS[idx];
+  const qs = cond.questions;
+  const answered = qs.filter(q => state.answers[q.id]);
+  if(answered.length === 0) return;
+
+  const nos = qs.filter(q => state.answers[q.id] === 'no').length;
+  const partials = qs.filter(q => state.answers[q.id] === 'partial').length;
+
+  let score;
+  if(nos > 0) score = 'absent';
+  else if(partials > 0) score = 'partial';
+  else score = 'present';
+
+  state.condScores[cond.key] = score;
+  const dot = document.getElementById(`dot-${cond.key}`);
+  dot.className = `score-dot ${score}`;
+
+  // Update overall status
+  const scores = Object.values(state.condScores).filter(Boolean);
+  const statusEl = document.getElementById('scoreStatus');
+  if(scores.some(s => s === 'absent')) {
+    statusEl.className = 'score-status risk';
+    statusEl.textContent = '⛔ Structural Risk';
+  } else if(scores.some(s => s === 'partial')) {
+    statusEl.className = 'score-status uncertain';
+    statusEl.textContent = '⚠ Structural Uncertainty';
+  } else if(scores.length === 5) {
+    statusEl.className = 'score-status ready';
+    statusEl.textContent = '✓ Structurally Ready';
+  }
+}
+
+function nextCondition() {
+  updateCondScore(state.currentCond);
+  if(state.currentCond < 4) {
+    state.currentCond++;
+    renderCondition(state.currentCond);
+    window.scrollTo({top: 0, behavior:'smooth'});
+    updateProgress();
+  } else {
+    showResults();
+  }
+}
+
+function updateProgress() {
+  const pct = (state.currentCond / 5) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+}
+
+// ══════════════════════════════════════════
+// RESULTS ENGINE
+// ══════════════════════════════════════════
+
+function showResults() {
+  document.getElementById('progFill').style.width = '100%';
+  computeFinalScores();
+  runMatchingEngine();
+  renderResults();
+  showStage('stageResults');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function computeFinalScores() {
+  CONDITIONS.forEach(cond => {
+    const qs = cond.questions;
+    const nos = qs.filter(q => state.answers[q.id] === 'no').length;
+    const partials = qs.filter(q => state.answers[q.id] === 'partial').length;
+    if(nos > 0) state.condScores[cond.key] = 'absent';
+    else if(partials > 0) state.condScores[cond.key] = 'partial';
+    else state.condScores[cond.key] = 'present';
+  });
+}
+
+function getOverallStatus() {
+  const s = state.condScores;
+  if(Object.values(s).some(v => v === 'absent')) return 'risk';
+  if(Object.values(s).some(v => v === 'partial')) return 'uncertain';
+  return 'ready';
+}
+
+function runMatchingEngine() {
+  if(!state.casesData || !state.casesData.length) {
+    state.matchedCases = [];
+    return;
+  }
+  const absentConds = Object.entries(state.condScores).filter(([k,v]) => v === 'absent').map(([k]) => k);
+  const partialConds = Object.entries(state.condScores).filter(([k,v]) => v === 'partial').map(([k]) => k);
+
+  // Score each case by how many of the user's absent/partial conditions match
+  const scored = state.casesData
+    .filter(c => c.type === 'Failure' || c.type === 'Cybersecurity Failure')
+    .map(c => {
+      let score = 0;
+      absentConds.forEach(k => {
+        const field = k + 'score';
+        if(c[field] === 0 || c[field] === '0') score += 2;
+      });
+      partialConds.forEach(k => {
+        const field = k + 'score';
+        if(c[field] === 0 || c[field] === '0') score += 1;
+      });
+      // Domain bonus
+      const userDomain = state.domain.toLowerCase();
+      const caseDomain = (c.domain || '').toLowerCase();
+      if(caseDomain.includes(userDomain.split(' ')[0]) || userDomain.includes(caseDomain.split(' ')[0])) score += 1;
+      return {...c, matchScore: score};
+    })
+    .filter(c => c.matchScore > 0)
+    .sort((a,b) => b.matchScore - a.matchScore)
+    .slice(0, 5);
+
+  state.matchedCases = scored;
+}
+
+function renderResults() {
+  const status = getOverallStatus();
+
+  // Org name
+  document.getElementById('resultsOrgName').textContent = state.org;
+
+  // Status badge
+  const badge = document.getElementById('statusBadge');
+  const statusText = document.getElementById('statusText');
+  const statusDesc = document.getElementById('statusDesc');
+  badge.className = `status-badge ${status}`;
+  if(status === 'risk') {
+    statusText.textContent = 'Structural Risk — Do Not Deploy';
+    statusDesc.textContent = 'One or more structural governance conditions are absent. In 160 of 160 documented failure cases, at least one condition was absent before deployment. Deployment without resolving this creates documented, predictable, and preventable risk of harm at scale.';
+  } else if(status === 'uncertain') {
+    statusText.textContent = 'Structural Uncertainty — Delay';
+    statusDesc.textContent = 'Nominal governance exists but is not fully verifiable. Conduct independent review before proceeding. Unverifiable governance is indistinguishable from absent governance when harm occurs.';
+  } else {
+    statusText.textContent = 'Structurally Ready — Proceed with Monitoring';
+    statusDesc.textContent = 'All five structural conditions are present with documented evidence. Proceed with ongoing monitoring. Governance is not a one-time certification — revisit this checklist annually and after any significant system change.';
+  }
+
+  // Condition results
+  const cr = document.getElementById('condResults');
+  cr.innerHTML = CONDITIONS.map(cond => {
+    const s = state.condScores[cond.key];
+    const cls = s === 'absent' ? 'a' : s === 'partial' ? 'x' : 'p';
+    const label = s === 'absent' ? 'Absent' : s === 'partial' ? 'Partial' : 'Present';
+    return `<div class="cr-cell">
+      <div class="cr-id">${cond.id}</div>
+      <div class="cr-name">${cond.name}</div>
+      <span class="cr-badge ${cls}">${label}</span>
+    </div>`;
+  }).join('');
+
+  // Matched cases
+  const absentCount = Object.values(state.condScores).filter(v => v === 'absent').length;
+  const partialCount = Object.values(state.condScores).filter(v => v === 'partial').length;
+  const totalIssues = absentCount + partialCount;
+
+  document.getElementById('matchedTitle').textContent =
+    state.matchedCases.length > 0
+      ? `${state.matchedCases.length} cases share your structural pattern`
+      : 'No domain-specific matches found — see full dataset';
+
+  const matchGrid = document.getElementById('matchedCases');
+  if(state.matchedCases.length === 0) {
+    matchGrid.innerHTML = `<p style="font-size:14px;color:var(--muted);padding:20px 0">No close matches in filtered dataset. <a href="/library" style="color:var(--amber)">Browse all 380 cases →</a></p>`;
+  } else {
+    matchGrid.innerHTML = state.matchedCases.map(c => {
+      const slug = c.slug || c.id;
+      const condTags = ['c1','c2','c3','c4','c5'].map(k => {
+        const s = c[k+'score'];
+        if(s === 0 || s === '0') return `<span class="match-cond-tag a">${k.toUpperCase()} Absent</span>`;
+        return '';
+      }).join('');
+      return `<a class="match-card" href="/${slug}" target="_blank">
+        <div class="match-card-left">
+          <div class="match-case-domain">${c.domain || ''} · ${c.country || ''} · ${c.deployyear || c.deployYear || ''}</div>
+          <div class="match-case-name">${c.name || c.casename || ''}</div>
+          <div class="match-case-harm">${c.harmdescription || c.harmDescription || ''}</div>
+          <div class="match-conds">${condTags}</div>
+        </div>
+        <div>
+          <div class="match-card-score">${c.gpws ?? '0.0'}</div>
+          <div class="match-score-label">GPWS</div>
+          <div class="match-arrow">View case ↗</div>
+        </div>
+      </a>`;
+    }).join('');
+  }
+}
+
+// ══════════════════════════════════════════
+// DOCUMENT GENERATION
+// ══════════════════════════════════════════
+
+function openDocPreview(docType) {
+  state.activeDocType = docType;
+  const titles = {'DOC-01':'Governance Condition Snapshot','DOC-02':'Structural Governance Assessment Report','DOC-03':'Procurement Assessment Letter'};
+  const prices = {'DOC-01':'$45','DOC-02':'$195','DOC-03':'$145'};
+  document.getElementById('pdfModalTitle').textContent = `${docType} — ${titles[docType]}`;
+  document.getElementById('btnPay').textContent = `Purchase ${prices[docType]} & Download →`;
+  document.getElementById('pdfPreview').innerHTML = generateDocHTML(docType);
+  document.getElementById('pdfOverlay').classList.add('on');
+}
+
+function closePdfPreview() {
+  document.getElementById('pdfOverlay').classList.remove('on');
+}
+
+function generateDocHTML(docType) {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  const status = getOverallStatus();
+  const statusLabel = status === 'risk' ? 'STRUCTURAL RISK — DO NOT DEPLOY' : status === 'uncertain' ? 'STRUCTURAL UNCERTAINTY — DELAY' : 'STRUCTURALLY READY — PROCEED WITH MONITORING';
+  const statusClass = status;
+
+  const condRows = CONDITIONS.map(cond => {
+    const s = state.condScores[cond.key];
+    const cls = s === 'absent' ? 'a' : s === 'partial' ? 'x' : 'p';
+    const label = s === 'absent' ? 'Absent' : s === 'partial' ? 'Partial' : 'Present';
+    const nos = cond.questions.filter(q => state.answers[q.id] === 'no').length;
+    const partials = cond.questions.filter(q => state.answers[q.id] === 'partial').length;
+    const detail = s === 'absent' ? `${nos} of 4 questions answered No` : s === 'partial' ? `${partials} of 4 questions answered Partial` : 'All 4 questions answered Yes';
+    return `<tr>
+      <td class="cond-id">${cond.id}</td>
+      <td>${cond.name}</td>
+      <td><span class="doc-badge-${cls}">${label}</span></td>
+      <td style="color:#666;font-size:11px">${detail}</td>
+    </tr>`;
+  }).join('');
+
+  const topCases = state.matchedCases.slice(0, docType === 'DOC-02' ? 5 : 3);
+  const caseRows = topCases.length > 0 ? topCases.map(c => `
+    <div class="doc-match-row">
+      <div>
+        <div class="doc-match-name">${c.name || c.casename || ''}</div>
+        <div class="doc-match-meta">${c.domain || ''} · ${c.country || ''} · Deployed ${c.deployyear || c.deployYear || 'N/A'}</div>
+        <div class="doc-match-harm">${c.harmdescription || c.harmDescription || ''}</div>
+      </div>
+      <div>
+        <div class="doc-match-score">${c.gpws ?? '0.0'}</div>
+        <div class="doc-match-score-label">GPWS</div>
+      </div>
+    </div>`).join('') : '<p style="font-size:12px;color:#999;padding:12px">No domain-specific matches identified in current dataset filter. See full HSRL case library at cases.thehumansystemsrisklab.com.</p>';
+
+  const nextStep = COND_NEXT_STEP[status];
+
+  const statusBlockHtml = `<div class="doc-status-row ${statusClass}">
+    <div>
+      <div class="doc-status-label">${statusLabel}</div>
+      <div class="doc-status-text">${status === 'risk' ? 'At least one structural governance condition is absent. In 160 of 160 documented failure cases, at least one condition was absent before deployment.' : status === 'uncertain' ? 'Nominal governance exists but is not fully verifiable. Unverifiable governance is indistinguishable from absent governance when harm occurs.' : 'All five structural preconditions are present. Proceed with ongoing monitoring. Revisit annually and after any system change.'}</div>
+    </div>
+  </div>`;
+
+  if(docType === 'DOC-01') {
+    return `<div class="doc-body">
+      <div class="doc-header-bar">
+        <div class="doc-header-left">
+          <div class="doc-header-org">Human Systems Risk Lab — Structural Governance Diagnostics Suite</div>
+          <div class="doc-header-title">Governance Condition Snapshot</div>
+          <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:11px;color:#c4bba9;margin-top:6px">${state.org} · ${state.system}</div>
+        </div>
+        <div class="doc-header-right">
+          <div class="doc-header-id">DOC-01</div>
+          <div class="doc-header-date">${dateStr}</div>
+          <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:9px;color:#7a8190;margin-top:4px">V2 · 380 cases validated</div>
+        </div>
+      </div>
+      <div class="doc-body-inner">
+        <div class="doc-section">
+          <div class="doc-section-label">Structural Status</div>
+          ${statusBlockHtml}
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Five-Condition Assessment</div>
+          <table class="doc-cond-table">
+            <thead><tr><th>Condition</th><th>Name</th><th>Status</th><th>Detail</th></tr></thead>
+            <tbody>${condRows}</tbody>
+          </table>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Top Comparable Documented Failures</div>
+          <div style="border:1px solid #eee">${caseRows}</div>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Recommended Next Step — HSRL Diagnostics Suite</div>
+          <div class="doc-next-box">
+            <div class="doc-next-title">${nextStep.title}</div>
+            <div class="doc-next-text">${nextStep.desc}</div>
+          </div>
+        </div>
+        <div class="doc-disclaimer">This document is generated from a self-administered diagnostic. It identifies structural governance conditions based on 380 validated cases but does not constitute a formal audit, legal advice, or engineering assessment. Findings should be reviewed by qualified practitioners before formal submission. Full methodology and dataset: cases.thehumansystemsrisklab.com · Contact: thehumansystemsrisklab.com</div>
+      </div>
+      <div class="doc-footer">
+        <span>HSRL Structural Governance Diagnostics Suite · DOC-01 · V2</span>
+        <span>Generated ${dateStr} · <a href="https://thehumansystemsrisklab.com">thehumansystemsrisklab.com</a></span>
+      </div>
+    </div>`;
+  }
+
+  if(docType === 'DOC-02') {
+    // Build trigger grid from answers
+    const triggerSectionsHtml = Object.entries(TRIGGER_SECTIONS).map(([key, sec]) => {
+      // Map triggers to answers where possible
+      const condKey = sec.cond.toLowerCase();
+      const condScore = state.condScores[condKey];
+      const condAnswers = CONDITIONS.find(c => c.id === sec.cond)?.questions || [];
+
+      const trigRows = sec.triggers.map((trig, ti) => {
+        // Best-effort mapping: if cond is absent, mark triggers as present risk
+        const isRisk = condScore === 'absent';
+        const isPartial = condScore === 'partial';
+        const flag = isRisk ? '<span class="trig-yes">FLAGGED</span>' : isPartial ? '<span style="color:#c07a18;font-family:var(--ff-mono,monospace);font-size:8px">PARTIAL</span>' : '<span class="trig-no">—</span>';
+        return `<tr><td>${trig}</td><td>${flag}</td></tr>`;
+      }).join('');
+
+      return `<div class="trig-section">
+        <div class="trig-section-label">${key} — ${sec.label} (${sec.cond})</div>
+        <table class="trig-table"><tbody>${trigRows}</tbody></table>
+      </div>`;
+    }).join('');
+
+    return `<div class="doc-body">
+      <div class="doc-header-bar">
+        <div class="doc-header-left">
+          <div class="doc-header-org">Human Systems Risk Lab — Structural Governance Diagnostics Suite</div>
+          <div class="doc-header-title">Structural Governance Assessment Report</div>
+          <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:11px;color:#c4bba9;margin-top:6px">${state.org} · ${state.system}</div>
+        </div>
+        <div class="doc-header-right">
+          <div class="doc-header-id">DOC-02</div>
+          <div class="doc-header-date">${dateStr}</div>
+          <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:9px;color:#7a8190;margin-top:4px">V2 · 380 cases validated</div>
+        </div>
+      </div>
+      <div class="doc-body-inner">
+        <div class="doc-section">
+          <div class="doc-section-label">Structural Status</div>
+          ${statusBlockHtml}
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Five-Condition Assessment</div>
+          <table class="doc-cond-table">
+            <thead><tr><th>Condition</th><th>Name</th><th>Status</th><th>Detail</th></tr></thead>
+            <tbody>${condRows}</tbody>
+          </table>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">57-Trigger Governance Matrix</div>
+          <p style="font-size:11px;color:#666;margin-bottom:12px;line-height:1.6">Trigger flags below are inferred from condition-level assessment scores. FLAGGED indicates the deploying organisation's condition absence creates structural exposure to this failure mode. For trigger-level verification, engage HSRL practitioner review.</p>
+          ${triggerSectionsHtml}
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Comparable Documented Failures — Case Appendix</div>
+          <div style="border:1px solid #eee">${caseRows}</div>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-label">Recommended Next Step — HSRL Diagnostics Suite</div>
+          <div class="doc-next-box">
+            <div class="doc-next-title">${nextStep.title}</div>
+            <div class="doc-next-text">${nextStep.desc}</div>
+          </div>
+        </div>
+        <div class="doc-disclaimer">This document is generated from a self-administered diagnostic and includes trigger-level analysis inferred from condition scores. It does not constitute a formal audit, legal advice, or engineering assessment. For practitioner-led trigger verification and formal GCR records, contact HSRL. Full methodology and dataset: cases.thehumansystemsrisklab.com · Contact: thehumansystemsrisklab.com</div>
+      </div>
+      <div class="doc-footer">
+        <span>HSRL Structural Governance Diagnostics Suite · DOC-02 · V2</span>
+        <span>Generated ${dateStr} · <a href="https://thehumansystemsrisklab.com">thehumansystemsrisklab.com</a></span>
+      </div>
+    </div>`;
+  }
+
+  if(docType === 'DOC-03') {
+    const absentConds = CONDITIONS.filter(c => state.condScores[c.key] === 'absent').map(c => c.name);
+    const partialConds = CONDITIONS.filter(c => state.condScores[c.key] === 'partial').map(c => c.name);
+    const absentStr = absentConds.length > 0 ? absentConds.join(', ') : 'none identified';
+    const topCase = topCases[0];
+    const caseRef = topCase ? `${topCase.name || topCase.casename} (${topCase.country}, ${topCase.deployyear || topCase.deployYear || 'date unknown'}, GPWS ${topCase.gpws ?? '0.0'})` : 'comparable documented failures available in HSRL dataset';
+
+    return `<div class="doc-body">
+      <div class="doc-header-bar">
+        <div class="doc-header-left">
+          <div class="doc-header-org">Human Systems Risk Lab — Structural Governance Diagnostics Suite</div>
+          <div class="doc-header-title">Procurement Assessment Letter</div>
+        </div>
+        <div class="doc-header-right">
+          <div class="doc-header-id">DOC-03</div>
+          <div class="doc-header-date">${dateStr}</div>
+        </div>
+      </div>
+      <div class="letter-body">
+        <div class="letter-date">${dateStr}</div>
+        <div class="letter-to">
+          To: Procurement Officer / Agency Leadership<br>
+          Re: ${state.system}<br>
+          Submitted by: ${state.org}
+        </div>
+        <div class="letter-re">RE: Structural Governance Assessment — Pre-Deployment Diagnostic Finding</div>
+        <p class="letter-p">This letter summarizes the findings of a structured pre-deployment governance diagnostic conducted on the above-referenced system using the Human Systems Risk Lab (HSRL) Structural Governance Pre-Deployment Checklist, Version 2. The diagnostic instrument is validated against 380 documented cases across 22 domains, 30+ countries, and 50+ years of operational record.</p>
+        <p class="letter-p"><strong>Assessment outcome: ${statusLabel}</strong></p>
+        <p class="letter-p">The diagnostic evaluated five structural governance conditions required for safe deployment of automated and consequential decision systems: Named Owner (C1), Testable Controls (C2), Structured Monitoring (C3), Pre-Established Accountability (C4), and No Suppression (C5).</p>
+        ${absentConds.length > 0 ? `<p class="letter-p">The following conditions were found to be <strong>absent</strong> at the time of assessment: <strong>${absentStr}</strong>. In 160 of 160 documented failure cases in the HSRL dataset, at least one structural condition was absent before deployment. Absence of these conditions does not indicate technical inaccuracy — it indicates that the deploying organisation lacks the structural capacity to catch, correct, or account for the system's errors.</p>` : ''}
+        ${partialConds.length > 0 ? `<p class="letter-p">The following conditions were found to be <strong>partially present</strong>: ${partialConds.join(', ')}. Partial presence indicates nominal governance structures exist but are not fully verifiable. Unverifiable governance is indistinguishable from absent governance when harm occurs.</p>` : ''}
+        <p class="letter-p">For reference, the closest comparable documented case in the HSRL dataset is: ${caseRef}. Full case documentation, condition analysis, and evidentiary sources are available at the HSRL Case Library: cases.thehumansystemsrisklab.com.</p>
+        <p class="letter-p">It is recommended that procurement of this system be delayed until the absent conditions are addressed and independently verified. The HSRL Diagnostics Suite includes practitioner-led services — Full Structural Authority Mapping, Independent Governance Record Assessment, and Ongoing Governance Ledger — appropriate to the findings above.</p>
+        <p class="letter-p">This letter is generated from a self-administered diagnostic instrument and does not constitute a formal audit, legal advice, or engineering assessment. For practitioner engagement and formal governance record production, contact Human Systems Risk Lab at thehumansystemsrisklab.com.</p>
+        <div class="letter-sig">
+          <div class="letter-sig-name">Human Systems Risk Lab</div>
+          <div class="letter-sig-title">Structural Governance Diagnostics Suite · V2</div>
+          <div class="letter-sig-title" style="margin-top:4px">thehumansystemsrisklab.com</div>
+        </div>
+        <div class="doc-disclaimer" style="margin-top:28px">HSRL DOC-03 · Generated ${dateStr} · This document summarizes a self-administered diagnostic finding. It should be reviewed and, where appropriate, supplemented by independent practitioner review before formal institutional submission.</div>
+      </div>
+    </div>`;
+  }
+}
+
+// ══════════════════════════════════════════
+// PAYMENT FLOW
+// ══════════════════════════════════════════
+
+async function handlePayment() {
+  const prices = {'DOC-01':'price_doc01','DOC-02':'price_doc02','DOC-03':'price_doc03'};
+  const docType = state.activeDocType;
+  sessionStorage.setItem('pendingDocType', docType);
+  sessionStorage.setItem('pendingDocHTML', document.getElementById('pdfPreview').innerHTML);
+
+  // In production: call /api/create-checkout-session
+  // For now: show confirmation directly (replace with Stripe redirect)
+  try {
+    const resp = await fetch('/api/create-checkout-session', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        docType,
+        org: state.org,
+        system: state.system,
+        successUrl: window.location.href + '?payment=success',
+        cancelUrl: window.location.href
+      })
+    });
+    const {url} = await resp.json();
+    window.location.href = url;
+  } catch(e) {
+    // Development fallback: show confirmation without payment
+    closePdfPreview();
+    showPayConfirm(docType);
+  }
+}
+
+function showPayConfirm(docType) {
+  const names = {'DOC-01':'Governance Condition Snapshot','DOC-02':'Structural Governance Assessment Report','DOC-03':'Procurement Assessment Letter'};
+  document.getElementById('payConfirmSub').textContent = `${docType} — ${names[docType] || ''}`;
+  document.getElementById('payConfirm').classList.add('on');
+}
+
+function downloadPdf() {
+  const docType = state.activeDocType || sessionStorage.getItem('pendingDocType');
+  const html = sessionStorage.getItem('pendingDocHTML') ||
+    (state.activeDocType ? document.getElementById('pdfPreview').innerHTML : '');
+
+  // Open in new window and trigger print
+  const w = window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Source+Sans+3:wght@400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+      :root{--ff-display:'Cormorant Garamond',Georgia,serif;--ff-body:'Source Sans 3',system-ui,sans-serif;--ff-mono:'DM Mono','Courier New',monospace;}
+      body{margin:0;padding:0;background:#fff}
+      ${getDocPrintCSS()}
+    </style>
+    </head><body>${html}</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 600);
+  document.getElementById('payConfirm').classList.remove('on');
+}
+
+function getDocPrintCSS() {
+  // Return only doc-body CSS extracted inline for clean print window
+  return `
+    .doc-body{color:#111;background:#fff;font-family:'Source Sans 3',sans-serif;font-size:13px;line-height:1.7}
+    .doc-header-bar{background:#0b1120;color:#ede8df;padding:24px 32px 20px;display:flex;justify-content:space-between;align-items:flex-start}
+    .doc-header-org{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#c4bba9;margin-bottom:6px}
+    .doc-header-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#ede8df;line-height:1.1}
+    .doc-header-right{text-align:right}
+    .doc-header-id{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#7a8190;margin-bottom:4px}
+    .doc-header-date{font-family:'DM Mono',monospace;font-size:11px;color:#c07a18}
+    .doc-body-inner{padding:28px 32px}
+    .doc-section{margin-bottom:24px}
+    .doc-section-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c07a18;border-bottom:1px solid #eee;padding-bottom:5px;margin-bottom:12px}
+    .doc-status-row{display:flex;align-items:center;gap:16px;padding:14px 16px;border-left:4px solid #c83030;background:#fff5f5;margin-bottom:16px}
+    .doc-status-row.uncertain{border-left-color:#c07a18;background:#fffaf0}
+    .doc-status-row.ready{border-left-color:#28885a;background:#f0faf5}
+    .doc-status-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#c83030;font-weight:600}
+    .doc-status-row.uncertain .doc-status-label{color:#c07a18}
+    .doc-status-row.ready .doc-status-label{color:#28885a}
+    .doc-status-text{font-size:12px;color:#555;line-height:1.5}
+    .doc-cond-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+    .doc-cond-table th{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#999;text-align:left;padding:6px 8px;border-bottom:1px solid #eee}
+    .doc-cond-table td{padding:8px 8px;border-bottom:1px solid #f5f5f5;font-size:12px;color:#333;vertical-align:top}
+    .cond-id{font-family:'DM Mono',monospace;font-size:9px;color:#c07a18;font-weight:600}
+    .doc-badge-a{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#c83030;background:#fff0f0;border:1px solid #fcc}
+    .doc-badge-p{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#28885a;background:#f0faf5;border:1px solid #c3e6d0}
+    .doc-badge-x{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;padding:2px 7px;text-transform:uppercase;color:#c07a18;background:#fffaf0;border:1px solid #ffd980}
+    .doc-match-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 12px;border-bottom:1px solid #f5f5f5;align-items:start}
+    .doc-match-row:last-child{border-bottom:none}
+    .doc-match-name{font-size:13px;color:#111;font-weight:600;margin-bottom:2px}
+    .doc-match-meta{font-family:'DM Mono',monospace;font-size:9px;color:#999;margin-bottom:4px}
+    .doc-match-harm{font-size:11px;color:#666;line-height:1.5}
+    .doc-match-score{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#c83030;text-align:right;line-height:1}
+    .doc-match-score-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;color:#999;text-align:right}
+    .doc-next-box{background:#f9f9f9;border:1px solid #e5e5e5;padding:14px 16px}
+    .doc-next-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#c07a18;margin-bottom:6px}
+    .doc-next-text{font-size:12px;color:#444;line-height:1.6}
+    .doc-footer{background:#f5f5f5;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;color:#999;border-top:1px solid #e5e5e5;text-transform:uppercase}
+    .doc-footer a{color:#c07a18;text-decoration:none}
+    .doc-disclaimer{font-size:10px;color:#999;line-height:1.6;margin-top:16px;padding-top:14px;border-top:1px solid #eee}
+    .trig-section{margin-bottom:14px}
+    .trig-section-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#c07a18;margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid #eee}
+    .trig-table{width:100%;border-collapse:collapse}
+    .trig-table td{padding:5px 8px;font-size:11px;border-bottom:1px solid #f8f8f8;color:#444}
+    .trig-table td:last-child{font-family:'DM Mono',monospace;font-size:8px;text-align:right;white-space:nowrap}
+    .trig-yes{color:#c83030}
+    .trig-no{color:#999}
+    .letter-body{font-family:'Source Sans 3',Georgia,serif;font-size:13px;line-height:1.8;color:#222;padding:40px 48px}
+    .letter-date{margin-bottom:28px;color:#555}
+    .letter-to{margin-bottom:24px;line-height:1.6;color:#333}
+    .letter-re{font-weight:600;color:#111;margin-bottom:24px;padding-bottom:8px;border-bottom:1px solid #ddd}
+    .letter-p{margin-bottom:16px}
+    .letter-sig{margin-top:32px}
+    .letter-sig-name{font-weight:600;color:#111}
+    .letter-sig-title{font-size:12px;color:#777}
+    @media print{@page{margin:0.5in}}
+  `;
+}
+
+// ══════════════════════════════════════════
+// UTILITY
+// ══════════════════════════════════════════
+
+function showStage(id) {
+  document.querySelectorAll('.stage').forEach(s => s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+// Boot
+boot();
+</script>
+</body>
+</html>
