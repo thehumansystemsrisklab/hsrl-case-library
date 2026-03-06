@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Library — Human Systems Risk Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0b1120;--navy2:#0f1826;--navy3:#131f2e;
+  --cream:#ede8df;--warm:#c4bba9;--muted:#7a8190;
+  --border:rgba(255,255,255,0.07);
+  --amber:#c07a18;--amber2:#e09030;
+  --red:#c83030;--green:#28885a;
+  --ff-display:'Cormorant Garamond',Georgia,serif;
+  --ff-body:'Source Sans 3',system-ui,sans-serif;
+  --ff-mono:'DM Mono','Courier New',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--warm);font-family:var(--ff-body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding:0 48px}
+.body-p{font-size:15px;color:var(--warm);line-height:1.9;margin-bottom:16px}
+.body-p:last-child{margin-bottom:0}
+.body-p strong{color:var(--cream)}
+.btn{display:inline-block;font-family:var(--ff-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:12px 24px;border:1px solid;transition:all .2s;cursor:pointer}
+.btn-amber{background:var(--amber);color:var(--navy);border-color:var(--amber)}
+.btn-amber:hover{background:var(--amber2);border-color:var(--amber2)}
+.btn-ghost{background:transparent;color:var(--amber);border-color:rgba(193,122,24,.35)}
+.btn-ghost:hover{background:rgba(193,122,24,.08);border-color:var(--amber)}
+.btn-outline{background:transparent;color:var(--cream);border-color:rgba(255,255,255,.2)}
+.btn-outline:hover{border-color:var(--cream)}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px}
+.loading-text{font-family:var(--ff-mono);font-size:11px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+.loading-bar{width:200px;height:2px;background:rgba(255,255,255,.06);position:relative;overflow:hidden}
+.loading-bar::after{content:'';position:absolute;left:-50%;width:50%;height:100%;background:var(--amber);animation:loadbar 1s ease-in-out infinite}
+@keyframes loadbar{0%{left:-50%}100%{left:100%}}
+
+/* RECORD BAR */
+.record-bar{background:var(--navy3);border-bottom:1px solid var(--border);padding:9px 0}
+.record-bar-inner{max-width:1180px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.record-id{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.record-id strong{color:var(--amber)}
+.record-actions{display:flex;gap:10px}
+.record-btn{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);padding:5px 12px;cursor:pointer;transition:all .15s}
+.record-btn:hover{border-color:var(--amber);color:var(--amber)}
+
+/* HERO */
+.case-hero{background:var(--navy2);padding:56px 0 0;position:relative;overflow:hidden}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at 12% 55%,rgba(200,48,48,.05) 0%,transparent 60%)}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:start}
+.breadcrumb{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.breadcrumb a{color:var(--amber);text-decoration:none;cursor:pointer}
+.case-flag{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.flag-dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0;box-shadow:0 0 10px rgba(200,48,48,.45)}
+.flag-dot.resilient{background:var(--green);box-shadow:0 0 10px rgba(40,136,90,.45)}
+.flag-type{font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.flag-type.resilient{color:var(--green)}
+.flag-domain{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
+.case-h1{font-family:var(--ff-display);font-size:clamp(38px,5.5vw,70px);font-weight:700;color:var(--cream);line-height:1.06;margin-bottom:10px}
+.case-h2{font-family:var(--ff-display);font-style:italic;font-size:clamp(15px,2vw,22px);color:var(--amber2);margin-bottom:24px;line-height:1.4}
+.case-meta{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:28px}
+.meta-chip{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:6px}
+.meta-chip::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--amber);flex-shrink:0}
+.gpws-panel{background:var(--navy3);border:1px solid var(--border);padding:28px 28px 24px}
+.gpws-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.gpws-score{font-family:var(--ff-display);font-size:80px;font-weight:700;color:var(--red);line-height:1;margin-bottom:6px}
+.gpws-tier{font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:18px}
+.gpws-bar-track{height:5px;background:rgba(255,255,255,.06);margin-bottom:6px}
+.gpws-bar-fill{height:100%;background:var(--red)}
+.gpws-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:14px}
+.cond-table{margin-top:16px;display:flex;flex-direction:column;gap:2px}
+.cond-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;background:var(--navy2);padding:10px 14px;gap:12px}
+.cond-id{font-family:var(--ff-mono);font-size:10px;font-weight:500;color:var(--amber)}
+.cond-name{font-size:13px;color:var(--warm)}
+.cond-badge{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase}
+.badge-a{color:var(--red);background:rgba(200,48,48,.1);border:1px solid rgba(200,48,48,.22)}
+.badge-p{color:var(--green);background:rgba(40,136,90,.1);border:1px solid rgba(40,136,90,.22)}
+.badge-x{color:var(--amber);background:rgba(192,122,24,.1);border:1px solid rgba(192,122,24,.22)}
+
+/* TAPE */
+.tape{background:var(--red);padding:9px 0;overflow:hidden}
+.tape-track{display:flex;gap:36px;white-space:nowrap;animation:scrolltape 22s linear infinite}
+.tape-item{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.88);flex-shrink:0}
+.tape-sep{color:rgba(255,255,255,.3);flex-shrink:0}
+@keyframes scrolltape{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION NAV */
+.sec-nav{position:sticky;top:0;z-index:100;background:rgba(11,17,32,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.sec-nav-track{display:flex;max-width:1180px;margin:0 auto;padding:0 48px;overflow-x:auto;scrollbar-width:none}
+.sec-nav-track::-webkit-scrollbar{display:none}
+.sec-nav-link{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:13px 18px;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none}
+.sec-nav-link:hover{color:var(--cream)}
+.sec-nav-link.on{color:var(--amber);border-bottom-color:var(--amber)}
+
+/* LAYOUT */
+.case-body{max-width:1180px;margin:0 auto;padding:0 48px}
+.sec{padding:72px 0;border-bottom:1px solid var(--border)}
+.sec:last-child{border-bottom:none}
+.sec-header{margin-bottom:36px}
+.sec-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.sec-title{font-family:var(--ff-display);font-size:clamp(22px,3vw,38px);font-weight:600;color:var(--cream);line-height:1.15;max-width:640px}
+.sec-title em{font-style:italic;color:var(--amber2)}
+.two-col{display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:start}
+.col-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.col-title{font-family:var(--ff-display);font-size:18px;font-weight:600;color:var(--cream);line-height:1.25;margin-bottom:8px}
+.col-note{font-size:13px;color:var(--muted);line-height:1.65}
+.sticky-col{position:sticky;top:104px}
+
+/* HARM STATS */
+.harm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:40px}
+.hstat{background:var(--navy2);padding:24px 20px;text-align:center}
+.hstat-n{font-family:var(--ff-display);font-size:clamp(22px,3vw,42px);font-weight:700;color:var(--red);line-height:1;margin-bottom:5px}
+.hstat-n.amber{color:var(--amber2)}
+.hstat-l{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column;position:relative}
+.tl::before{content:'';position:absolute;left:10px;top:22px;bottom:22px;width:1px;background:linear-gradient(to bottom,var(--amber) 0%,rgba(192,122,24,.08) 100%)}
+.tl-item{display:flex;gap:24px;padding-bottom:28px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{width:21px;height:21px;border-radius:50%;border:2px solid var(--amber);background:var(--navy);flex-shrink:0;margin-top:3px;z-index:1;display:flex;align-items:center;justify-content:center}
+.tl-dot.r{border-color:var(--red)}.tl-dot.g{border-color:var(--green)}
+.tl-pip{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.tl-dot.r .tl-pip{background:var(--red)}.tl-dot.g .tl-pip{background:var(--green)}
+.tl-date{font-family:var(--ff-mono);font-size:10px;letter-spacing:.1em;color:var(--amber);margin-bottom:3px}
+.tl-date.r{color:var(--red)}.tl-date.g{color:var(--green)}
+.tl-event{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;line-height:1.35}
+.tl-detail{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* 57-TRIGGER MATRIX */
+.trigger-section-block{margin-bottom:4px}
+.tsec-header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--navy3);cursor:pointer;user-select:none}
+.tsec-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);flex:1}
+.tsec-count{font-family:var(--ff-mono);font-size:10px;color:var(--muted)}
+.tsec-toggle{font-family:var(--ff-mono);font-size:10px;color:var(--muted);transition:transform .2s;display:inline-block}
+.tsec-toggle.open{transform:rotate(180deg)}
+.tsec-rows{display:flex;flex-direction:column;gap:1px;margin-top:1px}
+.trigger-row{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:12px;padding:10px 16px;background:var(--navy2)}
+.tr-id{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.tr-name{font-size:13px;color:var(--warm);line-height:1.4}
+.tr-score{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase;white-space:nowrap}
+.tr-yes{color:#3db57a;background:rgba(40,136,90,.1);border:1px solid rgba(40,136,90,.2)}
+.tr-nhr{color:var(--amber);background:rgba(192,122,24,.08);border:1px solid rgba(192,122,24,.18)}
+.tr-unk{color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.trigger-legend{display:flex;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+.tleg{display:flex;align-items:center;gap:7px;font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.tleg-dot{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.trigger-summary{display:flex;gap:2px;margin-bottom:24px;height:8px}
+
+/* CONDITION DEEP DIVES */
+.cdive{background:var(--navy2);border:1px solid var(--border);padding:28px;margin-bottom:12px}
+.cdive-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.cdive-id{font-family:var(--ff-mono);font-size:10px;color:var(--amber);letter-spacing:.1em;margin-bottom:4px}
+.cdive-name{font-family:var(--ff-display);font-size:18px;font-weight:600;color:var(--cream);line-height:1.2}
+.cdive-finding{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-top:5px}
+.cdive-text{font-size:13px;color:var(--warm);line-height:1.78;margin-bottom:10px}
+.cdive-quote{border-left:2px solid var(--amber);padding-left:16px;margin:14px 0;font-family:var(--ff-display);font-style:italic;font-size:15px;color:var(--warm);line-height:1.6}
+.cdive-source{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em}
+.launder-box{padding:22px 24px;background:rgba(200,48,48,.04);border:1px solid rgba(200,48,48,.14);border-left:3px solid var(--red);margin-top:20px}
+.launder-lbl{font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.launder-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.ltag{font-family:var(--ff-mono);font-size:10px;color:rgba(200,48,48,.8);background:rgba(200,48,48,.07);border:1px solid rgba(200,48,48,.18);padding:3px 9px}
+.launder-desc{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* PREVENTION */
+.prev-item{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--border)}
+.prev-item:last-child{border-bottom:none}
+.prev-cond{font-family:var(--ff-mono);font-size:11px;color:var(--amber);flex-shrink:0;width:28px;padding-top:2px}
+.prev-title{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;line-height:1.35}
+.prev-desc{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* COMPARABLE */
+.comp-card{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;background:var(--navy2);border:1px solid var(--border);border-left:3px solid rgba(192,122,24,.35);padding:22px 24px;margin-bottom:12px;cursor:pointer;transition:border-color .15s}
+.comp-card:hover{border-left-color:var(--amber)}
+.comp-name{font-size:15px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.comp-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.07em;margin-bottom:8px}
+.comp-overlaps{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}
+.comp-tag{font-family:var(--ff-mono);font-size:9px;color:var(--amber);background:rgba(192,122,24,.07);border:1px solid rgba(192,122,24,.18);padding:2px 8px;letter-spacing:.07em}
+.comp-desc{font-size:13px;color:var(--warm);line-height:1.65}
+.comp-score-col{text-align:right;flex-shrink:0}
+.comp-score-n{font-family:var(--ff-display);font-size:32px;font-weight:700;color:var(--red);line-height:1}
+.comp-score-l{font-family:var(--ff-mono);font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+
+/* METADATA */
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.meta-cell{background:var(--navy2);padding:16px 20px}
+.meta-cell-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.meta-cell-value{font-size:13px;color:var(--cream);line-height:1.5}
+.meta-cell-value.red{color:var(--red);font-weight:600}
+
+/* RELATED */
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rc{background:var(--navy2);border:1px solid var(--border);padding:20px;cursor:pointer;transition:border-color .15s;display:block}
+.rc:hover{border-color:rgba(192,122,24,.4)}
+.rc-type{display:flex;align-items:center;gap:6px;font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.rc-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rc-name{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:3px;line-height:1.3}
+.rc-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:9px}
+.rc-conds{display:flex;gap:4px;flex-wrap:wrap}
+.rct{font-family:var(--ff-mono);font-size:9px;padding:2px 7px}
+.rct-a{color:var(--red);background:rgba(200,48,48,.08);border:1px solid rgba(200,48,48,.18)}
+.rct-p{color:var(--green);background:rgba(40,136,90,.08);border:1px solid rgba(40,136,90,.18)}
+
+/* DATA-ONLY CASE PAGE */
+.data-notice{background:rgba(192,122,24,.06);border:1px solid rgba(192,122,24,.2);border-left:3px solid var(--amber);padding:22px 28px;margin-bottom:32px}
+.data-notice-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.data-notice-text{font-size:13px;color:var(--warm);line-height:1.7}
+
+/* LIBRARY INDEX */
+.lib-hero{background:var(--navy2);padding:72px 0 64px;border-bottom:1px solid var(--border)}
+.lib-hero-eyebrow{font-family:var(--ff-mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.lib-hero-title{font-family:var(--ff-display);font-size:clamp(36px,5vw,72px);font-weight:700;color:var(--cream);line-height:1.05;margin-bottom:20px}
+.lib-stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
+.lib-stat{font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.lib-stat strong{color:var(--amber);font-size:20px;display:block;margin-bottom:2px;font-family:var(--ff-display);font-weight:700}
+.filter-bar{background:var(--navy3);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:50}
+.filter-inner{max-width:1180px;margin:0 auto;padding:0 48px;display:flex;flex-direction:column;gap:10px}
+.search-input{flex:1;background:var(--navy2);border:1px solid var(--border);color:var(--cream);font-family:var(--ff-mono);font-size:12px;padding:9px 14px;outline:none;transition:border-color .15s;width:100%}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:rgba(192,122,24,.4)}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--muted);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:rgba(192,122,24,.4);color:var(--cream)}
+.chip.active{background:rgba(192,122,24,.12);border-color:rgba(192,122,24,.5);color:var(--amber)}
+.results-count{font-family:var(--ff-mono);font-size:10px;color:var(--muted);padding:6px 0 0}
+.case-grid{max-width:1180px;margin:0 auto;padding:32px 48px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.case-card{background:var(--navy2);border:1px solid var(--border);padding:22px;cursor:pointer;display:block;transition:border-color .15s}
+.case-card:hover{border-color:rgba(192,122,24,.35)}
+.card-type-row{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.card-type-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.card-type-label{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.card-domain-label{font-family:var(--ff-mono);font-size:9px;color:var(--muted);margin-left:auto;text-align:right;max-width:120px;line-height:1.3}
+.card-name{font-family:var(--ff-display);font-size:18px;font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:4px}
+.card-meta{font-family:var(--ff-mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px}
+.card-conditions{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+.cc{font-family:var(--ff-mono);font-size:9px;padding:2px 7px}
+.cc-a{color:var(--red);background:rgba(200,48,48,.08);border:1px solid rgba(200,48,48,.18)}
+.cc-p{color:var(--green);background:rgba(40,136,90,.08);border:1px solid rgba(40,136,90,.18)}
+.card-bottom{display:flex;justify-content:space-between;align-items:center}
+.card-score{font-family:var(--ff-display);font-size:26px;font-weight:700;line-height:1}
+.card-link{font-family:var(--ff-mono);font-size:9px;letter-spacing:.12em;color:var(--amber);text-transform:uppercase}
+.card-data-link{font-family:var(--ff-mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+@media(max-width:1024px){
+  .wrap,.case-body,.filter-inner,.case-grid,.record-bar-inner,.sec-nav-track{padding-left:32px;padding-right:32px}
+  .hero-grid,.two-col{grid-template-columns:1fr;gap:36px}
+  .sticky-col{position:static}
+  .harm-stats{grid-template-columns:1fr 1fr}
+  .related-grid,.case-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .wrap,.case-body,.filter-inner,.case-grid,.record-bar-inner,.sec-nav-track{padding-left:20px;padding-right:20px}
+  .harm-stats,.related-grid,.case-grid{grid-template-columns:1fr}
+  .comp-card{grid-template-columns:1fr}
+  .meta-grid{grid-template-columns:1fr}
+}
+@media print{
+  .record-bar .record-actions,.sec-nav,.tape,.filter-bar,.lib-hero,.case-grid{display:none!important}
+  *{background:white!important;color:#111!important;border-color:#ccc!important;box-shadow:none!important;text-shadow:none!important}
+  body{font-size:12pt!important}
+  .case-hero{padding:24px 0 16px!important}
+  .tsec-rows{display:flex!important;flex-direction:column!important}
+  .tsec-header{background:#f5f5f5!important}
+  .trigger-row,.cond-row,.hstat,.meta-cell,.cdive,.comp-card,.data-notice{border:1px solid #ddd!important}
+  .btn,.record-btn{display:none!important}
+  .hero-grid{display:block!important}
+  .gpws-bar-track{background:#ddd!important}
+  .gpws-bar-fill{background:#555!important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="loading">
+    <div class="loading-text">Loading Case Library</div>
+    <div class="loading-bar"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// TRIGGER DEFINITIONS
+// ═══════════════════════════════════════════════════════════════════
+const TRIGGER_NAMES = {
+  'A-01':'System affects human outcomes','A-02':'Non-trivial human outcome possible',
+  'B-01':'Output influences / substitutes human judgment','B-02':'Cannot interrupt or override in real time',
+  'B-03':'Behavior differs under time pressure','B-04':'System must be stoppable post-deployment',
+  'C-01':'Decisions must be auditable / litigable','C-02':'Inputs/outputs compressed or lossy',
+  'C-03':'Evidence may be challenged post-fact',
+  'D-01':'Missing or biased inputs possible','D-02':'May operate outside design assumptions',
+  'D-03':'May need to refuse or degrade safely',
+  'E-01':'Outputs replicated across many users or cases','E-02':'Small errors could affect large populations',
+  'E-03':'Output becomes input to another system',
+  'F-01':'Cases or users are queued or deprioritized','F-02':'Delays or backlogs can themselves cause harm',
+  'G-01':'System behavior may drift over time','G-02':'Performance or populations may change post-deploy',
+  'G-03':'Harm may emerge only after prolonged exposure',
+  'H-01':'System optimizes for proxy metrics','H-02':'Success definitions may shift',
+  'H-03':'Org incentives favor speed or cost over safety',
+  'I-01':'Outputs may be over-trusted','I-02':'Users may misuse or work around outputs',
+  'J-01':'Handles sensitive personal, legal, or medical data','J-02':'Unauthorized access could cause human harm',
+  'K-01':'Incentive to manipulate inputs or outputs','K-02':'Identity spoofing or false authority possible',
+  'K-03':'Evidence contamination or fabrication plausible','K-04':'Persuasive framing could override scrutiny',
+  'K-05':'Volume or flooding could degrade safeguards','K-06':'Org seams or vendors can be exploited',
+  'L-00':'Laundering dynamics active (presence gate)','L-01':'Accountability diffusion — no owner',
+  'L-02':'Authority denied after harm','L-03':'Evidence degraded or narrativized',
+  'L-04':'Responsibility shifted across time','L-05':'Responsibility shifted across teams or vendors',
+  'L-06':'Blame shifted onto tools','L-07':'Automation cited as inevitability',
+  'L-08':'Harm erased through aggregation or statistics','L-09':'Compliance artifacts substitute for safety',
+  'L-10':'Confidence substitutes for evidence','L-11':'Unnamed experts invoked as authority',
+  'L-12':'Scale framed as unavoidable','L-13':'Good intent used to negate outcomes',
+  'L-14':'Committees dissolve accountability','L-15':'Low probability excuses high-impact harm',
+  'L-16':'Moral responsibility shifted to users or victims',
+  'M-01':'Residual risk remains after mitigation','M-02':'System remains operational over time',
+  'M-03':'Incidents or near-misses occurred','M-04':'Long-tail harms are plausible',
+  'N-01':'Safety execution depends on staffing or resources',
+  'N-02':'Financial pressure may override safeguards',
+  'N-03':'Raising safety concerns carries career risk',
+};
+const TRIGGER_SECTIONS = [
+  {key:'A',name:'Entry & Safety Relevance Gates',keys:['A-01','A-02']},
+  {key:'B',name:'Authority, Control & Human Oversight',keys:['B-01','B-02','B-03','B-04']},
+  {key:'C',name:'Evidence, Traceability & Reconstructability',keys:['C-01','C-02','C-03']},
+  {key:'D',name:'Failure Modes, Absence & Degraded Operation',keys:['D-01','D-02','D-03']},
+  {key:'E',name:'Scale, Propagation & Amplification',keys:['E-01','E-02','E-03']},
+  {key:'F',name:'Queueing, Triage & Time-Based Harm',keys:['F-01','F-02']},
+  {key:'G',name:'Monitoring, Drift & Long-Term Operation',keys:['G-01','G-02','G-03']},
+  {key:'H',name:'Incentives, Objectives & Misalignment',keys:['H-01','H-02','H-03']},
+  {key:'I',name:'Human Interpretation & Use',keys:['I-01','I-02']},
+  {key:'J',name:'Security, Access & Cross-Domain Risk',keys:['J-01','J-02']},
+  {key:'K',name:'Adversarial, Crime & Abuse',keys:['K-01','K-02','K-03','K-04','K-05','K-06']},
+  {key:'L',name:'Responsibility & Evidence Laundering Suite',keys:['L-00','L-01','L-02','L-03','L-04','L-05','L-06','L-07','L-08','L-09','L-10','L-11','L-12','L-13','L-14','L-15','L-16']},
+  {key:'M',name:'Residual Risk & Lifecycle Governance',keys:['M-01','M-02','M-03','M-04']},
+  {key:'N',name:'Organizational Capacity',keys:['N-01','N-02','N-03']},
+];
+
+
+// ═══════════════════════════════════════════════════════════════════
+// DOMAIN GROUPS
+// ═══════════════════════════════════════════════════════════════════
+const DOMAIN_GROUPS = {
+  "Law Enforcement & Criminal Justice": ["Criminal Justice & Policing","Criminal Risk Assessment","Policing Forensics","Policing Infrastructure","Legal System"],
+  "Healthcare & Medical": ["Healthcare","Healthcare Infrastructure","Healthcare Administration","Healthcare Billing","Healthcare/Consumer","Medical Devices","Clinical AI","Public Health","Public Health Infrastructure","Public Health Surveillance","Health Claims / Tax"],
+  "Benefits, Welfare & Social Services": ["Benefits & Welfare","Benefits Administration","Benefits / Tax","Child Welfare","Social Services","Housing","Employment","Financial Aid"],
+  "Government & Public Administration": ["Government IT","Digital Government","Public Administration","Electoral Systems","Tax Administration","Tax / Benefits","Tax / Payment Integrity","Digital Identity & Infrastructure"],
+  "Financial Systems": ["Financial Systems","Financial Regulation","Financial Infrastructure","Financial Data","Financial IT"],
+  "Transportation & Aviation": ["Aviation","Aviation Infrastructure","Aviation Operations","Aviation/Space","Automotive","Autonomous Vehicles","Autonomous & Transport","Transit Infrastructure","Transport Infrastructure"],
+  "Critical Infrastructure & Technology": ["Critical Infrastructure","Critical Software Infrastructure","Technology","Technology/Consumer","Technology/Critical Infra","Technology/Financial","Telecommunications","Infrastructure","Public Infrastructure","Public Safety","Public Safety & Infrastructure","Emergency Alert"],
+  "Immigration & Border": ["Immigration & Border"],
+  "Education": ["Education"],
+  "Military & National Security": ["Military","Military & National Security","Military/Industrial"],
+  "Environment": ["Environmental","Environmental & Infrastructure","Environmental Monitoring","Environmental Regulation","Environmental/Infrastructure","Environmental/Transportation"],
+  "Other": ["Academic & Research","Content Moderation","Data Broker","Hospitality","International","Cross-domain RTF"],
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+let ALL_CASES = [];      // from cases-data.json  — all 380
+let CONTENT = {};        // from cases-content.json — narrative for built cases
+let filterState = { search:'', type:'all', domain:'all', domainGroup:'all', conditions:new Set() };
+
+// ═══════════════════════════════════════════════════════════════════
+// BOOT — load both JSON files in parallel
+// ═══════════════════════════════════════════════════════════════════
+async function boot() {
+  try {
+    const [dataRes, contentRes] = await Promise.all([
+      fetch('cases-data.json'),
+      fetch('cases-content.json')
+    ]);
+    ALL_CASES = await dataRes.json();
+    CONTENT   = await contentRes.json();
+    render();
+  } catch(e) {
+    document.getElementById('app').innerHTML = `
+      <div style="padding:80px 48px;text-align:center">
+        <div style="font-family:var(--ff-mono);font-size:11px;color:var(--red);letter-spacing:.2em;margin-bottom:16px">LOAD ERROR</div>
+        <h2 style="font-family:var(--ff-display);font-size:32px;color:var(--cream);margin-bottom:12px">Could not load case data</h2>
+        <p style="color:var(--warm);font-size:13px;margin-bottom:8px">Make sure <code>cases-data.json</code> and <code>cases-content.json</code> are in the same folder as this file.</p>
+        <p style="color:var(--muted);font-size:12px">${e.message}</p>
+      </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ROUTER
+// ═══════════════════════════════════════════════════════════════════
+function getSlug() {
+  // Support: / (library) or /compas (case detail)
+  const parts = window.location.pathname.split('/').filter(p => p && !p.includes('.') && p !== 'index');
+  if (!parts.length) return null;
+  // Ignore legacy /cases/slug pattern during transition
+  if (parts[0] === 'cases' && parts.length >= 2) return parts[1];
+  if (parts[0] === 'cases') return null;
+  return parts[0];
+}
+function navigate(slug) {
+  const url = slug ? `/${slug}` : '/';
+  window.history.pushState({}, '', url);
+  render();
+  window.scrollTo(0,0);
+}
+window.addEventListener('popstate', () => { render(); window.scrollTo(0,0); });
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function badgeClass(s) {
+  if (!s) return 'badge-a';
+  if (s.startsWith('ABSENT')) return 'badge-a';
+  if (s === 'PRESENT') return 'badge-p';
+  return 'badge-x';
+}
+function scoreColor(g) {
+  if (g <= 0.2) return 'var(--red)';
+  if (g <= 0.6) return 'var(--amber2)';
+  return 'var(--green)';
+}
+function typeColor(t) {
+  if (!t) return 'var(--muted)';
+  if (t.includes('Failure')) return 'var(--red)';
+  if (t === 'Resilient' || t.includes('Resilient')) return 'var(--green)';
+  return 'var(--amber)';
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const b = document.getElementById('copyBtn');
+    if (b) { b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy Link',2000); }
+  });
+}
+function printCase() { window.print(); }
+function scrollToSec(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TRIGGER MATRIX
+// ═══════════════════════════════════════════════════════════════════
+function renderTriggerMatrix(triggers) {
+  if (!triggers) return '<p style="color:var(--muted);font-size:13px">Trigger data not available for this record.</p>';
+  const total = Object.keys(triggers).length;
+  const yesC = Object.values(triggers).filter(v=>v==='YES').length;
+  const nhrC = Object.values(triggers).filter(v=>v==='NEEDS HUMAN REVIEW').length;
+  const unkC = total - yesC - nhrC;
+  let html = `
+    <div class="trigger-legend">
+      <div class="tleg"><div class="tleg-dot" style="background:#28885a"></div>YES — ${yesC}</div>
+      <div class="tleg"><div class="tleg-dot" style="background:var(--amber)"></div>NEEDS HUMAN REVIEW — ${nhrC}</div>
+      <div class="tleg"><div class="tleg-dot" style="background:var(--muted);opacity:.5"></div>UNKNOWN — ${unkC}</div>
+    </div>
+    <div class="trigger-summary">
+      <div style="width:${Math.max(2,yesC/total*100)}%;background:#28885a;height:100%"></div>
+      <div style="width:${nhrC/total*100}%;background:var(--amber);height:100%"></div>
+      <div style="width:${unkC/total*100}%;background:var(--muted);opacity:.4;height:100%"></div>
+    </div>`;
+  TRIGGER_SECTIONS.forEach((sec,idx) => {
+    const sYes=sec.keys.filter(k=>triggers[k]==='YES').length;
+    const sNhr=sec.keys.filter(k=>triggers[k]==='NEEDS HUMAN REVIEW').length;
+    const sUnk=sec.keys.filter(k=>!triggers[k]||triggers[k]==='UNKNOWN').length;
+    const parts=[]; if(sYes)parts.push(`${sYes} YES`); if(sNhr)parts.push(`${sNhr} NHR`); if(sUnk)parts.push(`${sUnk} UNKNOWN`);
+    const isL=sec.key==='L', open=idx<2;
+    let rows='';
+    sec.keys.forEach(k=>{
+      const v=triggers[k];
+      let cls='tr-unk',txt='—';
+      if(v==='YES'){cls='tr-yes';txt='YES';}
+      else if(v==='NEEDS HUMAN REVIEW'){cls='tr-nhr';txt='NHR';}
+      else if(v==='UNKNOWN'){cls='tr-unk';txt='UNKNOWN';}
+      rows+=`<div class="trigger-row"><span class="tr-id">${k}</span><span class="tr-name">${TRIGGER_NAMES[k]||''}</span><span class="tr-score ${cls}">${txt}</span></div>`;
+    });
+    html+=`<div class="trigger-section-block">
+      <div class="tsec-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';this.querySelector('.tsec-toggle').classList.toggle('open')"
+        style="${isL?'border-left:3px solid var(--red)':''}">
+        <span class="tsec-label" style="${isL?'color:var(--red)':''}">Section ${sec.key} — ${sec.name}</span>
+        <span class="tsec-count">${sec.keys.length} triggers · ${parts.join(' · ')}</span>
+        <span class="tsec-toggle ${open?'open':''}">▼</span>
+      </div>
+      <div class="tsec-rows" style="display:${open?'flex':'none'};flex-direction:column;gap:1px">${rows}</div>
+    </div>`;
+  });
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DATA-ONLY CASE PAGE (no narrative content yet)
+// ═══════════════════════════════════════════════════════════════════
+function renderDataPage(d) {
+  document.title = `${d.name} · ${d.id} — Dataset Record — Human Systems Risk Lab`;
+  const conds = ['c1','c2','c3','c4','c5'];
+  const condNames = ['Named Accountable Owner','Independent Validation','Structured Monitoring','Pre-Established Accountability','No Active Suppression'];
+  const condRows = conds.map((k,i) => `
+    <div class="cond-row">
+      <span class="cond-id">C${i+1}</span>
+      <span class="cond-name">${condNames[i]}</span>
+      <span class="cond-badge ${badgeClass(d[k])}">${d[k]||'UNKNOWN'}</span>
+    </div>`).join('');
+
+  return `
+    <div class="record-bar">
+      <div class="record-bar-inner">
+        <div class="record-id">HSRL Dataset Record <strong>${d.id}</strong> &nbsp;·&nbsp; ${d.name} &nbsp;·&nbsp; ${d.domain}</div>
+        <div class="record-actions">
+          <button id="copyBtn" class="record-btn" onclick="copyLink()">Copy Link</button>
+          <button class="record-btn" onclick="printCase()">Print / PDF</button>
+          <button class="record-btn" onclick="navigate(null)">← Case Library</button>
+        </div>
+      </div>
+    </div>
+    <section class="case-hero">
+      <div class="hero-glow"></div>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="breadcrumb"><span onclick="navigate(null)" style="color:var(--amber);cursor:pointer">Case Library</span> › ${d.name}</div>
+            <div class="case-flag">
+              <div class="flag-dot" style="background:${typeColor(d.type)}"></div>
+              <span class="flag-type" style="color:${typeColor(d.type)}">${d.type}</span>
+              <span class="flag-domain">· ${d.domain}</span>
+            </div>
+            <h1 class="case-h1">${d.name}</h1>
+            <p class="case-h2">${d.domain} · ${d.country}${d.deployYear ? ' · ' + d.deployYear : ''}</p>
+            <div class="case-meta">
+              <span class="meta-chip">Case ID: ${d.id}</span>
+              <span class="meta-chip">Country: ${d.country}</span>
+              <span class="meta-chip">Domain: ${d.domain}</span>
+              ${d.suppressionConfirmed ? '<span class="meta-chip" style="color:var(--red)">Suppression: Confirmed</span>' : ''}
+            </div>
+            ${d.harmDescription ? `<div style="background:var(--navy3);border:1px solid var(--border);border-left:3px solid var(--red);padding:18px 22px;margin-top:8px"><div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px">Harm Description</div><p style="font-size:13px;color:var(--warm);line-height:1.7">${d.harmDescription}</p></div>` : ''}
+          </div>
+          <div>
+            <div class="gpws-panel">
+              <div class="gpws-label">Governance Process Watchdog Score (GPWS)</div>
+              <div class="gpws-score" style="color:${scoreColor(d.gpws)}">${d.gpws.toFixed(1)}</div>
+              <div class="gpws-tier" style="color:${scoreColor(d.gpws)}">${d.gpws <= 0.2 ? '⛔ Structural Risk — DANGER' : d.gpws <= 0.6 ? '⚠ Elevated Risk' : '✓ Governance Present'}</div>
+              <div class="gpws-bar-track"><div class="gpws-bar-fill" style="width:${Math.max(2,d.gpws*100)}%;background:${scoreColor(d.gpws)}"></div></div>
+              <div class="gpws-note">Scale 0.0–1.0. 0.0 = all five conditions absent.</div>
+              <div class="cond-table">${condRows}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:32px"></div>
+    </section>
+
+    <div class="case-body">
+      <section class="sec" id="data-notice" style="padding:48px 0">
+        <div class="data-notice">
+          <div class="data-notice-label">Dataset Record — Narrative Analysis Pending</div>
+          <p class="data-notice-text">This case is in the HSRL dataset with full trigger scoring and condition assessment. A full narrative case analysis — including condition deep-dives, timeline, prevention analysis, and comparable cases — has not yet been written for this record. The 57-trigger matrix and classification data are available below.</p>
+        </div>
+      </section>
+      <section class="sec" id="triggers">
+        <div class="sec-header">
+          <div class="sec-eyebrow">57-Trigger Matrix</div>
+          <h2 class="sec-title">Full trigger<br><em>assessment record.</em></h2>
+        </div>
+        ${renderTriggerMatrix(d.triggers)}
+      </section>
+      <section class="sec" id="record">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Record</div>
+          <h2 class="sec-title">Classification<br><em>data.</em></h2>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-cell"><div class="meta-cell-label">Case ID</div><div class="meta-cell-value">${d.id}</div></div>
+          <div class="meta-cell"><div class="meta-cell-label">Type</div><div class="meta-cell-value ${d.type.includes('Failure')?'red':''}">${d.type}</div></div>
+          <div class="meta-cell"><div class="meta-cell-label">GPWS Score</div><div class="meta-cell-value ${d.gpws<=0.2?'red':''}">${d.gpws.toFixed(1)}</div></div>
+          <div class="meta-cell"><div class="meta-cell-label">Conditions Absent</div><div class="meta-cell-value ${d.conditionsAbsent>=4?'red':''}">${d.conditionsAbsent} of 5</div></div>
+          <div class="meta-cell"><div class="meta-cell-label">Suppression</div><div class="meta-cell-value ${d.suppressionConfirmed?'red':''}">${d.suppressionConfirmed?'Confirmed':'Not confirmed'}</div></div>
+          <div class="meta-cell"><div class="meta-cell-label">Country</div><div class="meta-cell-value">${d.country}</div></div>
+          ${d.deployYear ? `<div class="meta-cell"><div class="meta-cell-label">Deployment Year</div><div class="meta-cell-value">${d.deployYear}</div></div>` : ''}
+          ${d.discoveryYear ? `<div class="meta-cell"><div class="meta-cell-label">Discovery Year</div><div class="meta-cell-value">${d.discoveryYear}</div></div>` : ''}
+        </div>
+      </section>
+    </div>
+    <section style="padding:48px 0;background:var(--navy2);border-top:1px solid var(--border)">
+      <div class="wrap">
+        <button class="btn btn-ghost" onclick="navigate(null)">← Back to Case Library</button>
+      </div>
+    </section>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FULL NARRATIVE CASE PAGE
+// ═══════════════════════════════════════════════════════════════════
+function renderFullCase(d, c) {
+  document.title = `${d.name} · ${d.id} — Case Record — Human Systems Risk Lab`;
+  const fillPct = Math.max(2, d.gpws * 100);
+  const tapeItems = [...(c.tapeItems||[]), ...(c.tapeItems||[])];
+  const tapeHtml = tapeItems.map(t=>`<span class="tape-item">${t}</span><span class="tape-sep">·</span>`).join('');
+  const harmStatsHtml = (c.harmStats||[]).map(s=>`
+    <div class="hstat">
+      <div class="hstat-n ${s.color==='amber'?'amber':''}">${s.n}</div>
+      <div class="hstat-l">${(s.label||'').replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+  const timelineHtml = (c.timeline||[]).map(t => {
+    const dc = t.type==='harm'?'r':t.type==='accountability'?'g':'';
+    return `<div class="tl-item">
+      <div class="tl-dot ${dc}"><div class="tl-pip"></div></div>
+      <div>
+        <div class="tl-date ${dc}">${t.date}</div>
+        <div class="tl-event">${t.event}</div>
+        <div class="tl-detail">${t.detail}</div>
+      </div>
+    </div>`;
+  }).join('');
+  const conditionsHtml = (c.conditions||[]).map(cond=>`
+    <div class="cdive">
+      <div class="cdive-top">
+        <div>
+          <div class="cdive-id">${cond.id} — ${cond.name}</div>
+          <div class="cdive-name">${(cond.text&&cond.text[0]||'').substring(0,90)}…</div>
+          <div class="cdive-finding">${cond.finding||cond.score}</div>
+        </div>
+        <span class="cond-badge ${badgeClass(cond.score)}" style="flex-shrink:0;margin-top:4px">${cond.score}</span>
+      </div>
+      ${(cond.text||[]).map(t=>`<p class="cdive-text">${t}</p>`).join('')}
+      ${cond.quote?`<div class="cdive-quote">${cond.quote}</div><div class="cdive-source">${cond.source}</div>`:''}
+      ${cond.laundering?`
+        <div class="launder-box">
+          <div class="launder-lbl">Laundering Suite patterns — ${cond.id} analysis</div>
+          <div class="launder-tags">${(cond.laundering.tags||[]).map(t=>`<span class="ltag">${t}</span>`).join('')}</div>
+          <p class="launder-desc">${cond.laundering.desc}</p>
+        </div>`:''}
+    </div>`).join('');
+  const prevHtml = (c.prevention||[]).map(p=>`
+    <div class="prev-item">
+      <div class="prev-cond">${p.c}</div>
+      <div><div class="prev-title">${p.title}</div><div class="prev-desc">${p.desc}</div></div>
+    </div>`).join('');
+  const compHtml = (c.comparables||[]).map(comp=>`
+    <div class="comp-card" onclick="navigate('${comp.slug}')" style="${comp.scoreColor==='green'?'border-left-color:rgba(40,136,90,.4)':''}">
+      <div>
+        <div class="comp-name">${comp.name}</div>
+        <div class="comp-meta">${comp.meta}</div>
+        <div class="comp-overlaps">${(comp.tags||[]).map(t=>`<span class="comp-tag">${t}</span>`).join('')}</div>
+        <p class="comp-desc">${comp.desc}</p>
+      </div>
+      <div class="comp-score-col">
+        <div class="comp-score-n" style="color:${comp.scoreColor==='green'?'var(--green)':'var(--red)'}">${comp.score}</div>
+        <div class="comp-score-l">GPWS Score</div>
+      </div>
+    </div>`).join('');
+  const metaHtml = Object.entries(c.metadata||{}).map(([k,v])=>`
+    <div class="meta-cell">
+      <div class="meta-cell-label">${k}</div>
+      <div class="meta-cell-value ${String(v).includes('DANGER')||String(v).includes('Failure')||String(v).includes('Yes')||String(v).includes('5 of 5')?'red':''}">${v}</div>
+    </div>`).join('');
+  const sourcesHtml = (c.sources||[]).map(s=>`<div style="font-size:13px;color:var(--warm);padding:6px 0;border-bottom:1px solid var(--border)">${s}</div>`).join('');
+  const relatedHtml = (c.related||[]).map(r=>`
+    <div class="rc" onclick="navigate('${r.slug}')">
+      <div class="rc-type"><span class="rc-dot" style="background:var(--${r.dotColor||'muted'})"></span>${r.type} · ${r.domain}</div>
+      <div class="rc-name">${r.name}</div>
+      <div class="rc-meta">${r.meta}</div>
+      <div class="rc-conds">${(r.conds||[]).map((s,i)=>`<span class="rct ${s==='ABSENT'?'rct-a':'rct-p'}">C${i+1}</span>`).join('')}</div>
+    </div>`).join('');
+  const condRows = ['c1','c2','c3','c4','c5'].map((k,i)=>`
+    <div class="cond-row">
+      <span class="cond-id">C${i+1}</span>
+      <span class="cond-name">${['Named Accountable Owner','Independent Validation','Structured Monitoring','Pre-Established Accountability','No Active Suppression'][i]}</span>
+      <span class="cond-badge ${badgeClass(d[k])}">${d[k]||'UNKNOWN'}</span>
+    </div>`).join('');
+
+  return `
+    <div class="record-bar">
+      <div class="record-bar-inner">
+        <div class="record-id">HSRL Dataset Record <strong>${d.id}</strong> &nbsp;·&nbsp; ${d.name} &nbsp;·&nbsp; Last verified ${d.verified||'2025'} &nbsp;·&nbsp; ${d.domain}</div>
+        <div class="record-actions">
+          <button id="copyBtn" class="record-btn" onclick="copyLink()">Copy Link</button>
+          <button class="record-btn" onclick="printCase()">Print / PDF</button>
+          <button class="record-btn" onclick="navigate(null)">← Case Library</button>
+        </div>
+      </div>
+    </div>
+    <section class="case-hero">
+      <div class="hero-glow"></div>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="breadcrumb"><span onclick="navigate(null)" style="color:var(--amber);cursor:pointer">Case Library</span> › ${d.name}</div>
+            <div class="case-flag">
+              <div class="flag-dot"></div>
+              <span class="flag-type">${d.type}</span>
+              <span class="flag-domain">· ${d.domain}</span>
+            </div>
+            <h1 class="case-h1">${d.name}</h1>
+            <p class="case-h2">${d.subtitle||d.domain+' · '+d.country}</p>
+            <div class="case-meta">
+              <span class="meta-chip">Case ID: ${d.id}</span>
+              <span class="meta-chip">Country: ${d.country}</span>
+              <span class="meta-chip">Domain: ${d.domain}</span>
+              ${d.suppressionConfirmed?'<span class="meta-chip" style="color:var(--red)">Suppression: Confirmed</span>':''}
+            </div>
+          </div>
+          <div>
+            <div class="gpws-panel">
+              <div class="gpws-label">Governance Process Watchdog Score (GPWS)</div>
+              <div class="gpws-score">${d.gpws.toFixed(1)}</div>
+              <div class="gpws-tier">⛔ Structural Risk — DANGER</div>
+              <div class="gpws-bar-track"><div class="gpws-bar-fill" style="width:${fillPct}%"></div></div>
+              <div class="gpws-note">Scale 0.0–1.0. 0.0 = all five conditions absent.</div>
+              <div class="cond-table">${condRows}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:32px"></div>
+    </section>
+    ${tapeHtml.length ? `<div class="tape"><div class="tape-track">${tapeHtml}</div></div>` : ''}
+    <div class="sec-nav">
+      <div class="sec-nav-track">
+        <button class="sec-nav-link" onclick="scrollToSec('harm')">Scale of Harm</button>
+        <button class="sec-nav-link" onclick="scrollToSec('timeline')">Timeline</button>
+        <button class="sec-nav-link" onclick="scrollToSec('conditions')">Conditions</button>
+        <button class="sec-nav-link" onclick="scrollToSec('triggers')">57-Trigger Matrix</button>
+        <button class="sec-nav-link" onclick="scrollToSec('prevention')">Prevention</button>
+        <button class="sec-nav-link" onclick="scrollToSec('comparable')">Comparable Cases</button>
+        <button class="sec-nav-link" onclick="scrollToSec('record')">Record &amp; Sources</button>
+      </div>
+    </div>
+    <div class="case-body">
+      <section class="sec" id="harm">
+        ${harmStatsHtml ? `<div class="harm-stats">${harmStatsHtml}</div>` : ''}
+        <div class="two-col">
+          <div class="sticky-col">
+            <div class="col-label">Harm Context</div>
+            <div class="col-title">${c.overviewTitle||d.name}</div>
+            <p class="col-note">${c.overviewNote||''}</p>
+          </div>
+          <div>${(c.overview||[]).map(p=>`<p class="body-p">${p}</p>`).join('')}</div>
+        </div>
+      </section>
+      <section class="sec" id="timeline">
+        <div class="two-col">
+          <div class="sticky-col">
+            <div class="col-label">Timeline</div>
+            <div class="col-title">Deploy to accountability</div>
+            <p class="col-note" style="margin-top:14px;font-size:12px">
+              <span style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--amber);display:inline-block"></span>Neutral</span>
+              <span style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--red);display:inline-block"></span>Harm</span>
+              <span style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;border:2px solid var(--green);display:inline-block"></span>Accountability</span>
+            </p>
+          </div>
+          <div class="tl">${timelineHtml}</div>
+        </div>
+      </section>
+      <section class="sec" id="conditions">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Condition Analysis</div>
+          <h2 class="sec-title">Why each condition scored <em>ABSENT</em></h2>
+        </div>
+        ${conditionsHtml}
+      </section>
+      <section class="sec" id="triggers">
+        <div class="sec-header">
+          <div class="sec-eyebrow">57-Trigger Matrix</div>
+          <h2 class="sec-title">Full trigger<br><em>assessment record.</em></h2>
+        </div>
+        ${renderTriggerMatrix(d.triggers)}
+      </section>
+      <section class="sec" id="prevention">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Prevention Analysis</div>
+          <h2 class="sec-title">What would have<br><em>changed the outcome.</em></h2>
+        </div>
+        <p class="body-p" style="max-width:680px;margin-bottom:32px">Specific structural conditions whose pre-deployment presence would have interrupted the harm pathway.</p>
+        <div>${prevHtml}</div>
+        <div style="margin-top:36px;background:var(--navy2);border:1px solid var(--border);border-top:2px solid var(--amber);padding:28px">
+          <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:12px">If a GCR record had existed before deployment</div>
+          <p class="body-p">A pre-deployment Governance Confirmation Record for ${d.name} would have required the deploying organisation to answer in plain language what happens when the system produces adverse outputs — and to sign that answer before deployment.</p>
+        </div>
+      </section>
+      <section class="sec" id="comparable">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Comparable Cases</div>
+          <h2 class="sec-title">Systems with matching<br><em>governance profiles.</em></h2>
+        </div>
+        ${compHtml}
+      </section>
+      <section class="sec" id="record">
+        <div class="sec-header">
+          <div class="sec-eyebrow">Record &amp; Sources</div>
+          <h2 class="sec-title">Classification &amp;<br><em>evidentiary basis.</em></h2>
+        </div>
+        <div class="meta-grid">${metaHtml}</div>
+        <div style="margin-top:16px;background:var(--navy2);border:1px solid var(--border);padding:24px">
+          <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Primary evidentiary sources</div>
+          ${sourcesHtml}
+        </div>
+      </section>
+    </div>
+    <section style="padding:72px 0;background:var(--navy2);border-top:1px solid var(--border)">
+      <div class="wrap">
+        <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:16px">Related Cases</div>
+        <h2 style="font-family:var(--ff-display);font-size:clamp(22px,3vw,38px);font-weight:600;color:var(--cream);margin-bottom:32px">More from the dataset</h2>
+        <div class="related-grid">${relatedHtml}</div>
+        <div style="margin-top:28px"><button class="btn btn-ghost" onclick="navigate(null)">Browse All 380 Cases →</button></div>
+      </div>
+    </section>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LIBRARY INDEX
+// ═══════════════════════════════════════════════════════════════════
+function renderLibrary() {
+  document.title = 'Case Library — Human Systems Risk Lab';
+  const builtCount = Object.keys(CONTENT).length;
+  return `
+    <div class="lib-hero">
+      <div class="wrap">
+        <div class="lib-hero-eyebrow">Human Systems Risk Lab</div>
+        <h1 class="lib-hero-title">Case Library</h1>
+        <p style="font-size:15px;color:var(--warm);max-width:560px;line-height:1.8">Documented governance failures in automated and sociotechnical systems. Validated against the five-condition diagnostic framework.</p>
+        <div class="lib-stats">
+          <div class="lib-stat"><strong>${ALL_CASES.length}</strong>Total cases</div>
+          <div class="lib-stat"><strong>${ALL_CASES.filter(c=>c.type==='Failure'||c.type==='Cybersecurity Failure').length}</strong>Failures</div>
+          <div class="lib-stat"><strong>${ALL_CASES.filter(c=>c.type==='Resilient'||c.type==='Cybersecurity Resilient').length}</strong>Resilient</div>
+          <div class="lib-stat"><strong>${builtCount}</strong>Full analyses</div>
+          <div class="lib-stat"><strong>${ALL_CASES.filter(c=>c.suppressionConfirmed).length}</strong>Suppression confirmed</div>
+        </div>
+      </div>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <div class="filter-inner">
+        <input class="search-input" id="searchInput" placeholder="Search by name, domain, country, or case ID…" oninput="updateSearch(this.value)">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <select id="domainGroupSelect" onchange="setDomainGroup(this.value)" style="background:var(--navy2);border:1px solid var(--border);color:var(--warm);font-family:var(--ff-mono);font-size:11px;padding:9px 12px;outline:none;cursor:pointer;transition:border-color .15s;width:100%" onfocus="this.style.borderColor='rgba(192,122,24,.4)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="all">All Domains</option>
+            <option value="Law Enforcement &amp; Criminal Justice">Law Enforcement &amp; Criminal Justice</option>
+            <option value="Healthcare &amp; Medical">Healthcare &amp; Medical</option>
+            <option value="Benefits, Welfare &amp; Social Services">Benefits, Welfare &amp; Social Services</option>
+            <option value="Government &amp; Public Administration">Government &amp; Public Administration</option>
+            <option value="Financial Systems">Financial Systems</option>
+            <option value="Transportation &amp; Aviation">Transportation &amp; Aviation</option>
+            <option value="Critical Infrastructure &amp; Technology">Critical Infrastructure &amp; Technology</option>
+            <option value="Immigration &amp; Border">Immigration &amp; Border</option>
+            <option value="Education">Education</option>
+            <option value="Military &amp; National Security">Military &amp; National Security</option>
+            <option value="Environment">Environment</option>
+            <option value="Other">Other</option>
+          </select>
+          <select id="domainSelect" onchange="setDomain(this.value)" style="background:var(--navy2);border:1px solid var(--border);color:var(--warm);font-family:var(--ff-mono);font-size:11px;padding:9px 12px;outline:none;cursor:pointer;transition:border-color .15s;width:100%;display:none" onfocus="this.style.borderColor='rgba(192,122,24,.4)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="all">All Subdomains</option>
+          </select>
+        </div>
+        <div class="chip-row" id="typeChips">
+          <button class="chip active" onclick="setType('all',this)">All</button>
+          <button class="chip" onclick="setType('Failure',this)">Failures</button>
+          <button class="chip" onclick="setType('Resilient',this)">Resilient</button>
+          <button class="chip" onclick="setType('RTF',this)">RTF</button>
+          <button class="chip" onclick="setType('Cybersecurity Failure',this)">Cyber Failures</button>
+          <button class="chip" onclick="setType('Cybersecurity Resilient',this)">Cyber Resilient</button>
+        </div>
+        <div class="chip-row" id="condChips">
+          <button class="chip" onclick="toggleCond('c1-absent',this)">C1 Absent</button>
+          <button class="chip" onclick="toggleCond('c2-absent',this)">C2 Absent</button>
+          <button class="chip" onclick="toggleCond('c3-absent',this)">C3 Absent</button>
+          <button class="chip" onclick="toggleCond('c4-absent',this)">C4 Absent</button>
+          <button class="chip" onclick="toggleCond('c5-absent',this)">C5 Absent</button>
+          <button class="chip" onclick="toggleCond('suppression',this)">Suppression Confirmed</button>
+          <button class="chip" onclick="toggleCond('full-analysis',this)">Full Analysis Only</button>
+        </div>
+        <div class="results-count" id="resultsCount"></div>
+      </div>
+    </div>
+    <div class="case-grid" id="caseGrid"></div>`;
+}
+
+function filterAndRenderCards() {
+  const q = filterState.search.toLowerCase();
+  const filtered = ALL_CASES.filter(c => {
+    if (q && !`${c.name} ${c.domain} ${c.country} ${c.id}`.toLowerCase().includes(q)) return false;
+    if (filterState.type !== 'all' && c.type !== filterState.type) return false;
+    if (filterState.domainGroup !== 'all') {
+      const groupDomains = DOMAIN_GROUPS[filterState.domainGroup] || [];
+      if (!groupDomains.includes(c.domain)) return false;
+    }
+    if (filterState.domain !== 'all' && c.domain !== filterState.domain) return false;
+    for (const cond of filterState.conditions) {
+      if (cond==='c1-absent' && !String(c.c1).startsWith('ABSENT')) return false;
+      if (cond==='c2-absent' && !String(c.c2).startsWith('ABSENT')) return false;
+      if (cond==='c3-absent' && !String(c.c3).startsWith('ABSENT')) return false;
+      if (cond==='c4-absent' && !String(c.c4).startsWith('ABSENT')) return false;
+      if (cond==='c5-absent' && !String(c.c5).startsWith('ABSENT')) return false;
+      if (cond==='suppression' && !c.suppressionConfirmed) return false;
+      if (cond==='full-analysis' && !CONTENT[c.slug]) return false;
+    }
+    return true;
+  });
+  const grid = document.getElementById('caseGrid');
+  const count = document.getElementById('resultsCount');
+  if (!grid) return;
+  count.textContent = `Showing ${filtered.length} of ${ALL_CASES.length} cases`;
+  grid.innerHTML = filtered.map(c => {
+    const dot = typeColor(c.type);
+    const sc = scoreColor(c.gpws);
+    const hasContent = !!CONTENT[c.slug];
+    const conds = ['c1','c2','c3','c4','c5'].map((k,i) =>
+      `<span class="cc ${String(c[k]).startsWith('ABSENT')?'cc-a':'cc-p'}">C${i+1}</span>`).join('');
+    return `<div class="case-card" onclick="navigate('${c.slug}')">
+      <div class="card-type-row">
+        <div class="card-type-dot" style="background:${dot}"></div>
+        <span class="card-type-label">${c.type}</span>
+        <span class="card-domain-label">${c.domain}</span>
+      </div>
+      <div class="card-name">${c.name}</div>
+      <div class="card-meta">${c.country}${c.deployYear?' · '+c.deployYear:''}</div>
+      <div class="card-conditions">${conds}</div>
+      <div class="card-bottom">
+        <div class="card-score" style="color:${sc}">${c.gpws.toFixed(1)}</div>
+        ${hasContent
+          ? '<span class="card-link">Full analysis →</span>'
+          : '<span class="card-data-link">Dataset record</span>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateSearch(v) { filterState.search=v; filterAndRenderCards(); }
+function setType(t,btn) {
+  filterState.type=t;
+  document.querySelectorAll('#typeChips .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterAndRenderCards();
+}
+function setDomainGroup(v) {
+  filterState.domainGroup = v;
+  filterState.domain = 'all'; // reset subdomain when group changes
+  // Update subdomain dropdown to show only subdomains for selected group
+  const sub = document.getElementById('domainSelect');
+  if (!sub) return;
+  if (v === 'all') {
+    sub.innerHTML = '<option value="all">All Subdomains</option>';
+    sub.style.display = 'none';
+  } else {
+    const subs = DOMAIN_GROUPS[v] || [];
+    sub.innerHTML = '<option value="all">All Subdomains</option>' +
+      subs.map(d => `<option value="${d}">${d}</option>`).join('');
+    sub.style.display = '';
+    sub.value = 'all';
+  }
+  filterAndRenderCards();
+}
+function setDomain(v) {
+  filterState.domain = v;
+  filterAndRenderCards();
+}
+function toggleCond(c,btn) {
+  btn.classList.toggle('active');
+  filterState.conditions.has(c) ? filterState.conditions.delete(c) : filterState.conditions.add(c);
+  filterAndRenderCards();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════
+function render() {
+  const slug = getSlug();
+  const app = document.getElementById('app');
+  if (!slug) {
+    app.innerHTML = renderLibrary();
+    setTimeout(filterAndRenderCards, 0);
+    return;
+  }
+  const dataCase = ALL_CASES.find(c => c.slug === slug);
+  if (!dataCase) {
+    app.innerHTML = `<div style="padding:120px 48px;text-align:center">
+      <div style="font-family:var(--ff-mono);font-size:11px;color:var(--amber);letter-spacing:.2em;margin-bottom:16px">404 — NOT FOUND</div>
+      <h1 style="font-family:var(--ff-display);font-size:48px;color:var(--cream);margin-bottom:20px">Case not found</h1>
+      <p style="color:var(--warm);margin-bottom:28px">No record for "<strong>${slug}</strong>".</p>
+      <button class="btn btn-ghost" onclick="navigate(null)">← Back to Case Library</button>
+    </div>`;
+    return;
+  }
+  const content = CONTENT[slug];
+  app.innerHTML = content ? renderFullCase(dataCase, content) : renderDataPage(dataCase);
+}
+
+boot();
+</script>
+</body>
+</html>
